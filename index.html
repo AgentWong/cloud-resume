@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Herman Wong</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet"
+        type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">
+            <span class="d-block d-lg-none">Herman Wong</span>
+            <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2"
+                    src="assets/img/profile.jpg" alt="..." /></span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#certifications">Certifications</a>
+                </li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Page Content-->
+    <div class="container-fluid p-0">
+        <!-- About-->
+        <section class="resume-section" id="about">
+            <div class="resume-section-content">
+                <h1 class="mb-0">
+                    Herman
+                    <span class="text-primary">Wong</span>
+                </h1>
+                <div class="subheading mb-5">
+                    Honolulu, HI ·
+                    <a href="mailto:hwong@hermanwong.net">hwong@hermanwong.net</a>
+                </div>
+                <p class="lead mb-5"></p>
+                <p>I'm a VMWare System Administrator based in Hawaii with 4 years of progressively increasing experience
+                    and responsibility in Windows and VMware. I have demonstrated experience in root cause analysis and
+                    troubleshooting complex environments with multiple dependencies (DNS, DHCP, PKI, AD, GPO).</p>
+                <p>A key theme throughout my career has been my knack for 1) identifying bottlenecks and 2) eliminating
+                    the bottlenecks, usually with automation. In my very first Helpdesk job at an MSP, a common task
+                    that
+                    was done manually was to install a clean Windows 10 OS, install updated drivers, and install our
+                    standard suite of common software (Office 365, RMM agent, anti-virus agent) on client computers.
+                    This was something I automated away by doing the initial legwork of configuring an MDT/WDS
+                    deployment server to image our client computers, which saved hundreds of hours of manual effort a
+                    month.</p>
+                <p>This has been a consistent theme later on with the use of Powershell and PowerCLI to script Windows
+                    OS patch installations, which reduced the time between the release of patches on Patch Tuesdays and
+                    the functional testing in our Testing lab, so patches could more quickly be released into
+                    Production. This later evolved into using Powershell Desired State Configuration for patch
+                    orchestration so that the process is fully automated and that services are always available (So
+                    Exchange 01 node will patch, and Exchange 02 will wait until the first node is finished before
+                    starting its own patching).</p>
+                <p>This knack of identifying and eliminating bottlenecks embodies good Systems Administration principles
+                    and makes me a force multiplier even within IT, which itself is a force multiplier within any larger
+                    organization. Combined with an “automation first” mindset, this tends to make me a key contributor
+                    in any roles I’ve held.</p>
+                <p>This website is a static site hosted in an AWS S3 bucket behind a CloudFront CDN. Read about the
+                    configuration <a href="#!">here</a>.</p><br>
+                <p>
+                    Visits:
+                    <span id="visits-counter"></span>
+                </p>
+                <div class="social-icons">
+                    <a class="social-icon" href="https://www.linkedin.com/in/hermanwong808/"><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a class="social-icon" href="https://github.com/AgentWong"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </section>
+        <hr class="m-0" />
+        <!-- Experience-->
+        <section class="resume-section" id="experience">
+            <div class="resume-section-content">
+                <h2 class="mb-5">Experience</h2>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
+                        <h3 class="mb-0">VMWare Systems Administrator</h3>
+                        <div class="subheading mb-3">General Dynamics Information Technology – Contractor | SPAWAR
+                            (Government Client)</div>
+                        <ul>
+                            <li>Responsible for maintaining VMWare stability and security through patching and system
+                                monitoring.</li>
+                            <li>Served as highest point of escalation within the organization for complex Windows/VMWare
+                                issues where progress has been slow for an extended period (more than a month).</li>
+                            <li>Spearheaded deployment and configuration of vRealize Operations Manager to support
+                                long-term monitoring and maintenance of virtual infrastructure and installation and
+                                configuration of vRealize Log Insight to collect meaningful logs and present them in
+                                easily readable dashboards as well as configure to send alerts to vRealize Operations
+                                Manager on failed service events (account lockouts, DFS failures, Exchange failures, SQL
+                                Server failures) so it can function as a single pane of glass for monitoring the
+                                infrastructure.</li>
+                            <li>Configured vSAN native Clustered VMDK with Windows Failover Clustering to achieve high
+                                availability and fault tolerance of file servers.</li>
+                            <li>Wrote custom Powershell DSC class-based resource to orchestrate patching in domain (02
+                                Exchange Server node will wait for 01 Exchange Server node to finish patching before
+                                beginning its own patching). This prevents service outage during scheduled patching
+                                windows and fully automates patching.</li>
+                            <li>Integrated legacy (but mission-critical) software to work with modern OS and
+                                infrastructure (VDI) that the software was never designed or tested for. Wrote
+                                Powershell script to address issues in the software caused by the nature of VDI (SQL
+                                Server databases break when computer name changes as a result of cloning). This allowed
+                                the software to be fully functional in the VDI infrastructure.</li>
+                            <li>Determined serious problems in new systems were caused by incorrectly issued Subordinate
+                                CA (PKI/SSL) certificates. Worked with the government SME to reissue correctly
+                                configured certificates and reinstall the new endpoint certificates wherever they were
+                                used in the infrastructure (vCenter, VxRail, etc) to avoid service impacts.</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">April 2021 - Present</span></div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
+                        <h3 class="mb-0">Systems Administrator</h3>
+                        <div class="subheading mb-3">Zachary Piper Solutions – Subcontractor | SPAWAR (Government
+                            Client)</div>
+                        <ul>
+                            <li>Responsible for maintaining Windows domain stability and security though patching and
+                                system monitoring.</li>
+                            <li>Implemented WSUS configuration best practices to improve performance of WSUS servers by
+                                20-30 times and to improve process of exporting metadata/approvals and importing in an
+                                air gapped network. Net result is a dramatic reduction in time for a process that
+                                normally takes 100+ hours down to 8 hours to complete for monthly patch export/imports.
+                            </li>
+                            <li>Wrote Powershell scripts to start and stop DAG maintenance mode for Microsoft Exchange
+                                mailbox servers as well as run additional checks to ensure all relevant services are
+                                properly started and stopped prior to major CU upgrades.</li>
+                            <li>Used Powershell to script monthly Windows OS patch installations. This saves hundreds of
+                                man hours a month and reduced the times between patch availability and testing of
+                                patches before release into production.</li>
+                            <li>Wrote Powershell script to conduct various health checks on domain controllers (DFSR,
+                                DNS, dcdiag, etc) and Exchange, and to highlight any failures for Systems
+                                Administrators. This helped to streamline some of the patch testing that was previous
+                                done manually by making the testing simultaneously faster and more thorough by
+                                increasing the number of tests.</li>
+                            <li>Corrected issue with ADAM database values in View Connection Server that did not match
+                                SQL database Deployment Group ID values, which prevented VDI pools from being recomposed
+                                for months.</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">October 2020 - April 2021</span></div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
+                        <h3 class="mb-0">PC Technician</h3>
+                        <div class="subheading mb-3">Abbtech – Subcontractor | US Army Corps of Engineers IT (Government
+                            Client)</div>
+                        <ul>
+                            <li>Responsible for Tier 2 on-site support after initial triage of end user support requests
+                                by the Enterprise Helpdesk.</li>
+                            <li>Wrote Powershell scripts to automate simple tasks. Transcribed a PC Health Check tool
+                                originally written in VBScript to Powershell. This allowed expansion of the tool to run
+                                at scale against 600+ computers instead of only one at a time, as well as
+                                Powershell-specific improvements such as utilizing runspaces so that the tool is
+                                multi-threaded and finishes in minutes instead of hours. This tool was used and expanded
+                                to determine activation of workstation backup software, verify installation status of
+                                SCCM clients, presence and accuracy of Bitlocker recovery passwords in AD, and patch
+                                compliance on domain computers.</li>
+                            <li>Assisted SCCM Administrators in tracing origins of SCCM clients uninstalling themselves
+                                throughout the Enterprise, which led to Operational impacts (inability to deliver OS
+                                patches and software installations), by tracing Event Logs in order to determine that a
+                                recently enabled SCCM add-on caused the behavior.</li>
+                            <li>Hundreds of users were having instances of Microsoft Office no longer being activated
+                                and refusing to open, resulting in a work stoppage. Root cause analysis determined that
+                                the problem was due to a misconfigured Group Policy object. Provided the Tier 3 Active
+                                Directory management team with the configurations needed to resolve the issue.</li>
+                            <li>End users (Structural Engineers and Architects) required installation of large (20-30GB)
+                                CAD software from file servers in the domain during height of COVID pandemic while
+                                working remotely. VPN was bandwidth limited to 10 mbps up / 10 mbps down and would
+                                disconnect after 10 hours, so the installer could not be transferred in one day. Made
+                                use of Powershell to access BITS (Background Intelligent Transfer Service) to transfer
+                                files over the unreliable connection by using the ability of BITS to resume file
+                                transfers even if the VPN was disconnected or the computer was restarted.</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">April 2019 - September 2020</span></div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between">
+                    <div class="flex-grow-1">
+                        <h3 class="mb-0">Helpdesk Technician</h3>
+                        <div class="subheading mb-3">Hawaii Tech Support</div>
+                        <ul>
+                            <li>Configured WinRM and SNMP in client environments for Network Monitoring using Auvik.
+                                This provided network mapping, service monitoring, alerts, and discovery of previously
+                                unidentified or undocumented devices on the network.</li>
+                            <li>Configured SPF/DKIM/DMARC in DNS hosting for clients as modern email systems rely upon
+                                these records. This resulted in less emails being rejected as spam or unsafe as well as
+                                provided security by preventing malicious actors from spoofing client email domains.
+                            </li>
+                            <li>Deployed Microsoft Azure Recovery Services to provide direct-to-cloud backup solution
+                                for non-profit client who received Azure credits, providing no-cost offsite backups.
+                            </li>
+                            <li>Deployed MDT/WDS on server to automate Windows 10 OS installations, driver
+                                installations, and standard software installations (Office 365, RMM agents, Anti-Virus
+                                Agents). These saved hundreds of hours a month due to the frequency of setting up new
+                                computers for client use.</li>
+                            <li>Maintained Active Directory with Powershell and Task Scheduler to prune stale computer
+                                and user accounts.</li>
+                            <li>Remotely enabled and configured iDRAC/iLO on client servers to allow remote power on of
+                                servers following a temporary power loss event, preventing the need for technicians to
+                                physically travel to client sites to power on the servers.</li>
+                            <li>Tableau software would not automatically start services after server restart due to
+                                regular patching. Worked with vendor support to determine the software-specific commands
+                                that needed to be run and used Powershell & Task Scheduler to run them before and after
+                                patching. Tableau support noted issue for future software improvement.</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">February 2018 - February 2019</span></div>
+                </div>
+            </div>
+        </section>
+        <hr class="m-0" />
+        <!-- Skills-->
+        <section class="resume-section" id="skills">
+            <div class="resume-section-content">
+                <h2 class="mb-5">Skills</h2>
+                <div class="subheading mb-3">Operating Systems & Environments</div>
+                <ul class="list-inline dev-icons">
+                    <li class="list-inline-item"><i class="fab fa-windows"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-linux"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-aws"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-redhat"></i></li>
+                </ul><br>
+                <div class="subheading mb-3">IaC and Configuration Management</div>
+                <ul class="fa-ul mb-0">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        Ansible
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        CloudFormation
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        Powershell Desired State Configuration (DSC)
+                    </li>
+                </ul><br>
+                <div class="subheading mb-3">Cloud</div>
+                <ul class="fa-ul mb-0">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        AWS: EC2, S3, Lambda, VPC, ELB, CloudFront, RDS, Route 53, CloudWatch
+                    </li>
+                </ul><br>
+                <div class="subheading mb-3">Core Infrastructure</div>
+                <ul class="fa-ul mb-0">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        Windows: AD, GPO, DNS, PKI
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        vSphere: vCenter, Horizon VDI, vSAN, vRealize
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        Linux: SElinux, Bash, Apache, SSH, Yum, Cron
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <hr class="m-0" />
+        <!-- Certifications-->
+        <section class="resume-section" id="certifications">
+            <div class="resume-section-content">
+                <h2 class="mb-5">Certifications</h2>
+                <a href="https://www.credly.com/badges/b238abde-9217-4517-bfc2-1a41d502aa7e/public_url" target="_blank">
+                    <img src="assets/img/aws-certified-solutions-architect-associate.png">
+                </a>
+                <a href="https://rhtapps.redhat.com/certifications/badge/verify/FOXANPS7ZZCGI6ZTO2YQT554AYAEQU3CUPSQX2KSDXT6RW46LQ3XCZJWRJNV7ILTXVE4I6VB7OTCG4U5NQYTCNA62RUWOCM34WWBUYQ="
+                    target="_blank">
+                    <img src="assets/img/RHCE.png">
+                </a>
+                <a href="https://rhtapps.redhat.com/certifications/badge/verify/FOXANPS7ZZCGI6ZTO2YQT554AYAEQU3CUPSQX2KSDXT6RW46LQ3T7ULZ55KZZ56SKO7EQ3ETTLYZQ4U5NQYTCNA62RUWOCM34WWBUYQ="
+                    target="_blank">
+                    <img src="assets/img/RHCSA.png">
+                </a>
+                <a href="https://www.credly.com/badges/32c14ebf-02c7-48b6-80ca-eb1250c55fbd/public_url" target="_blank">
+                    <img src="assets/img/offensive-security-certified-professional-oscp.png">
+                </a>
+                <p></p>
+                <a href="https://www.credly.com/badges/9a034478-e4a2-4ea9-91a3-8ba663c3458f/public_url" target="_blank">
+                    <img src="assets/img/vmware-certified-professional-data-center-virtualization-2021.png">
+                </a>
+                <a href="https://www.credly.com/badges/8c791384-7f53-41cb-811d-dd0d4e9cdfd0/public_url" target="_blank">
+                    <img src="assets/img/mcse-core-infrastructure-certified-2019.png">
+                </a>
+                <a href="https://www.credly.com/badges/5bf2e52e-1303-4191-a0e6-a5978be12d9d/public_url" target="_blank">
+                    <img src="assets/img/mcsa-windows-server-2016-certified-2019.png">
+                </a>
+                <a href="https://www.credly.com/badges/16dbf870-c30f-4cfe-88f1-64fc13ad6ccc/public_url" target="_blank">
+                    <img src="assets/img/comptia-security-ce-certification.png">
+                </a>
+                <p></p>
+            </div>
+        </section>
+        <hr class="m-0" />
+        <!-- Education-->
+        <section class="resume-section" id="education">
+            <div class="resume-section-content">
+                <h2 class="mb-5">Education</h2>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
+                        <h3 class="mb-0">Kapiolani Community College</h3>
+                        <div class="subheading mb-3">Associate of Applied Science</div>
+                        <div>Information Technology</div>
+                        <p>GPA: 4.0</p>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">December 2017</span></div>
+                </div>
+            </div>
+        </section>
+        <hr class="m-0" />
+    </div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <script src="js/visit.js"></script>
+</body>
+
+</html>
