@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- Testing! -->
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -33,6 +34,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Projects</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#certifications">Certifications</a>
                 </li>
@@ -53,32 +55,53 @@
                     Honolulu, HI ·
                     <a href="mailto:hwong@hermanwong.net">hwong@hermanwong.net</a>
                 </div>
-                <p class="lead mb-5"></p>
-                <p>I'm a VMWare System Administrator based in Hawaii with 4 years of progressively increasing experience
-                    and responsibility in Windows and VMware. I have demonstrated experience in root cause analysis and
-                    troubleshooting complex environments with multiple dependencies (DNS, DHCP, PKI, AD, GPO).</p>
-                <p>A key theme throughout my career has been my knack for 1) identifying bottlenecks and 2) eliminating
-                    the bottlenecks, usually with automation. In my very first Helpdesk job at an MSP, a common task
-                    that
-                    was done manually was to install a clean Windows 10 OS, install updated drivers, and install our
-                    standard suite of common software (Office 365, RMM agent, anti-virus agent) on client computers.
-                    This was something I automated away by doing the initial legwork of configuring an MDT/WDS
-                    deployment server to image our client computers, which saved hundreds of hours of manual effort a
-                    month.</p>
-                <p>This has been a consistent theme later on with the use of Powershell and PowerCLI to script Windows
-                    OS patch installations, which reduced the time between the release of patches on Patch Tuesdays and
-                    the functional testing in our Testing lab, so patches could more quickly be released into
-                    Production. This later evolved into using Powershell Desired State Configuration for patch
-                    orchestration so that the process is fully automated and that services are always available (So
-                    Exchange 01 node will patch, and Exchange 02 will wait until the first node is finished before
-                    starting its own patching).</p>
-                <p>This knack of identifying and eliminating bottlenecks embodies good Systems Administration principles
-                    and makes me a force multiplier even within IT, which itself is a force multiplier within any larger
-                    organization. Combined with an “automation first” mindset, this tends to make me a key contributor
-                    in any roles I’ve held.</p>
+                <p>
+                    I am a results-driven Cloud Engineer with a strong focus on automation, cloud architecture, and
+                    infrastructure management. Experienced in leveraging cutting-edge technologies, such as Ansible,
+                    Terraform, Packer, and Selenium, to streamline processes, optimize deployments, and enhance
+                    operational
+                    efficiency. Skilled in designing and implementing cloud-based solutions, orchestrating complex
+                    infrastructure deployments, and automating repetitive tasks to reduce manual effort. Proficient in
+                    cloud platforms like AWS. Collaborative team player with excellent problem-solving abilities and a
+                    track record of
+                    delivering high-quality solutions.</p>
+
+                <p>
+                    Key highlights of expertise:</p>
+                <ul>
+                    <li>Cloud Architecture and Design: Proficient in designing scalable and resilient cloud
+                        architectures
+                        using AWS/Azure services and adhering to best practices for security, performance, and cost
+                        optimization.</li>
+                    <li>Infrastructure Automation: Strong background in automation using tools like Ansible, Packer,
+                        Selenium, Python, Terraform,
+                        and PowerShell to deploy and manage cloud resources, improving efficiency and reducing manual
+                        errors.
+                    </li>
+                    <li>Infrastructure as Code (IaC): Experienced in defining infrastructure configurations using tools
+                        like Terraform, allowing for version-controlled, reproducible infrastructure
+                        deployments.</li>
+                    <li>Monitoring and Optimization: Proficient in implementing monitoring solutions and utilizing
+                        cloud-native services for proactive monitoring, performance optimization, and cost management of
+                        cloud environments.</li>
+                    <li>Collaboration and Communication: Effective in collaborating with cross-functional teams,
+                        including
+                        developers, system administrators, and stakeholders, to understand requirements and deliver
+                        scalable
+                        and reliable solutions.</li>
+                </ul>
+
+                <p>With a focus on automation, cloud engineering, and infrastructure management, I
+                    am dedicated to
+                    leveraging cloud technologies to drive efficiency, scalability, and reliability in the delivery of
+                    cloud-based solutions. Combining technical expertise with strong collaboration and problem-solving
+                    skills, I am committed to delivering optimal outcomes for cloud projects.</p>
                 <b>Note:</b><br>
-                <p>This website is a static site hosted in an AWS S3 bucket behind a CloudFront CDN. Changes are made in VSCode, sync'd to GitHub, and then deployed to AWS via a simple CI/CD pipeline with GitHub Action.  Read about the
-                    configuration <a href="https://www.hermanwong.net/aws-cloud-resume-challenge/" target="_blank">here</a>.</p><br>
+                <p>This website is a static site hosted in an AWS S3 bucket behind a CloudFront CDN. Changes are made in
+                    VSCode, sync'd to GitHub, and then deployed to AWS via a simple CI/CD pipeline with GitHub Action.
+                    Read about the
+                    configuration <a href="https://www.hermanwong.net/aws-cloud-resume-challenge/"
+                        target="_blank">here</a>.</p><br>
                 <p>
                     Visits:
                     <span id="visits-counter"></span>
@@ -86,7 +109,8 @@
                 <div class="social-icons">
                     <a class="social-icon" href="https://www.linkedin.com/in/hermanwong808/" target="_blank"><i
                             class="fab fa-linkedin-in"></i></a>
-                    <a class="social-icon" href="https://github.com/AgentWong" target="_blank"><i class="fab fa-github"></i></a>
+                    <a class="social-icon" href="https://github.com/AgentWong" target="_blank"><i
+                            class="fab fa-github"></i></a>
                 </div>
             </div>
         </section>
@@ -97,39 +121,48 @@
                 <h2 class="mb-5">Experience</h2>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
+                        <h3 class="mb-0">DevOps Engineer</h3>
+                        <div class="subheading mb-3">Coalfire</div>
+                        <ul>
+                            <li>Refactored Bash, Python, and Powershell User Data scripts into native Ansible roles for
+                                EC2 instance configuration to enable better feedback in case of execution failures.</li>
+                            <li>Wrote Ansible roles to deploy Splunk and Elastic, reducing deployment and configuration
+                                times from 100+ man-hours to 35 minutes and drastically improving consistency of
+                                deployments.</li>
+                            <li>Automated full architecture deployments (Active Directory, Certificate Authorities,
+                                Anti-Virus solution, SIEM, Ticketing System) with Terraform and Ansible.</li>
+                            <li>Leveraged full automation of deployments to quickly test Benchmarks (CIS, STIG) for
+                                potentially breaking changes to applications and infrastructure.</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">May 2022 - Present</span></div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
                         <h3 class="mb-0">VMWare Systems Administrator</h3>
                         <div class="subheading mb-3">General Dynamics Information Technology – Contractor | SPAWAR
                             (Government Client)</div>
                         <ul>
-                            <li>Responsible for maintaining VMWare stability and security through patching and system
-                                monitoring.</li>
-                            <li>Served as highest point of escalation within the organization for complex Windows/VMWare
-                                issues where progress has been slow for an extended period (more than a month).</li>
                             <li>Spearheaded deployment and configuration of vRealize Operations Manager to support
                                 long-term monitoring and maintenance of virtual infrastructure and installation and
                                 configuration of vRealize Log Insight to collect meaningful logs and present them in
-                                easily readable dashboards as well as configure to send alerts to vRealize Operations
-                                Manager on failed service events (account lockouts, DFS failures, Exchange failures, SQL
+                                easily readable dashboards as well as configure to send alerts to vRealize
+                                Operations
+                                Manager on failed service events (account lockouts, DFS failures, Exchange failures,
+                                SQL
                                 Server failures) so it can function as a single pane of glass for monitoring the
                                 infrastructure.</li>
-                            <li>Configured vSAN native Clustered VMDK with Windows Failover Clustering to achieve high
+                            <li>Configured vSAN native Clustered VMDK with Windows Failover Clustering to achieve
+                                high
                                 availability and fault tolerance of file servers.</li>
-                            <li>Wrote custom Powershell DSC class-based resource to orchestrate patching in domain (02
+                            <li>Wrote custom Powershell DSC class-based resource to orchestrate patching in domain
+                                (02
                                 Exchange Server node will wait for 01 Exchange Server node to finish patching before
                                 beginning its own patching). This prevents service outage during scheduled patching
                                 windows and fully automates patching.</li>
-                            <li>Integrated legacy (but mission-critical) software to work with modern OS and
-                                infrastructure (VDI) that the software was never designed or tested for. Wrote
-                                Powershell script to address issues in the software caused by the nature of VDI (SQL
-                                Server databases break when computer name changes as a result of cloning). This allowed
-                                the software to be fully functional in the VDI infrastructure.</li>
-                            <li>Determined serious problems in new systems were caused by incorrectly issued Subordinate
-                                CA (PKI/SSL) certificates. Worked with the government SME to reissue correctly
-                                configured certificates and reinstall the new endpoint certificates wherever they were
-                                used in the infrastructure (vCenter, VxRail, etc) to avoid service impacts.</li>
                         </ul>
                     </div>
-                    <div class="flex-shrink-0"><span class="text-primary">April 2021 - Present</span></div>
+                    <div class="flex-shrink-0"><span class="text-primary">April 2021 - April 2022</span></div>
                 </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
@@ -137,27 +170,29 @@
                         <div class="subheading mb-3">Zachary Piper Solutions – Subcontractor | SPAWAR (Government
                             Client)</div>
                         <ul>
-                            <li>Responsible for maintaining Windows domain stability and security though patching and
-                                system monitoring.</li>
-                            <li>Implemented WSUS configuration best practices to improve performance of WSUS servers by
-                                20-30 times and to improve process of exporting metadata/approvals and importing in an
+                            <li>Implemented WSUS configuration best practices to improve performance of WSUS servers
+                                by
+                                20-30 times and to improve process of exporting metadata/approvals and importing in
+                                an
                                 air gapped network. Net result is a dramatic reduction in time for a process that
-                                normally takes 100+ hours down to 8 hours to complete for monthly patch export/imports.
+                                normally takes 100+ hours down to 8 hours to complete for monthly patch
+                                export/imports.
                             </li>
-                            <li>Wrote Powershell scripts to start and stop DAG maintenance mode for Microsoft Exchange
+                            <li>Wrote Powershell scripts to start and stop DAG maintenance mode for Microsoft
+                                Exchange
                                 mailbox servers as well as run additional checks to ensure all relevant services are
                                 properly started and stopped prior to major CU upgrades.</li>
-                            <li>Used Powershell to script monthly Windows OS patch installations. This saves hundreds of
+                            <li>Used Powershell to script monthly Windows OS patch installations. This saves
+                                hundreds of
                                 man hours a month and reduced the times between patch availability and testing of
                                 patches before release into production.</li>
-                            <li>Wrote Powershell script to conduct various health checks on domain controllers (DFSR,
+                            <li>Wrote Powershell script to conduct various health checks on domain controllers
+                                (DFSR,
                                 DNS, dcdiag, etc) and Exchange, and to highlight any failures for Systems
-                                Administrators. This helped to streamline some of the patch testing that was previous
+                                Administrators. This helped to streamline some of the patch testing that was
+                                previous
                                 done manually by making the testing simultaneously faster and more thorough by
                                 increasing the number of tests.</li>
-                            <li>Corrected issue with ADAM database values in View Connection Server that did not match
-                                SQL database Deployment Group ID values, which prevented VDI pools from being recomposed
-                                for months.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">October 2020 - April 2021</span></div>
@@ -165,32 +200,30 @@
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
                         <h3 class="mb-0">PC Technician</h3>
-                        <div class="subheading mb-3">Abbtech – Subcontractor | US Army Corps of Engineers IT (Government
+                        <div class="subheading mb-3">Abbtech – Subcontractor | US Army Corps of Engineers IT
+                            (Government
                             Client)</div>
                         <ul>
-                            <li>Responsible for Tier 2 on-site support after initial triage of end user support requests
-                                by the Enterprise Helpdesk.</li>
-                            <li>Wrote Powershell scripts to automate simple tasks. Transcribed a PC Health Check tool
-                                originally written in VBScript to Powershell. This allowed expansion of the tool to run
+                            <li>Wrote Powershell scripts to automate simple tasks. Transcribed a PC Health Check
+                                tool
+                                originally written in VBScript to Powershell. This allowed expansion of the tool to
+                                run
                                 at scale against 600+ computers instead of only one at a time, as well as
                                 Powershell-specific improvements such as utilizing runspaces so that the tool is
-                                multi-threaded and finishes in minutes instead of hours. This tool was used and expanded
-                                to determine activation of workstation backup software, verify installation status of
+                                multi-threaded and finishes in minutes instead of hours. This tool was used and
+                                expanded
+                                to determine activation of workstation backup software, verify installation status
+                                of
                                 SCCM clients, presence and accuracy of Bitlocker recovery passwords in AD, and patch
                                 compliance on domain computers.</li>
-                            <li>Assisted SCCM Administrators in tracing origins of SCCM clients uninstalling themselves
-                                throughout the Enterprise, which led to Operational impacts (inability to deliver OS
-                                patches and software installations), by tracing Event Logs in order to determine that a
-                                recently enabled SCCM add-on caused the behavior.</li>
-                            <li>Hundreds of users were having instances of Microsoft Office no longer being activated
-                                and refusing to open, resulting in a work stoppage. Root cause analysis determined that
-                                the problem was due to a misconfigured Group Policy object. Provided the Tier 3 Active
-                                Directory management team with the configurations needed to resolve the issue.</li>
-                            <li>End users (Structural Engineers and Architects) required installation of large (20-30GB)
+                            <li>End users (Structural Engineers and Architects) required installation of large
+                                (20-30GB)
                                 CAD software from file servers in the domain during height of COVID pandemic while
                                 working remotely. VPN was bandwidth limited to 10 mbps up / 10 mbps down and would
-                                disconnect after 10 hours, so the installer could not be transferred in one day. Made
-                                use of Powershell to access BITS (Background Intelligent Transfer Service) to transfer
+                                disconnect after 10 hours, so the installer could not be transferred in one day.
+                                Made
+                                use of Powershell to access BITS (Background Intelligent Transfer Service) to
+                                transfer
                                 files over the unreliable connection by using the ability of BITS to resume file
                                 transfers even if the VPN was disconnected or the computer was restarted.</li>
                         </ul>
@@ -203,31 +236,68 @@
                         <div class="subheading mb-3">Hawaii Tech Support</div>
                         <ul>
                             <li>Configured WinRM and SNMP in client environments for Network Monitoring using Auvik.
-                                This provided network mapping, service monitoring, alerts, and discovery of previously
+                                This provided network mapping, service monitoring, alerts, and discovery of
+                                previously
                                 unidentified or undocumented devices on the network.</li>
-                            <li>Configured SPF/DKIM/DMARC in DNS hosting for clients as modern email systems rely upon
-                                these records. This resulted in less emails being rejected as spam or unsafe as well as
+                            <li>Configured SPF/DKIM/DMARC in DNS hosting for clients as modern email systems rely
+                                upon
+                                these records. This resulted in less emails being rejected as spam or unsafe as well
+                                as
                                 provided security by preventing malicious actors from spoofing client email domains.
                             </li>
-                            <li>Deployed Microsoft Azure Recovery Services to provide direct-to-cloud backup solution
-                                for non-profit client who received Azure credits, providing no-cost offsite backups.
-                            </li>
                             <li>Deployed MDT/WDS on server to automate Windows 10 OS installations, driver
-                                installations, and standard software installations (Office 365, RMM agents, Anti-Virus
-                                Agents). These saved hundreds of hours a month due to the frequency of setting up new
+                                installations, and standard software installations (Office 365, RMM agents,
+                                Anti-Virus
+                                Agents). These saved hundreds of hours a month due to the frequency of setting up
+                                new
                                 computers for client use.</li>
-                            <li>Maintained Active Directory with Powershell and Task Scheduler to prune stale computer
-                                and user accounts.</li>
-                            <li>Remotely enabled and configured iDRAC/iLO on client servers to allow remote power on of
-                                servers following a temporary power loss event, preventing the need for technicians to
+                            <li>Remotely enabled and configured iDRAC/iLO on client servers to allow remote power on
+                                of
+                                servers following a temporary power loss event, preventing the need for technicians
+                                to
                                 physically travel to client sites to power on the servers.</li>
-                            <li>Tableau software would not automatically start services after server restart due to
-                                regular patching. Worked with vendor support to determine the software-specific commands
-                                that needed to be run and used Powershell & Task Scheduler to run them before and after
-                                patching. Tableau support noted issue for future software improvement.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">February 2018 - February 2019</span></div>
+                </div>
+            </div>
+        </section>
+        <hr class="m-0" />
+        <!-- Projects-->
+        <section class="resume-section" id="projects">
+            <div class="resume-section-content">
+                <h2 class="mb-5">Projects</h2>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
+                        <a href="https://www.linkedin.com/pulse/deploying-elastic-cloud-aws-eks-herman-wong/"
+                            target="_blank">
+                            <h3 class="mb-0">Elastic Cloud on Kubernetes on AWS EKS</h3>
+                        </a>
+                        <ul>
+                            <li>Deployed simple EKS cluster with dedicated IRSA roles to manage permissions for EKS
+                                Add-Ons.</li>
+                            <li>Compute is provided by 4 Amazon Linux 2 t3.medium AWS Managed Nodes.</li>
+                            <li>Deployed simple Elastic stack (Elasticsearch, Kibana, Fleet Server) on the EKS cluster
+                                with minimal configuration using Terraform "kubernetes" and "kubectl" providers.</li>
+                            <li>Use of "wait" conditions in "kubernetes_manifest" resource to ensure dependencies are
+                                ready before dependent Kubernetes resources are deployed (e.g. Kibana waits for
+                                Elasticsearch, Fleet waits for Kibana)</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">June 2023</span></div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
+                        <a href="https://www.linkedin.com/pulse/terragrunt-ansible-aws-cloud-lab-herman-wong/"
+                            target="_blank">
+                            <h3 class="mb-0">Terragrunt and Ansible AWS Cloud Lab</h3>
+                        </a>
+                        <ul>
+                            <li>Demonstrates use of Terraform to provision AWS infrastructure in conjunction with Ansible to configure deployed EC2 instances.</li>
+                            <li>Demonstrates use of Terragrunt as a wrapper to drastically reduce duplication of code.</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">July 2022</span></div>
                 </div>
             </div>
         </section>
@@ -251,7 +321,15 @@
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        CloudFormation
+                        Packer
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        Selenium
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        Terraform
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
@@ -262,7 +340,7 @@
                 <ul class="fa-ul mb-0">
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        AWS: EC2, S3, Lambda, VPC, ELB, CloudFront, RDS, Route 53, CloudWatch, DynamoDB
+                        AWS: EC2, S3, VPC, DynamoDB, RDS, Route 53, IAM, SSM, EKS, KMS
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
@@ -281,7 +359,7 @@
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        Linux: SElinux, Bash, Apache, SSH, Yum, Cron
+                        Linux: Bash, Cron, LVM, Systemd
                     </li>
                 </ul>
             </div>
