@@ -125,14 +125,28 @@
                         <div class="subheading mb-3">Coalfire</div>
                         <ul>
                             <li>Refactored Bash, Python, and Powershell User Data scripts into native Ansible roles for
-                                EC2 instance configuration to enable better feedback in case of execution failures.</li>
-                            <li>Wrote Ansible roles to deploy Splunk and Elastic, reducing deployment and configuration
-                                times from 100+ man-hours to 35 minutes and drastically improving consistency of
-                                deployments.</li>
+                                EC2 instance configuration. This enables more immediate feedback useful for debugging as
+                                the output is shown immediately in the terminal instead of requiring an engineer to
+                                login to the EC2 instance in question and look for the "cloud-init-output.log" file for
+                                each EC2 instance (not scalable in a clustered application with multiple EC2 instances).
+                            </li>
                             <li>Automated full architecture deployments (Active Directory, Certificate Authorities,
-                                Anti-Virus solution, SIEM, Ticketing System) with Terraform and Ansible.</li>
+                                Anti-Virus solution, SIEM, Ticketing System, Firewalls) with Terraform and Ansible.</li>
+                            <li>Transition towards Ansible for configuration management also allows further
+                                configuration of the applications (e.g. requesting private TLS certificates from private
+                                CA and installing them on application, utilizing ACME protocol to request trusted 3rd
+                                party public TLS certificates, and interacting with application-specific APIs). User
+                                Data is limited to 16kB size and is not suitable for complex configurations.</li>
+                            <li>Used Selenium to drive web-browser based configurations that weren't exposed through
+                                command line, configuration files, or API.</li>
                             <li>Leveraged full automation of deployments to quickly test Benchmarks (CIS, STIG) for
                                 potentially breaking changes to applications and infrastructure.</li>
+                            <li>Research and develop use of Gitlab to execute Terraform/Ansible/Packer in CI pipelines
+                                (often in conjunction with each other). One example would be to call Ansible code from
+                                within a Packer CI pipeline for complex configuration of an AMI. Another would be to use
+                                Terraform to provision infrastructure, then call Ansible to configure EC2 instances that
+                                were provisioned, and call more Terraform code for other parts of the infrastructure
+                                which may depend on the Ansible configuration.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">May 2022 - Present</span></div>
@@ -293,8 +307,10 @@
                             <h3 class="mb-0">Terragrunt and Ansible AWS Cloud Lab</h3>
                         </a>
                         <ul>
-                            <li>Demonstrates use of Terraform to provision AWS infrastructure in conjunction with Ansible to configure deployed EC2 instances.</li>
-                            <li>Demonstrates use of Terragrunt as a wrapper to drastically reduce duplication of code.</li>
+                            <li>Demonstrates use of Terraform to provision AWS infrastructure in conjunction with
+                                Ansible to configure deployed EC2 instances.</li>
+                            <li>Demonstrates use of Terragrunt as a wrapper to drastically reduce duplication of code.
+                            </li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">July 2022</span></div>
@@ -340,11 +356,11 @@
                 <ul class="fa-ul mb-0">
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        AWS: EC2, S3, VPC, DynamoDB, RDS, Route 53, IAM, SSM, EKS, KMS
+                        AWS: EC2, S3, VPC, DynamoDB, RDS, Route 53, IAM, SSM, EKS, KMS, ASG, ELB
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        CI/CD: Git, GitHub, GitHub Actions
+                        CI/CD: Git, Gitlab, GitHub, GitHub Actions
                     </li>
                 </ul><br>
                 <div class="subheading mb-3">Core Infrastructure</div>
@@ -409,7 +425,6 @@
                         <h3 class="mb-0">Kapiolani Community College</h3>
                         <div class="subheading mb-3">Associate of Applied Science</div>
                         <div>Information Technology</div>
-                        <p>GPA: 4.0</p>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">December 2017</span></div>
                 </div>
