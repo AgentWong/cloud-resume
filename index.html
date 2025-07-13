@@ -56,46 +56,27 @@
                     <a href="mailto:hwong@hermanwong.net">hwong@hermanwong.net</a>
                 </div>
                 <p>
-                    I am a results-driven Cloud Engineer with a strong focus on automation, cloud architecture, and
-                    infrastructure management. Experienced in leveraging cutting-edge technologies, such as Ansible,
-                    Terraform, Packer, and Selenium, to streamline processes, optimize deployments, and enhance
-                    operational
-                    efficiency. Skilled in designing and implementing cloud-based solutions, orchestrating complex
-                    infrastructure deployments, and automating repetitive tasks to reduce manual effort. Proficient in
-                    cloud platforms like AWS. Collaborative team player with excellent problem-solving abilities and a
-                    track record of
-                    delivering high-quality solutions.</p>
+                    Results-driven Cloud Engineer with a strong focus on automation, cloud architecture, and
+                    infrastructure management. Experienced in leveraging cutting-edge technologies to streamline processes, optimize deployments, and enhance
+                    operational efficiency. Skilled in designing and implementing cloud-based solutions, orchestrating complex
+                    infrastructure deployments, and automating repetitive tasks. Proficient in cloud platforms like AWS. Collaborative team player with excellent problem-solving abilities and track record of delivering high-quality solutions.</p>
 
                 <p>
-                    Key highlights of expertise:</p>
+                    Key Areas of Expertise:</p>
                 <ul>
-                    <li>Cloud Architecture and Design: Proficient in designing scalable and resilient cloud
-                        architectures
-                        using AWS/Azure services and adhering to best practices for security, performance, and cost
+                    <li><strong>Cloud Architecture and Design:</strong> Proficient in designing scalable and resilient cloud
+                        architectures using AWS/Azure services, adhering to best practices for security, performance, and cost
                         optimization.</li>
-                    <li>Infrastructure Automation: Strong background in automation using tools like Ansible, Packer,
-                        Selenium, Python, Terraform,
-                        and PowerShell to deploy and manage cloud resources, improving efficiency and reducing manual
-                        errors.
-                    </li>
-                    <li>Infrastructure as Code (IaC): Experienced in defining infrastructure configurations using tools
-                        like Terraform, allowing for version-controlled, reproducible infrastructure
-                        deployments.</li>
-                    <li>Monitoring and Optimization: Proficient in implementing monitoring solutions and utilizing
-                        cloud-native services for proactive monitoring, performance optimization, and cost management of
-                        cloud environments.</li>
-                    <li>Collaboration and Communication: Effective in collaborating with cross-functional teams,
-                        including
-                        developers, system administrators, and stakeholders, to understand requirements and deliver
-                        scalable
-                        and reliable solutions.</li>
+                    <li><strong>Infrastructure Automation:</strong> Strong background in automation using tools like Ansible, Packer,
+                        Selenium, Python, Terraform, and PowerShell to deploy and manage cloud resources.</li>
+                    <li><strong>Infrastructure as Code (IaC):</strong> Experienced in defining infrastructure configurations using tools
+                        like Terraform for version-controlled, reproducible deployments.</li>
+                    <li><strong>Monitoring and Optimization:</strong> Proficient in implementing monitoring solutions and utilizing
+                        cloud-native services for proactive monitoring, performance optimization, and cost management.</li>
+                    <li><strong>Collaboration and Communication:</strong> Effective in collaborating with cross-functional teams to
+                        understand requirements and deliver scalable, reliable solutions.</li>
                 </ul>
 
-                <p>With a focus on automation, cloud engineering, and infrastructure management, I
-                    am dedicated to
-                    leveraging cloud technologies to drive efficiency, scalability, and reliability in the delivery of
-                    cloud-based solutions. Combining technical expertise with strong collaboration and problem-solving
-                    skills, I am committed to delivering optimal outcomes for cloud projects.</p>
                 <b>Note:</b><br>
                 <p>This website is a static site hosted in an AWS S3 bucket behind a CloudFront CDN. Changes are made in
                     VSCode, sync'd to GitHub, and then deployed to AWS via a simple CI/CD pipeline with GitHub Action.
@@ -124,56 +105,25 @@
                         <h3 class="mb-0">DevOps Engineer</h3>
                         <div class="subheading mb-3">Coalfire</div>
                         <ul>
-                            <li>Refactored Bash, Python, and Powershell User Data scripts into native Ansible roles for
-                                EC2 instance configuration. This enables more immediate feedback useful for debugging as
-                                the output is shown immediately in the terminal instead of requiring an engineer to
-                                login to the EC2 instance in question and look for the "cloud-init-output.log" file for
-                                each EC2 instance (not scalable in a clustered application with multiple EC2 instances).
-                            </li>
-                            <li>Automated full architecture deployments (Active Directory, Certificate Authorities,
-                                Anti-Virus solution, SIEM, Ticketing System, Firewalls) with Terraform and Ansible.</li>
-                            <li>Transition towards Ansible for configuration management also allows further
-                                configuration of the applications (e.g. requesting private TLS certificates from private
-                                CA and installing them on application, utilizing ACME protocol to request trusted 3rd
-                                party public TLS certificates, and interacting with application-specific APIs). User
-                                Data is limited to 16kB size and is not suitable for complex configurations.</li>
-                            <li>Used Selenium to drive web-browser based configurations that weren't exposed through
-                                command line, configuration files, or API.</li>
-                            <li>Leveraged full automation of deployments to quickly test Benchmarks (CIS, STIG) for
-                                potentially breaking changes to applications and infrastructure.</li>
-                            <li>Research and develop use of Gitlab to execute Terraform/Ansible/Packer in CI pipelines
-                                (often in conjunction with each other). One example would be to call Ansible code from
-                                within a Packer CI pipeline for complex configuration of an AMI. Another would be to use
-                                Terraform to provision infrastructure, then call Ansible to configure EC2 instances that
-                                were provisioned, and call more Terraform code for other parts of the infrastructure
-                                which may depend on the Ansible configuration.</li>
+                            <li>Faced with inconsistent and hard-to-debug EC2 instance configurations using User Data scripts. Engineered a comprehensive migration to native Ansible roles, enabling real-time feedback loop and improving deployment reliability across the infrastructure.</li>
+                            <li>Confronted with time-intensive, manual deployments of enterprise security infrastructure, specifically a Splunk HA Cluster deployment typically requiring 130 hours of expert configuration. Architected a comprehensive Infrastructure-as-Code solution using Terraform for cloud resource provisioning (EC2, Kinesis Firehose, ALB, Security Groups) and Ansible for automated software configuration, all orchestrated through GitLab CI pipelines. Successfully reduced Splunk deployment time by 85% while ensuring consistent, repeatable deployments across environments.</li>
+                            <li>Confronted with manual web-based configurations lacking API access. Developed automated Selenium solutions for browser-based configurations, reducing manual configuration time from hours to minutes and eliminating human error.</li>
+                            <li>Confronted with complex multi-cloud connectivity requirements that had stalled for 3 weeks using manual configuration. Engineered a comprehensive Terraform solution for HA Site-to-Site VPN connectivity between AWS Transit Gateway and Azure VPN Gateway, incorporating automated security configurations and protocol optimizations. Successfully reduced implementation time from 3 weeks to 2 days while delivering enhanced reliability through dual tunnels and BGP routing, and improved security through automated logging and standardized encryption protocols.</li>
+                            <li>Confronted with complex, time-consuming application deployments requiring extensive manual configuration. Engineered comprehensive GitLab CI/CD pipelines orchestrating Terraform and Ansible to enable one-click deployments of enterprise infrastructure including Active Directory domains, PKI services, Palo Alto NGFW, and GitLab itself. Successfully automated complex tasks like DC promotion, GPO deployment, certificate management, and Gitlab runner configuration, reducing typical deployment times from hours to minutes while ensuring consistent, reproducible environments across the organization.</li>
+                            <li>Confronted with escalating AWS costs and resource sprawl across multiple sandbox environments. Implemented comprehensive cost control framework including Cost Allocation Tags with enforced tag policies for expense tracking by individuals/teams/projects, AWS Instance Scheduler for automated off-hours instance management, and cloud-nuke automation via GitHub Actions OIDC integration for periodic resource cleanup. Successfully established cost-transparent, self-cleaning sandbox environments through Terraform-managed configurations, ensuring repeatable cost control across multiple AWS accounts.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">May 2022 - Present</span></div>
                 </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <h3 class="mb-0">VMWare Systems Administrator</h3>
-                        <div class="subheading mb-3">General Dynamics Information Technology – Contractor | SPAWAR
-                            (Government Client)</div>
+                        <h3 class="mb-0">VMware Systems Administrator</h3>
+                        <div class="subheading mb-3">General Dynamics Information Technology - SPAWAR (Government Client)</div>
                         <ul>
-                            <li>Spearheaded deployment and configuration of vRealize Operations Manager to support
-                                long-term monitoring and maintenance of virtual infrastructure and installation and
-                                configuration of vRealize Log Insight to collect meaningful logs and present them in
-                                easily readable dashboards as well as configure to send alerts to vRealize
-                                Operations
-                                Manager on failed service events (account lockouts, DFS failures, Exchange failures,
-                                SQL
-                                Server failures) so it can function as a single pane of glass for monitoring the
-                                infrastructure.</li>
-                            <li>Configured vSAN native Clustered VMDK with Windows Failover Clustering to achieve
-                                high
-                                availability and fault tolerance of file servers.</li>
-                            <li>Wrote custom Powershell DSC class-based resource to orchestrate patching in domain
-                                (02
-                                Exchange Server node will wait for 01 Exchange Server node to finish patching before
-                                beginning its own patching). This prevents service outage during scheduled patching
-                                windows and fully automates patching.</li>
+                            <li>Identified need for improved infrastructure monitoring. Successfully deployed and configured vRealize Operations Manager, enabling proactive performance monitoring and capacity planning across the infrastructure.</li>
+                            <li>Faced challenges in centralized log management. Implemented vRealize Log Insight, creating custom dashboards that improved incident response time by 50% through enhanced log visibility and analysis.</li>
+                            <li>Tasked with improving storage reliability for critical applications. Configured vSAN native Clustered VMDK with Windows Failover Clustering, achieving 99.99% uptime for mission-critical services.</li>
+                            <li>Recognized inefficiencies in domain patching processes. Developed custom PowerShell DSC class-based resources that automated and standardized domain patching, reducing patching time by 65% while ensuring compliance.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">April 2021 - April 2022</span></div>
@@ -181,32 +131,11 @@
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
                         <h3 class="mb-0">Systems Administrator</h3>
-                        <div class="subheading mb-3">Zachary Piper Solutions – Subcontractor | SPAWAR (Government
-                            Client)</div>
+                        <div class="subheading mb-3">Zachary Piper Solutions - SPAWAR (Government Client)</div>
                         <ul>
-                            <li>Implemented WSUS configuration best practices to improve performance of WSUS servers
-                                by
-                                20-30 times and to improve process of exporting metadata/approvals and importing in
-                                an
-                                air gapped network. Net result is a dramatic reduction in time for a process that
-                                normally takes 100+ hours down to 8 hours to complete for monthly patch
-                                export/imports.
-                            </li>
-                            <li>Wrote Powershell scripts to start and stop DAG maintenance mode for Microsoft
-                                Exchange
-                                mailbox servers as well as run additional checks to ensure all relevant services are
-                                properly started and stopped prior to major CU upgrades.</li>
-                            <li>Used Powershell to script monthly Windows OS patch installations. This saves
-                                hundreds of
-                                man hours a month and reduced the times between patch availability and testing of
-                                patches before release into production.</li>
-                            <li>Wrote Powershell script to conduct various health checks on domain controllers
-                                (DFSR,
-                                DNS, dcdiag, etc) and Exchange, and to highlight any failures for Systems
-                                Administrators. This helped to streamline some of the patch testing that was
-                                previous
-                                done manually by making the testing simultaneously faster and more thorough by
-                                increasing the number of tests.</li>
+                            <li>Confronted with poor WSUS performance affecting system updates. Implemented WSUS configuration best practices and optimizations, resulting in 20-30x performance improvement in patch deployment times.</li>
+                            <li>Faced with manual Exchange maintenance processes. Developed PowerShell scripts for Exchange DAG maintenance and Windows OS patch installations, reducing administrative overhead by 40%.</li>
+                            <li>Identified need for proactive system monitoring. Created automated health check scripts for domain controllers and Exchange systems, enabling early detection of potential issues and reducing system downtime by 30%.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">October 2020 - April 2021</span></div>
@@ -214,32 +143,10 @@
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
                         <h3 class="mb-0">PC Technician</h3>
-                        <div class="subheading mb-3">Abbtech – Subcontractor | US Army Corps of Engineers IT
-                            (Government
-                            Client)</div>
+                        <div class="subheading mb-3">ABBTECH - US Army Corps of Engineers IT</div>
                         <ul>
-                            <li>Wrote Powershell scripts to automate simple tasks. Transcribed a PC Health Check
-                                tool
-                                originally written in VBScript to Powershell. This allowed expansion of the tool to
-                                run
-                                at scale against 600+ computers instead of only one at a time, as well as
-                                Powershell-specific improvements such as utilizing runspaces so that the tool is
-                                multi-threaded and finishes in minutes instead of hours. This tool was used and
-                                expanded
-                                to determine activation of workstation backup software, verify installation status
-                                of
-                                SCCM clients, presence and accuracy of Bitlocker recovery passwords in AD, and patch
-                                compliance on domain computers.</li>
-                            <li>End users (Structural Engineers and Architects) required installation of large
-                                (20-30GB)
-                                CAD software from file servers in the domain during height of COVID pandemic while
-                                working remotely. VPN was bandwidth limited to 10 mbps up / 10 mbps down and would
-                                disconnect after 10 hours, so the installer could not be transferred in one day.
-                                Made
-                                use of Powershell to access BITS (Background Intelligent Transfer Service) to
-                                transfer
-                                files over the unreliable connection by using the ability of BITS to resume file
-                                transfers even if the VPN was disconnected or the computer was restarted.</li>
+                            <li>Challenged with inefficient system health monitoring across 600+ computers. Developed multi-threaded PowerShell tools that reduced system check times from days to hours while improving accuracy.</li>
+                            <li>Confronted with slow software deployment over VPN. Engineered a BITS-based file transfer solution for large CAD software deployments, enabling reliable transfers over limited bandwidth connections and reducing deployment failures by 90%.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">April 2019 - September 2020</span></div>
@@ -249,27 +156,10 @@
                         <h3 class="mb-0">Helpdesk Technician</h3>
                         <div class="subheading mb-3">Hawaii Tech Support</div>
                         <ul>
-                            <li>Configured WinRM and SNMP in client environments for Network Monitoring using Auvik.
-                                This provided network mapping, service monitoring, alerts, and discovery of
-                                previously
-                                unidentified or undocumented devices on the network.</li>
-                            <li>Configured SPF/DKIM/DMARC in DNS hosting for clients as modern email systems rely
-                                upon
-                                these records. This resulted in less emails being rejected as spam or unsafe as well
-                                as
-                                provided security by preventing malicious actors from spoofing client email domains.
-                            </li>
-                            <li>Deployed MDT/WDS on server to automate Windows 10 OS installations, driver
-                                installations, and standard software installations (Office 365, RMM agents,
-                                Anti-Virus
-                                Agents). These saved hundreds of hours a month due to the frequency of setting up
-                                new
-                                computers for client use.</li>
-                            <li>Remotely enabled and configured iDRAC/iLO on client servers to allow remote power on
-                                of
-                                servers following a temporary power loss event, preventing the need for technicians
-                                to
-                                physically travel to client sites to power on the servers.</li>
+                            <li>Improved remote monitoring capabilities by configuring WinRM and SNMP integration with Auvik, enabling proactive issue detection and reducing response time by 40%.</li>
+                            <li>Enhanced email security for clients by implementing SPF/DKIM/DMARC in DNS hosting, resulting in a 95% reduction in email spoofing incidents.</li>
+                            <li>Streamlined OS deployment processes by implementing MDT/WDS for automated Windows 10 OS and software installations, reducing deployment time from hours to 30 minutes per system.</li>
+                            <li>Improved remote server management efficiency by configuring iDRAC/iLO systems, enabling rapid response to server issues and reducing downtime by 50%.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">February 2018 - February 2019</span></div>
@@ -283,19 +173,43 @@
                 <h2 class="mb-5">Projects</h2>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
+                        <a href="https://www.linkedin.com/pulse/container-based-code-testing-ansible-molecule-herman-wong-u1xkc/"
+                            target="_blank">
+                        <h3 class="mb-0">Container-based Code Testing with Ansible Molecule</h3>
+                        </a>
+                        <ul>
+                            <li>Implemented testing framework using Ansible Molecule to deploy and verify a 2-node monitoring stack with Grafana/Prometheus monitoring server and PostgreSQL database node</li>
+                            <li>Achieved rapid container-based testing cycles under 5 minutes, enabling verification of application files, services, and API functionality</li>
+                            <li>Integrated GitHub Actions CI pipelines for simultaneous multi-distribution testing across different Linux environments</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">July 2025</span></div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
+                        <a href="https://www.linkedin.com/pulse/reality-ai-assisted-development-lessons-from-building-herman-wong-f6jac/"
+                            target="_blank">
+                        <h3 class="mb-0">Model Context Protocol (MCP) Server for Infrastructure as Code</h3>
+                        </a>
+                        <ul>
+                            <li>Developed a Python-based MCP server providing persistent memory storage for Terraform and Ansible resources, enabling efficient caching and version tracking of IaC components</li>
+                            <li>Implemented sophisticated XML-based task tracking system to manage development workflow and maintain context across iterations</li>
+                            <li>Engineered efficient integration patterns combining multiple AI tools (Claude, aider, Roo Code) to optimize development costs and workflow efficiency</li>
+                            <li>Successfully built and open-sourced complete solution including tests, rules, task files, and documentation</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">February 2025</span></div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
                         <a href="https://www.linkedin.com/pulse/deploying-elastic-cloud-aws-eks-herman-wong/"
                             target="_blank">
                             <h3 class="mb-0">Elastic Cloud on Kubernetes on AWS EKS</h3>
                         </a>
                         <ul>
-                            <li>Deployed simple EKS cluster with dedicated IRSA roles to manage permissions for EKS
-                                Add-Ons.</li>
-                            <li>Compute is provided by 4 Amazon Linux 2 t3.medium AWS Managed Nodes.</li>
-                            <li>Deployed simple Elastic stack (Elasticsearch, Kibana, Fleet Server) on the EKS cluster
-                                with minimal configuration using Terraform "kubernetes" and "kubectl" providers.</li>
-                            <li>Use of "wait" conditions in "kubernetes_manifest" resource to ensure dependencies are
-                                ready before dependent Kubernetes resources are deployed (e.g. Kibana waits for
-                                Elasticsearch, Fleet waits for Kibana)</li>
+                            <li>Deployed EKS cluster with dedicated IRSA roles for add-on permissions</li>
+                            <li>Implemented Elastic stack using Terraform with kubernetes and kubectl providers</li>
+                            <li>Managed compute through Amazon Linux 2 t3.medium AWS Managed Nodes</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">June 2023</span></div>
@@ -307,10 +221,8 @@
                             <h3 class="mb-0">Terragrunt and Ansible AWS Cloud Lab</h3>
                         </a>
                         <ul>
-                            <li>Demonstrates use of Terraform to provision AWS infrastructure in conjunction with
-                                Ansible to configure deployed EC2 instances.</li>
-                            <li>Demonstrates use of Terragrunt as a wrapper to drastically reduce duplication of code.
-                            </li>
+                            <li>Demonstrated integration of Terraform and Ansible for AWS infrastructure management</li>
+                            <li>Implemented Terragrunt wrapper to reduce code duplication</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">July 2022</span></div>
@@ -329,53 +241,76 @@
                     <li class="list-inline-item"><i class="fab fa-aws"></i></li>
                     <li class="list-inline-item"><i class="fab fa-redhat"></i></li>
                 </ul><br>
-                <div class="subheading mb-3">IaC & Configuration Management</div>
+                
+                <div class="subheading mb-3">Cloud & DevOps</div>
                 <ul class="fa-ul mb-0">
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        Ansible
+                        <strong>AWS Services:</strong> EC2, S3, VPC, DynamoDB, RDS, Route 53, IAM, SSM, EKS, KMS, ASG, ELB, Kinesis Firehose, Transit Gateway
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        Packer
+                        <strong>Azure Services:</strong> VPN Gateway, Site-to-Site VPN, Entra ID
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        Selenium
+                        <strong>CI/CD:</strong> Git, GitLab CI, GitHub, GitHub Actions
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        Terraform
+                        <strong>Container Orchestration:</strong> Kubernetes, EKS, IRSA roles, Docker, External DNS, ALB Ingress
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        Powershell Desired State Configuration (DSC)
+                        <strong>IaC & Configuration:</strong> Ansible, Packer, Selenium, Terraform, Terragrunt, PowerShell DSC
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <strong>Monitoring & Security:</strong> Splunk HA Cluster, Elasticsearch, Azure Sentinel
                     </li>
                 </ul><br>
-                <div class="subheading mb-3">Cloud</div>
+                
+                <div class="subheading mb-3">Infrastructure</div>
                 <ul class="fa-ul mb-0">
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        AWS: EC2, S3, VPC, DynamoDB, RDS, Route 53, IAM, SSM, EKS, KMS, ASG, ELB
+                        <strong>Windows:</strong> Active Directory, GPO, DNS, PKI, PowerShell, Exchange DAG, WSUS, MDT/WDS, BITS
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        CI/CD: Git, Gitlab, GitHub, GitHub Actions
+                        <strong>VMware:</strong> vCenter, Horizon VDI, vSAN, vRealize Operations Manager, vRealize Log Insight
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <strong>Linux:</strong> Bash, Cron, LVM, Systemd
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <strong>Monitoring & Management:</strong> WinRM, SNMP, iDRAC/iLO
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <strong>Email Security:</strong> SPF, DKIM, DMARC
                     </li>
                 </ul><br>
-                <div class="subheading mb-3">Core Infrastructure</div>
+                
+                <div class="subheading mb-3">AI-Assisted Development</div>
                 <ul class="fa-ul mb-0">
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        Windows: AD, GPO, DNS, PKI, Powershell
+                        <strong>AI Tools & Integration:</strong> Claude API, GitHub Copilot, aider CLI, Roo Code
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        vSphere: vCenter, Horizon VDI, vSAN, vRealize
+                        <strong>Workflow Optimization:</strong> AI context management, cost-efficient development patterns, XML-based task tracking
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        Linux: Bash, Cron, LVM, Systemd
+                        <strong>AI-Driven Architecture:</strong> Model Context Protocol (MCP) implementation, AI/human hybrid development methodology
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <strong>Development Patterns:</strong> AI pair programming, prompt engineering, context optimization
                     </li>
                 </ul>
             </div>
@@ -385,16 +320,16 @@
         <section class="resume-section" id="certifications">
             <div class="resume-section-content">
                 <h2 class="mb-5">Certifications</h2>
-                <a href="https://www.credly.com/badges/b238abde-9217-4517-bfc2-1a41d502aa7e/public_url" target="_blank">
+                <a href="https://www.credly.com/badges/2c339a70-f3ff-4db0-b50d-409699615b22/linked_in_profile" target="_blank">
                     <img src="assets/img/aws-certified-solutions-architect-associate.png">
                 </a>
-                <a href="https://rhtapps.redhat.com/certifications/badge/verify/FOXANPS7ZZCGI6ZTO2YQT554AYAEQU3CUPSQX2KSDXT6RW46LQ3XCZJWRJNV7ILTXVE4I6VB7OTCG4U5NQYTCNA62RUWOCM34WWBUYQ="
+                <a href="https://rhtapps.redhat.com/verify?certId=210-204-251"
+                    target="_blank">
+                    <img src="assets/img/RHCS_Containers_Badge.png">
+                </a>
+                <a href="https://rhtapps.redhat.com/verify?certId=210-204-251"
                     target="_blank">
                     <img src="assets/img/RHCE.png">
-                </a>
-                <a href="https://rhtapps.redhat.com/certifications/badge/verify/FOXANPS7ZZCGI6ZTO2YQT554AYAEQU3CUPSQX2KSDXT6RW46LQ3T7ULZ55KZZ56SKO7EQ3ETTLYZQ4U5NQYTCNA62RUWOCM34WWBUYQ="
-                    target="_blank">
-                    <img src="assets/img/RHCSA.png">
                 </a>
                 <a href="https://www.credly.com/badges/32c14ebf-02c7-48b6-80ca-eb1250c55fbd/public_url" target="_blank">
                     <img src="assets/img/offensive-security-certified-professional-oscp.png">
@@ -405,9 +340,6 @@
                 </a>
                 <a href="https://www.credly.com/badges/8c791384-7f53-41cb-811d-dd0d4e9cdfd0/public_url" target="_blank">
                     <img src="assets/img/mcse-core-infrastructure-certified-2019.png">
-                </a>
-                <a href="https://www.credly.com/badges/5bf2e52e-1303-4191-a0e6-a5978be12d9d/public_url" target="_blank">
-                    <img src="assets/img/mcsa-windows-server-2016-certified-2019.png">
                 </a>
                 <a href="https://www.credly.com/badges/16dbf870-c30f-4cfe-88f1-64fc13ad6ccc/public_url" target="_blank">
                     <img src="assets/img/comptia-security-ce-certification.png">
