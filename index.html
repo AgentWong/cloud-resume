@@ -52,11 +52,11 @@
                     <span class="text-primary">Wong</span>
                 </h1>
                 <div class="subheading mb-5">
-                    Lewiston, ID ·
+                    Honolulu, HI ·
                     <a href="mailto:hwong@hermanwong.net">hwong@hermanwong.net</a>
                 </div>
                 <p>
-                    Results-driven Cloud Engineer with a strong focus on automation, cloud architecture, and
+                    Results-driven Cloud Engineer with <strong>7+ years of professional experience</strong> and a strong focus on automation, cloud architecture, and
                     infrastructure management. Experienced in leveraging cutting-edge technologies to streamline processes, optimize deployments, and enhance
                     operational efficiency. Skilled in designing and implementing cloud-based solutions, orchestrating complex
                     infrastructure deployments, and automating repetitive tasks. Proficient in cloud platforms like AWS. Collaborative team player with excellent problem-solving abilities and track record of delivering high-quality solutions.</p>
@@ -105,15 +105,19 @@
                         <h3 class="mb-0">DevOps Engineer</h3>
                         <div class="subheading mb-3">Coalfire</div>
                         <ul>
-                            <li>Faced with inconsistent and hard-to-debug EC2 instance configurations using User Data scripts. Engineered a comprehensive migration to native Ansible roles, enabling real-time feedback loop and improving deployment reliability across the infrastructure.</li>
-                            <li>Confronted with time-intensive, manual deployments of enterprise security infrastructure, specifically a Splunk HA Cluster deployment typically requiring 130 hours of expert configuration. Architected a comprehensive Infrastructure-as-Code solution using Terraform for cloud resource provisioning (EC2, Kinesis Firehose, ALB, Security Groups) and Ansible for automated software configuration, all orchestrated through GitLab CI pipelines. Successfully reduced Splunk deployment time by 85% while ensuring consistent, repeatable deployments across environments.</li>
-                            <li>Confronted with manual web-based configurations lacking API access. Developed automated Selenium solutions for browser-based configurations, reducing manual configuration time from hours to minutes and eliminating human error.</li>
-                            <li>Confronted with complex multi-cloud connectivity requirements that had stalled for 3 weeks using manual configuration. Engineered a comprehensive Terraform solution for HA Site-to-Site VPN connectivity between AWS Transit Gateway and Azure VPN Gateway, incorporating automated security configurations and protocol optimizations. Successfully reduced implementation time from 3 weeks to 2 days while delivering enhanced reliability through dual tunnels and BGP routing, and improved security through automated logging and standardized encryption protocols.</li>
-                            <li>Confronted with complex, time-consuming application deployments requiring extensive manual configuration. Engineered comprehensive GitLab CI/CD pipelines orchestrating Terraform and Ansible to enable one-click deployments of enterprise infrastructure including Active Directory domains, PKI services, Palo Alto NGFW, and GitLab itself. Successfully automated complex tasks like DC promotion, GPO deployment, certificate management, and Gitlab runner configuration, reducing typical deployment times from hours to minutes while ensuring consistent, reproducible environments across the organization.</li>
-                            <li>Confronted with escalating AWS costs and resource sprawl across multiple sandbox environments. Implemented comprehensive cost control framework including Cost Allocation Tags with enforced tag policies for expense tracking by individuals/teams/projects, AWS Instance Scheduler for automated off-hours instance management, and cloud-nuke automation via GitHub Actions OIDC integration for periodic resource cleanup. Successfully established cost-transparent, self-cleaning sandbox environments through Terraform-managed configurations, ensuring repeatable cost control across multiple AWS accounts.</li>
+                            <li><strong>Terraform Drift Detection Tool Enhancement (Golang):</strong> Re-architected an open-source drift detection tool (driftctl) to replace 107 service-specific API enumerators with a single AWS Config API call for resource discovery, eliminating API rate limiting issues and reducing maintenance overhead. Integrated the terraform-exec Golang library to run terraform init + terraform plan against all root modules, enabling true configuration drift detection rather than just unmanaged resource identification.</li>
+                            <li><strong>Infrastructure Automation & Deployment:</strong> Engineered comprehensive Infrastructure-as-Code solutions using Terraform for cloud resource provisioning (EC2, Kinesis Firehose, ALB, Security Groups) and Ansible for automated configuration management, reducing Splunk HA Cluster deployment time by 85% from 150 hours to under 20 hours through standardized, repeatable processes.</li>
+                            <li><strong>Ansible Molecule Container-Based Testing:</strong> Implemented Ansible Molecule testing framework with Docker containers for local role and collection testing, replacing slow cloud-based validation cycles. Configured multi-node test scenarios simulating production topologies (Elasticsearch clusters, Kibana, Fleet Server) with systemd support and custom networking.</li>
+                            <li><strong>AI-Assisted Development with Continuous Feedback Loop:</strong> Integrated GitHub Copilot Agent Mode with Molecule testing infrastructure to accelerate Ansible collection development. Created instruction files defining test commands, error patterns, and fix strategies that enabled AI to autonomously execute Run - Analyze - Fix - Repeat cycles, significantly reducing debugging time for complex infrastructure configurations.</li>
+                            <li><strong>Multi-Cloud Architecture:</strong> Architected multi-cloud connectivity solutions with Terraform, establishing HA Site-to-Site VPN between AWS Transit Gateway and Azure VPN Gateway with dual tunnels and BGP routing, reducing implementation time from 3 weeks to 2 days while enhancing reliability and automated failover capabilities.</li>
+                            <li><strong>CI/CD Pipeline Development:</strong> Developed comprehensive GitLab CI/CD pipelines orchestrating Terraform and Ansible workflows, enabling one-click deployments of enterprise infrastructure including Active Directory domains, PKI services, Palo Alto NGFW, and automated certificate management.</li>
+                            <li><strong>Cost Optimization Framework:</strong> Implemented AWS cost control framework including Cost Allocation Tags with enforced policies, AWS Instance Scheduler for automated resource management, and cloud-nuke automation via GitHub Actions OIDC integration, establishing cost-transparent sandbox environments.</li>
+                            <li><strong>Packer AMI Templating with Jinja2:</strong> Developed an Ansible Jinja2 templating tool that generates valid Packer HCL templates for multiple Linux distributions (AL2, AL2023, Ubuntu, RHEL) and AMI purposes (base-os, docker, eks). Consolidated shared build steps into a single source while handling distro-specific variations.</li>
+                            <li><strong>Cross-Platform Container Image Build Pipeline:</strong> Developed CI-agnostic container build pipeline using go-task for orchestration, building hardened images from IronBank ubi9-minimal base with Trivy vulnerability scanning and OpenSCAP RHEL9 STIG compliance checks.</li>
+                            <li><strong>RegScale GRC Platform Infrastructure:</strong> Engineered complete cloud infrastructure for RegScale (Governance, Risk, and Compliance) platform using Terraform, provisioning production-grade EKS cluster with Fargate profiles, IRSA roles, multi-AZ RDS SQL Server instances, and EFS file systems with comprehensive networking and security configurations.</li>
                         </ul>
                     </div>
-                    <div class="flex-shrink-0"><span class="text-primary">May 2022 - Present</span></div>
+                    <div class="flex-shrink-0"><span class="text-primary">May 2022 - Jan 2026</span></div>
                 </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
@@ -171,6 +175,19 @@
         <section class="resume-section" id="projects">
             <div class="resume-section-content">
                 <h2 class="mb-5">Projects</h2>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
+                         <a href="https://www.linkedin.com/pulse/how-i-get-10x-more-value-from-github-copilot-using-one-herman-wong-3xotc/"
+                            target="_blank">
+                        <h3 class="mb-0">Apache Kafka Cluster with AI-Assisted Development Workflow</h3>
+                        </a>
+                        <ul>
+                            <li>Developed Ansible collection deploying production-grade 8-node Apache Kafka cluster (3 ZooKeeper nodes, 3 Kafka brokers, Root CA for TLS certificates, Kafka UI dashboard) using Molecule container-based testing for rapid local iteration without cloud costs</li>
+                            <li>Demonstrated GitHub Copilot Agent Mode optimization technique achieving 95%+ cost efficiency by leveraging autonomous Run - Analyze - Fix iterative loops that consume single premium requests regardless of iteration count</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">January 2026</span></div>
+                </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
                         <a href="https://www.linkedin.com/pulse/container-based-code-testing-ansible-molecule-herman-wong-u1xkc/"
@@ -246,7 +263,7 @@
                 <ul class="fa-ul mb-0">
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>AWS Services:</strong> EC2, S3, VPC, DynamoDB, RDS, Route 53, IAM, SSM, EKS, KMS, ASG, ELB, Kinesis Firehose, Transit Gateway
+                        <strong>AWS Services:</strong> EC2, S3, VPC, DynamoDB, RDS, Route 53, IAM, SSM, EKS, KMS, ASG, ELB, Kinesis Firehose, Transit Gateway, CloudFormation, Lambda, CloudWatch
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
@@ -254,19 +271,19 @@
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>CI/CD:</strong> Git, GitLab CI, GitHub, GitHub Actions
+                        <strong>CI/CD:</strong> Git, GitLab CI, GitHub, GitHub Actions, ArgoCD for GitOps
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Container Orchestration:</strong> Kubernetes, EKS, IRSA roles, Docker, External DNS, ALB Ingress
+                        <strong>Container Orchestration:</strong> Kubernetes, EKS, IRSA roles, Docker, External DNS, ALB Ingress, Helm
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>IaC & Configuration:</strong> Ansible, Packer, Selenium, Terraform, Terragrunt, PowerShell DSC
+                        <strong>IaC & Configuration:</strong> Ansible, Ansible Molecule, Packer, Selenium, Terraform, Terragrunt, PowerShell DSC
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Monitoring & Security:</strong> Splunk HA Cluster, Elasticsearch, Azure Sentinel
+                        <strong>Monitoring & Observability:</strong> Splunk HA Cluster, Elasticsearch, Prometheus, Grafana, CloudWatch
                     </li>
                 </ul><br>
                 
@@ -298,7 +315,7 @@
                 <ul class="fa-ul mb-0">
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>AI Tools & Integration:</strong> Claude API, GitHub Copilot, aider CLI, Roo Code
+                        <strong>AI Tools & Integration:</strong> Claude API, GitHub Copilot, aider CLI, Roo Code, Claude Code
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
