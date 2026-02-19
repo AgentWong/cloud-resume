@@ -52,29 +52,27 @@
                     <span class="text-primary">Wong</span>
                 </h1>
                 <div class="subheading mb-5">
-                    Honolulu, HI ·
+                    Lewiston, ID ·
                     <a href="mailto:hwong@hermanwong.net">hwong@hermanwong.net</a>
                 </div>
                 <p>
-                    Results-driven Cloud Engineer with <strong>7+ years of professional experience</strong> and a strong focus on automation, cloud architecture, and
-                    infrastructure management. Experienced in leveraging cutting-edge technologies to streamline processes, optimize deployments, and enhance
-                    operational efficiency. Skilled in designing and implementing cloud-based solutions, orchestrating complex
-                    infrastructure deployments, and automating repetitive tasks. Proficient in cloud platforms like AWS. Collaborative team player with excellent problem-solving abilities and track record of delivering high-quality solutions.</p>
+                    DevOps Engineer with <strong>7+ years in IT</strong>, coming from the Ops side. I focus on eliminating manual work through infrastructure automation - turning multi-week manual efforts into repeatable, version-controlled pipelines you can run with a single click.</p>
+
+                <p>
+                    Most of my recent work has been Terraform and Ansible on AWS. I've built everything from multi-cloud VPN connectivity (AWS-to-Azure, dual tunnels with BGP) to fully automated Splunk HA cluster deployments that cut provisioning from 153 hours to under 5. I write CI/CD pipelines in GitLab CI and GitHub Actions, build hardened container images, and use Ansible Molecule for testing infrastructure code locally before it touches a cloud account.</p>
+
+                <p>
+                    I also integrate AI tooling (GitHub Copilot, Claude) into infrastructure workflows - not as a gimmick, but to speed up the write-test-fix loop on Ansible roles and Terraform modules.</p>
 
                 <p>
                     Key Areas of Expertise:</p>
                 <ul>
-                    <li><strong>Cloud Architecture and Design:</strong> Proficient in designing scalable and resilient cloud
-                        architectures using AWS/Azure services, adhering to best practices for security, performance, and cost
-                        optimization.</li>
-                    <li><strong>Infrastructure Automation:</strong> Strong background in automation using tools like Ansible, Packer,
-                        Selenium, Python, Terraform, and PowerShell to deploy and manage cloud resources.</li>
-                    <li><strong>Infrastructure as Code (IaC):</strong> Experienced in defining infrastructure configurations using tools
-                        like Terraform for version-controlled, reproducible deployments.</li>
-                    <li><strong>Monitoring and Optimization:</strong> Proficient in implementing monitoring solutions and utilizing
-                        cloud-native services for proactive monitoring, performance optimization, and cost management.</li>
-                    <li><strong>Collaboration and Communication:</strong> Effective in collaborating with cross-functional teams to
-                        understand requirements and deliver scalable, reliable solutions.</li>
+                    <li><strong>Cloud Infrastructure:</strong> AWS (EC2, VPC, EKS, Transit Gateway, IAM, S3, RDS, KMS), Azure (VPN Gateway, Entra ID), multi-cloud connectivity</li>
+                    <li><strong>Infrastructure as Code:</strong> Terraform, Terragrunt, Ansible (roles, collections, Molecule testing), Packer AMI/container builds</li>
+                    <li><strong>CI/CD & Automation:</strong> GitLab CI, GitHub Actions, container image pipelines with Trivy scanning, automated deployment orchestration</li>
+                    <li><strong>Monitoring & Observability:</strong> Splunk HA clusters, Elasticsearch, Prometheus, Grafana, vRealize Operations</li>
+                    <li><strong>Scripting:</strong> Python, PowerShell, Bash, Golang (practical modifications to existing tools)</li>
+                    <li><strong>AI-Augmented Workflows:</strong> Claude Code, GitHub Copilot, MCP integrations (Firecrawl, Chrome DevTools), orchestrator-agent patterns for token-aware automation</li>
                 </ul>
 
                 <b>Note:</b><br>
@@ -110,7 +108,7 @@
                             <li><strong>Ansible Molecule Container-Based Testing:</strong> Implemented Ansible Molecule testing framework with Docker containers for local role and collection testing, replacing slow cloud-based validation cycles. Configured multi-node test scenarios simulating production topologies (Elasticsearch clusters, Kibana, Fleet Server) with systemd support and custom networking, enabling rapid iteration and catching configuration errors before cloud deployment.</li>
                             <li><strong>AI-Assisted Development with Continuous Feedback Loop:</strong> Integrated GitHub Copilot Agent Mode with Molecule testing infrastructure to accelerate Ansible collection development. Created instruction files defining test commands, error patterns, and fix strategies that enabled AI to autonomously execute Run - Analyze - Fix - Repeat cycles, significantly reducing debugging time for complex infrastructure configurations.</li>
                             <li><strong>Multi-Cloud Architecture:</strong> Architected multi-cloud connectivity solutions with Terraform, establishing HA Site-to-Site VPN between AWS Transit Gateway and Azure VPN Gateway with dual tunnels and BGP routing. Reduced implementation time from 3 weeks to 2 days through IaC automation, enhancing reliability and automated failover capabilities. Diagnosed tunnel establishment failures by enabling VPN logging via Terraform and analyzing IKE negotiation errors, resolving incompatible default encryption protocols between AWS and Azure by explicitly defining compatible Diffie-Hellman Group 24 cipher configurations.</li>
-                            <li><strong>CI/CD Pipeline Development:</strong> Developed comprehensive GitLab CI/CD pipelines orchestrating Terraform and Ansible workflows, enabling one-click deployments of enterprise infrastructure including Active Directory domains, PKI services, Palo Alto NGFW, and automated certificate management, reducing deployment complexity and human error.</li>
+                            <li><strong>CI/CD Pipeline Development:</strong> Developed comprehensive GitLab CI/CD pipelines orchestrating Terraform and Ansible workflows, enabling one-click deployments of enterprise infrastructure including Active Directory domains, PKI services, Palo Alto NGFW, and clustered applications such as Gitlab/Elasticsearch/Splunk reducing deployment complexity and human error.</li>
                             <li><strong>Configuration Management Migration:</strong> Migrated inconsistent EC2 User Data scripts to native Ansible roles with real-time feedback loops, improving deployment reliability and debugging capabilities across distributed infrastructure environments.</li>
                             <li><strong>Cost Optimization Framework:</strong> Implemented AWS cost control framework using Terraform, including Cost Allocation Tags with enforced policies, AWS Instance Scheduler for automated resource management, and cloud-nuke automation via GitHub Actions OIDC integration, establishing cost-transparent sandbox environments.</li>
                             <li><strong>Process Automation:</strong> Automated browser-based configurations using Selenium for systems lacking API access, eliminating manual configuration time and reducing human error in complex deployment scenarios where traditional API automation wasn't available.</li>
@@ -189,6 +187,36 @@
         <section class="resume-section" id="projects">
             <div class="resume-section-content">
                 <h2 class="mb-5">Projects</h2>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
+                        <a href="https://github.com/AgentWong/ai-job-search"
+                            target="_blank">
+                        <h3 class="mb-0">AI Job Search Automation with Orchestrator-Agent Pattern</h3>
+                        </a>
+                        <ul>
+                            <li>Built AI-assisted job search automation system using GitHub Copilot prompt files with Claude models, implementing an orchestrator + dedicated agent pattern where orchestrators coordinate isolated subagents to prevent context degradation across token-heavy job search results</li>
+                            <li>Developed structured workflows for multi-platform job discovery (Greenhouse, Lever, Ashby, Workday, Hiring Cafe) using Firecrawl MCP for web scraping and Chrome DevTools MCP for browser automation, with configurable scoring framework applying boosters, penalties, and disqualifiers to rank positions on a 0-10 scale</li>
+                            <li>Implemented automated resume tailoring pipeline using Claude Code slash commands that extract keywords from job postings, match against a full CV, and generate keyword-optimized DOCX resumes and cover letters via Python docx library -- enforcing no fabrication of unlisted skills</li>
+                            <li>Designed modular configuration system with YAML-based inclusions/exclusions, markdown-based scoring rules, and CSV-based company monitoring targets, enabling rapid customization for different roles and tech stacks</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">February 2026</span></div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
+                        <a href="https://github.com/AgentWong/container-build-pipeline"
+                            target="_blank">
+                        <h3 class="mb-0">Multi-Distribution Container Build Pipeline</h3>
+                        </a>
+                        <ul>
+                            <li>Developed CI/CD pipeline for building 20 container images across 4 Linux distributions (Alpine, UBI9, Ubuntu, Amazon Linux 2023) and 5 DevOps tools (Ansible, Terraform, Packer, Python, Golang), using GitHub Actions matrix strategy for parallel builds</li>
+                            <li>Implemented comprehensive security scanning with Trivy for CVE detection, secret scanning, and misconfiguration analysis, generating SPDX-format Software Bill of Materials (SBOM) for supply chain transparency</li>
+                            <li>Engineered non-root user configurations across all images for security hardening, with distribution-specific optimizations and shared requirements files to eliminate duplication</li>
+                            <li>Created Makefile-based local development workflow supporting Apple Silicon (ARM64) with build, test, scan, and shell debugging capabilities for rapid iteration without CI dependency</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">February 2026</span></div>
+                </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
                          <a href="https://www.linkedin.com/pulse/how-i-get-10x-more-value-from-github-copilot-using-one-herman-wong-3xotc/"
@@ -353,19 +381,23 @@
                 <ul class="fa-ul mb-0">
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>AI Tools & Integration:</strong> Claude API, GitHub Copilot, aider CLI, Roo Code, Claude Code
+                        <strong>AI Tools & Integration:</strong> Claude API, Claude Code CLI, GitHub Copilot, Python Anthropic SDK
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Workflow Optimization:</strong> AI context management, cost-efficient development patterns, XML-based task tracking
+                        <strong>Model Context Protocol (MCP):</strong> Firecrawl MCP for web scraping/search, Chrome DevTools MCP for browser automation, MCP server configuration and integration
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>AI-Driven Architecture:</strong> Model Context Protocol (MCP) implementation, AI/human hybrid development methodology
+                        <strong>AI Architecture Patterns:</strong> Orchestrator-agent pattern design for context-window-aware task decomposition, isolated subagent execution to prevent context degradation across token-heavy workloads
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Development Patterns:</strong> AI pair programming, prompt engineering, context optimization
+                        <strong>Automation Pipelines:</strong> End-to-end AI-driven workflows (search, filter, score, tailor resume, generate DOCX), YAML/markdown-based configuration systems for AI workflow customization
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <strong>Practical AI Integration:</strong> AI pair programming for infrastructure code (Terraform, Ansible), prompt engineering for structured output, treating AI tooling with infrastructure-grade engineering rigor (modularity, reproducibility, configuration management)
                     </li>
                 </ul>
             </div>
