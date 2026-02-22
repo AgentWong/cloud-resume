@@ -56,31 +56,42 @@
                     <a href="mailto:hwong@hermanwong.net">hwong@hermanwong.net</a>
                 </div>
                 <p>
-                    DevOps Engineer with <strong>7+ years in IT</strong>, coming from the Ops side. I focus on eliminating manual work through infrastructure automation - turning multi-week manual efforts into repeatable, version-controlled pipelines you can run with a single click.</p>
+                    DevOps Engineer with <strong>7+ years in IT</strong>, coming from the Ops side. I focus on
+                    eliminating manual work through infrastructure automation - turning multi-week manual efforts into
+                    repeatable, version-controlled pipelines you can run with a single click.</p>
 
                 <p>
-                    Most of my recent work has been Terraform and Ansible on AWS. I've built everything from multi-cloud VPN connectivity (AWS-to-Azure, dual tunnels with BGP) to fully automated Splunk HA cluster deployments that cut provisioning from 153 hours to under 5. I write CI/CD pipelines in GitLab CI and GitHub Actions, build hardened container images, and use Ansible Molecule for testing infrastructure code locally before it touches a cloud account.</p>
+                    Most of my recent work has been Terraform and Ansible on AWS. I've built everything from multi-cloud
+                    VPN connectivity (AWS-to-Azure, dual tunnels with BGP) to fully automated Splunk HA cluster
+                    deployments that cut provisioning from 153 hours to under 5. I write CI/CD pipelines in GitLab CI
+                    and GitHub Actions, build hardened container images, and use Ansible Molecule for testing
+                    infrastructure code locally before it touches a cloud account.</p>
 
                 <p>
-                    I also integrate AI tooling (GitHub Copilot, Claude) into infrastructure workflows - not as a gimmick, but to speed up the write-test-fix loop on Ansible roles and Terraform modules.</p>
+                    I also integrate AI tooling (GitHub Copilot, Claude) into infrastructure workflows - not as a
+                    gimmick, but to speed up the write-test-fix loop on Ansible roles and Terraform modules.</p>
 
                 <p>
                     Key Areas of Expertise:</p>
                 <ul>
-                    <li><strong>Cloud Infrastructure:</strong> AWS (EC2, VPC, EKS, Transit Gateway, IAM, S3, RDS, KMS), Azure (VPN Gateway, Entra ID), multi-cloud connectivity</li>
-                    <li><strong>Infrastructure as Code:</strong> Terraform, Terragrunt, Ansible (roles, collections, Molecule testing), Packer AMI/container builds</li>
-                    <li><strong>CI/CD & Automation:</strong> GitLab CI, GitHub Actions, container image pipelines with Trivy scanning, automated deployment orchestration</li>
-                    <li><strong>Monitoring & Observability:</strong> Splunk HA clusters, Elasticsearch, Prometheus, Grafana, vRealize Operations</li>
-                    <li><strong>Scripting:</strong> Python, PowerShell, Bash, Golang (practical modifications to existing tools)</li>
-                    <li><strong>AI-Augmented Workflows:</strong> Claude Code, GitHub Copilot, MCP integrations (Firecrawl, Chrome DevTools), orchestrator-agent patterns for token-aware automation</li>
+                    <li><strong>Cloud Infrastructure:</strong> AWS (EC2, VPC, EKS, Transit Gateway, IAM, S3, RDS, KMS),
+                        Azure (VPN Gateway, Entra ID), multi-cloud connectivity</li>
+                    <li><strong>Infrastructure as Code:</strong> Terraform, Terragrunt, Ansible (roles, collections,
+                        Molecule testing), Packer AMI/container builds</li>
+                    <li><strong>CI/CD & Automation:</strong> GitLab CI, GitHub Actions, container image pipelines with
+                        Trivy scanning, automated deployment orchestration</li>
+                    <li><strong>Monitoring & Observability:</strong> Splunk HA clusters, Elasticsearch, Prometheus,
+                        Grafana, vRealize Operations</li>
+                    <li><strong>Scripting:</strong> Python, PowerShell, Bash, Golang (practical modifications to
+                        existing tools)</li>
+                    <li><strong>AI-Augmented Workflows:</strong> Claude Code, GitHub Copilot, MCP integrations
+                        (Firecrawl, Chrome DevTools), orchestrator-agent patterns for token-aware automation</li>
                 </ul>
 
                 <b>Note:</b><br>
                 <p>This website is a static site hosted in an AWS S3 bucket behind a CloudFront CDN. Changes are made in
                     VSCode, sync'd to GitHub, and then deployed to AWS via a simple CI/CD pipeline with GitHub Action.
-                    Read about the
-                    configuration <a href="https://www.hermanwong.net/aws-cloud-resume-challenge/"
-                        target="_blank">here</a>.</p><br>
+                </p><br>
                 <p>
                     Visits:
                     <span id="visits-counter"></span>
@@ -103,18 +114,75 @@
                         <h3 class="mb-0">DevOps Engineer</h3>
                         <div class="subheading mb-3">Coalfire</div>
                         <ul>
-                            <li><strong>Terraform Drift Detection Tool Enhancement (Golang):</strong> Re-architected an open-source drift detection tool (driftctl) to replace 107 service-specific API enumerators with a single AWS Config API call for resource discovery, eliminating API rate limiting issues and reducing maintenance overhead. Integrated the terraform-exec Golang library to run terraform init + terraform plan against all root modules, enabling true configuration drift detection rather than just unmanaged resource identification. Implemented categorization logic to filter false positives by identifying CloudFormation-managed resources, AWS-managed service-linked roles, and resources unsupported by AWS Config or Terraform.</li>
-                            <li><strong>Infrastructure Automation & Deployment:</strong> Engineered comprehensive Infrastructure-as-Code solutions using Terraform for cloud resource provisioning (EC2, Kinesis Firehose, ALB, Security Groups) and Ansible for automated configuration management, reducing Splunk HA Cluster deployment time by 97% from 153 hours to under 5 hours through standardized, repeatable processes.</li>
-                            <li><strong>Ansible Molecule Container-Based Testing:</strong> Implemented Ansible Molecule testing framework with Docker containers for local role and collection testing, replacing slow cloud-based validation cycles. Configured multi-node test scenarios simulating production topologies (Elasticsearch clusters, Kibana, Fleet Server) with systemd support and custom networking, enabling rapid iteration and catching configuration errors before cloud deployment.</li>
-                            <li><strong>AI-Assisted Development with Continuous Feedback Loop:</strong> Integrated GitHub Copilot Agent Mode with Molecule testing infrastructure to accelerate Ansible collection development. Created instruction files defining test commands, error patterns, and fix strategies that enabled AI to autonomously execute Run - Analyze - Fix - Repeat cycles, significantly reducing debugging time for complex infrastructure configurations.</li>
-                            <li><strong>Multi-Cloud Architecture:</strong> Architected multi-cloud connectivity solutions with Terraform, establishing HA Site-to-Site VPN between AWS Transit Gateway and Azure VPN Gateway with dual tunnels and BGP routing. Reduced implementation time from 3 weeks to 2 days through IaC automation, enhancing reliability and automated failover capabilities. Diagnosed tunnel establishment failures by enabling VPN logging via Terraform and analyzing IKE negotiation errors, resolving incompatible default encryption protocols between AWS and Azure by explicitly defining compatible Diffie-Hellman Group 24 cipher configurations.</li>
-                            <li><strong>CI/CD Pipeline Development:</strong> Developed comprehensive GitLab CI/CD pipelines orchestrating Terraform and Ansible workflows, enabling one-click deployments of enterprise infrastructure including Active Directory domains, PKI services, Palo Alto NGFW, and clustered applications such as Gitlab/Elasticsearch/Splunk reducing deployment complexity and human error.</li>
-                            <li><strong>Configuration Management Migration:</strong> Migrated inconsistent EC2 User Data scripts to native Ansible roles with real-time feedback loops, improving deployment reliability and debugging capabilities across distributed infrastructure environments.</li>
-                            <li><strong>Cost Optimization Framework:</strong> Implemented AWS cost control framework using Terraform, including Cost Allocation Tags with enforced policies, AWS Instance Scheduler for automated resource management, and cloud-nuke automation via GitHub Actions OIDC integration, establishing cost-transparent sandbox environments.</li>
-                            <li><strong>Process Automation:</strong> Automated browser-based configurations using Selenium for systems lacking API access, eliminating manual configuration time and reducing human error in complex deployment scenarios where traditional API automation wasn't available.</li>
-                            <li><strong>Packer AMI Templating with Jinja2:</strong> Developed an Ansible Jinja2 templating tool that generates valid Packer HCL templates for multiple Linux distributions (AL2, AL2023, Ubuntu 20.04/22.04, RHEL8/9) and AMI purposes (base-os, docker, eks). Consolidated shared build steps (cloud-init wait, package updates, Python/Ansible installation, LVM compliance volumes, STIG hardening) into a single source while handling distro-specific variations. Implemented GitHub Actions CI pipeline for monthly sandbox builds with automated validation and README badge for build status visibility.</li>
-                            <li><strong>Cross-Platform Container Image Build Pipeline:</strong> Developed CI-agnostic container build pipeline using go-task for orchestration, building hardened images from IronBank ubi9-minimal base with Trivy vulnerability scanning and OpenSCAP RHEL9 STIG compliance checks. Designed dual-environment workflow supporting both external GitHub Actions (build validation, badge display, artifact generation) and airgapped GitLab with ECR push capability for internal deployments.</li>
-                            <li><strong>RegScale GRC Platform Infrastructure:</strong> Engineered complete cloud infrastructure for RegScale (Governance, Risk, and Compliance) platform using Terraform, provisioning production-grade EKS cluster with AWS-managed node groups for auto-scaling multi-environment workloads. Implemented secure IRSA roles for granular service account permissions across VPC-CNI, AWS Load Balancer Controller, and External DNS components. Deployed backend infrastructure including multi-AZ RDS SQL Server instances with KMS encryption, performance insights, and automated backups, plus multi-AZ EFS file systems with encrypted persistent storage.</li>
+                            <li><strong>Terraform Drift Detection Tool Enhancement (Golang):</strong> Re-architected an
+                                open-source drift detection tool (driftctl) to replace 107 service-specific API
+                                enumerators with a single AWS Config API call for resource discovery, eliminating API
+                                rate limiting issues and reducing maintenance overhead. Integrated the terraform-exec
+                                Golang library to run <code>terraform init</code> + <code>terraform plan</code> against
+                                all root modules, enabling true configuration drift detection rather than just unmanaged
+                                resource identification. Implemented categorization logic to filter false positives by
+                                identifying CloudFormation-managed resources, AWS-managed service-linked roles, and
+                                resources unsupported by AWS Config or Terraform.</li>
+                            <li><strong>Infrastructure Automation & Deployment:</strong> Built Terraform configs for
+                                cloud resource provisioning (EC2, Kinesis Firehose, ALB, Security Groups) and Ansible
+                                roles for configuration management. Splunk HA Cluster deployments went from 153 hours of
+                                manual work to under 5 hours, fully automated through standardized playbooks.</li>
+                            <li><strong>Ansible Molecule Container-Based Testing:</strong> Set up Ansible Molecule with
+                                Docker containers for local role and collection testing, replacing slow cloud-based
+                                validation cycles where you'd wait for EC2 instances just to test a config change.
+                                Configured multi-node test scenarios simulating production topologies (Elasticsearch
+                                clusters, Kibana, Fleet Server) with systemd support and custom networking. Catches
+                                configuration errors locally before anything touches a cloud account.</li>
+                            <li><strong>AI-Assisted Development with Continuous Feedback Loop:</strong> Integrated
+                                GitHub Copilot Agent Mode with Molecule testing so the AI could run tests, read
+                                failures, and fix issues on its own in a loop. Created instruction files defining test
+                                commands, error patterns, and fix strategies so the AI handles the tedious Run → Analyze
+                                → Fix → Repeat cycle, which cut debugging time on complex Ansible roles significantly.
+                            </li>
+                            <li><strong>Multi-Cloud Architecture:</strong> Built Terraform configs for HA Site-to-Site
+                                VPN between AWS Transit Gateway and Azure VPN Gateway with dual tunnels and BGP routing.
+                                What was a 3-week manual process took 2 days with IaC. Failover works automatically.
+                                Diagnosed tunnel establishment failures by enabling VPN logging via Terraform and
+                                analyzing IKE negotiation errors - root cause was incompatible default encryption
+                                protocols between AWS and Azure, resolved by explicitly defining compatible
+                                Diffie-Hellman Group 24 cipher configurations on both platforms.</li>
+                            <li><strong>CI/CD Pipeline Development:</strong> Built GitLab CI/CD pipelines that
+                                orchestrate Terraform + Ansible workflows. Push a button and 45 minutes later you have
+                                Active Directory domains, PKI services, Palo Alto NGFW, and clustered applications
+                                (Gitlab/Elasticsearch/Splunk) fully deployed.</li>
+                            <li><strong>Configuration Management Migration:</strong> Migrated inconsistent EC2 User Data
+                                scripts to native Ansible roles with real-time feedback. User Data scripts are
+                                fire-and-forget with no visibility into failures. Ansible gives you immediate output on
+                                what broke and where.</li>
+                            <li><strong>Cost Optimization:</strong> Set up AWS cost controls in Terraform: Cost
+                                Allocation Tags with enforced policies, Instance Scheduler to shut down resources
+                                off-hours, and cloud-nuke via GitHub Actions OIDC to wipe sandbox environments on
+                                schedule. Made it obvious who's spending what.</li>
+                            <li><strong>Process Automation:</strong> Wrote Selenium (Python) scripts to automate
+                                browser-based configurations for systems with no API. When there's no API, you either
+                                click through a web UI manually or you script a browser to do it for you.</li>
+                            <li><strong>Packer AMI Templating with Jinja2:</strong> Built an Ansible Jinja2 templating
+                                tool that generates valid Packer HCL templates for multiple Linux distributions (AL2,
+                                AL2023, Ubuntu 20.04/22.04, RHEL8/9) and AMI purposes (base-os, docker, eks). Shared
+                                build steps (cloud-init wait, package updates, Python/Ansible install, LVM compliance
+                                volumes, STIG hardening) live in one place; distro-specific variations are handled by
+                                the template. GitHub Actions CI pipeline runs monthly sandbox builds with automated
+                                validation.</li>
+                            <li><strong>Cross-Platform Container Image Build Pipeline:</strong> Built a container build
+                                pipeline using go-task, building hardened images from IronBank ubi9-minimal base with
+                                Trivy scanning and OpenSCAP RHEL9 STIG checks. Runs on both GitHub Actions (external,
+                                with build validation and badges) and airgapped GitLab with ECR push for internal
+                                deployments. Makefile handles local builds for bootstrapping Docker executor images.
+                            </li>
+                            <li><strong>RegScale GRC Platform Infrastructure Deployment:</strong> Built the full cloud
+                                infrastructure for RegScale (Governance, Risk, and Compliance) in Terraform: EKS cluster
+                                with AWS-managed node groups for multi-environment workloads (dev/prod/default
+                                namespaces), IRSA roles for granular service account permissions (VPC-CNI, AWS Load
+                                Balancer Controller, External DNS). Backend was multi-AZ RDS SQL Server (Express for
+                                dev, Standard Edition for prod) with KMS encryption and automated backups, plus multi-AZ
+                                EFS for persistent storage. Networking was VPC with multi-tier subnets
+                                (public/private/database/intra), least-privilege security groups, and AWS Load Balancer
+                                Controller via Helm for ingress.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">May 2022 - Jan 2026</span></div>
@@ -122,17 +190,73 @@
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
                         <h3 class="mb-0">VMware Systems Administrator</h3>
-                        <div class="subheading mb-3">General Dynamics Information Technology - SPAWAR (Government Client)</div>
+                        <div class="subheading mb-3">General Dynamics Information Technology - SPAWAR (Government
+                            Client)</div>
                         <ul>
-                            <li><strong>VMware Horizon VDI Performance Optimization:</strong> Diagnosed VDI recompose operations taking 3-5 hours due to Horizon View Agent defaulting to KMS activation instead of AD-based activation. Implemented registry fix reducing recompose time to 30 minutes per pool (97% reduction), dramatically cutting maintenance windows and increasing VDI availability.</li>
-                            <li><strong>VDI Infrastructure Recovery:</strong> Resolved critical issue where VDI pools could not be managed or recomposed for 4 months. Diagnosed SQL database deployment group ID mismatch with ADAM database values on View Connection Server and corrected, restoring full pool management capability across production environment.</li>
-                            <li><strong>VxRail Upgrade Troubleshooting:</strong> When VxRail upgrades stalled for one month across 6 production enclaves despite vendor support, volunteered to investigate. Identified two configuration issues: new SubCA certificate not added to VxRail Manager trust store after CA rotation, and missing /etc/hosts entries for ESXi hosts. Successfully upgraded 5 of 6 production enclaves within one week after diagnosis.</li>
-                            <li><strong>Log4J Vulnerability Remediation:</strong> Assessed and executed patching procedures for vROPs, Horizon View, and vCenter to address Log4J vulnerability across production environments. Resolved legacy View Security Server blocking issue requiring Flash-based pairing password reset; adapted unsupported PowerCLI script as workaround. Trained team on VMware stack patching procedures.</li>
-                            <li><strong>Unified Access Gateway HA Architecture:</strong> Researched and proposed 2x VCS (View Connection Server) + 4x UAG architecture replacing original 4x VCS configuration. Configured load-balanced UAG appliances enabling VDI session persistence during Connection Server restarts for monthly patching, reducing user disruption during maintenance windows.</li>
-                            <li><strong>Infrastructure Monitoring Stack:</strong> Deployed and configured vRealize Operations Manager with vCenter SSO integration across production environments. Configured DISA Compliance Pack for STIG compliance monitoring. Integrated vRealize Log Insight with Content Packs for Active Directory, Exchange, SQL, Windows, Horizon View, and Linux, creating centralized alerting through vROPS for single-pane-of-glass monitoring.</li>
-                            <li><strong>Windows Failover Clustering:</strong> Researched and configured native clustered VMDK with Windows Failover Clustering for file servers across production enclaves. Configured anti-affinity rules to keep file servers on separate hosts, enabling zero-downtime file access during monthly patching cycles.</li>
-                            <li><strong>PowerShell DSC Patch Orchestration:</strong> Developed PowerShell DSC configurations for automated/orchestrated patching across 6 production enclaves. Implemented logic where primary VMs in each role are patched first, secondary VMs wait until primary completes. Configured DSC Pull Server with ability to toggle Windows Update orchestration on/off via configuration data file.</li>
-                            <li><strong>Infrastructure Automation:</strong> Developed PowerCLI scripts for monthly pre-patch snapshot management across environments. Created PowerShell script reading registry uninstall strings from Windows VMs, enabling automated software inventory of 100+ VMs per enclave. Built domain controller health automation running dcdiag and dfsdiag tests with parsed and color-coded results for rapid health assessment.</li>
+                            <li><strong>VMware Horizon VDI Performance Optimization:</strong> Diagnosed VDI recompose
+                                operations taking 3-5 hours due to Horizon View Agent defaulting to KMS activation
+                                instead of AD-based activation. Implemented registry fix reducing recompose time to 30
+                                minutes per pool (97% reduction), dramatically cutting maintenance windows and
+                                increasing VDI availability.</li>
+                            <li><strong>VDI Infrastructure Recovery:</strong> Resolved critical issue where VDI pools
+                                could not be managed or recomposed for 4 months. Diagnosed SQL database deployment group
+                                ID mismatch with ADAM database values on View Connection Server and corrected, restoring
+                                full pool management capability across production environment.</li>
+                            <li><strong>C2PC Legacy Software VDI Integration:</strong> Integrated C2PC (military Command
+                                and Control software by Northrop Grumman) with Horizon View VDI infrastructure it was
+                                never designed for. C2PC's SQL Server instances are hostname-based, causing the
+                                application to spam critical alerts and become unresponsive after VDI pool recompose
+                                operations changed clone hostnames. Wrote a PowerShell script to connect to SQL Server,
+                                drop the stale database, create a new database, and run the vendor's table-recreation
+                                script; registered it as a Horizon View post-synchronization script so it ran
+                                automatically after every pool publish. Successfully tested in MOC lab and deployed
+                                across all 6 production MOCs, resolving recurring C2PC failures after pool recompose.
+                            </li>
+                            <li><strong>VxRail Upgrade Troubleshooting & PKI Certificate Remediation:</strong> When
+                                VxRail upgrades stalled for one month across 6 production enclaves despite vendor
+                                support, volunteered to investigate. Identified two configuration issues: new SubCA
+                                certificate not added to VxRail Manager trust store after CA rotation, and missing
+                                /etc/hosts entries for ESXi hosts. Located documentation on vendor portal that team
+                                members couldn't access. Successfully upgraded 5 of 6 production enclaves within one
+                                week after diagnosis. Also diagnosed a separate incident where serious problems in new
+                                systems were caused by incorrectly issued Subordinate CA (PKI/SSL) certificates; worked
+                                with government SME to reissue correctly configured certificates and reinstall them
+                                across all affected infrastructure components (vCenter, VxRail) to prevent service
+                                impacts.</li>
+                            <li><strong>Log4J Vulnerability Remediation:</strong> Assessed and executed patching
+                                procedures for vROPs, Horizon View, and vCenter to address Log4J vulnerability across
+                                production environments. Resolved legacy View Security Server blocking issue requiring
+                                Flash-based pairing password reset; adapted unsupported PowerCLI script as workaround.
+                                Trained team on VMware stack patching procedures.</li>
+                            <li><strong>Unified Access Gateway HA Architecture:</strong> Researched and proposed 2x VCS
+                                (View Connection Server) + 4x UAG architecture replacing the original 4x VCS setup.
+                                Configured load-balanced UAG appliances so VDI sessions stay active during Connection
+                                Server restarts, so users stop getting kicked during monthly patching.</li>
+                            <li><strong>Infrastructure Monitoring Stack:</strong> Deployed vRealize Operations Manager
+                                with vCenter SSO integration across production environments. Set up DISA Compliance Pack
+                                for STIG monitoring. Integrated vRealize Log Insight with Content Packs for AD,
+                                Exchange, SQL, Windows, Horizon View, and Linux, all funneled through vROPS so you have
+                                one place to look.</li>
+                            <li><strong>Internal Documentation Platform (DokuWiki):</strong> There was no internal
+                                documentation across production enclaves. Confluence was available but leadership wanted
+                                an air-gap-friendly alternative they controlled. Deployed DokuWiki on a Synology NAS
+                                with plugins for backup, syntax highlighting, discussions, and tagging. Set up namespace
+                                hierarchy covering infrastructure domains and operational areas. Ended up being the
+                                primary author, writing runbooks for vROPs/vLOG SSO, VxRail troubleshooting, and Horizon
+                                View administration.</li>
+                            <li><strong>Windows Failover Clustering:</strong> Set up native clustered VMDK with Windows
+                                Failover Clustering for file servers across production enclaves. Anti-affinity rules
+                                keep file servers on separate hosts so users have zero-downtime file access during
+                                monthly patching.</li>
+                            <li><strong>PowerShell DSC Patch Orchestration:</strong> Wrote PowerShell DSC configurations
+                                for orchestrated patching across 6 production enclaves. Primary VMs in each role get
+                                patched first, secondaries wait until primary completes. DSC Pull Server with a config
+                                data file to toggle orchestration on/off.</li>
+                            <li><strong>Infrastructure Automation:</strong> Wrote PowerCLI scripts for monthly pre-patch
+                                snapshot management. Built a PowerShell script that reads registry uninstall strings
+                                from Windows VMs for automated software inventory of 100+ VMs per enclave. Domain
+                                controller health automation runs dcdiag and dfsdiag with parsed, color-coded output for
+                                quick health checks.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">April 2021 - April 2022</span></div>
@@ -142,11 +266,32 @@
                         <h3 class="mb-0">Systems Administrator</h3>
                         <div class="subheading mb-3">Zachary Piper Solutions - SPAWAR (Government Client)</div>
                         <ul>
-                            <li><strong>WSUS Performance Optimization:</strong> Implemented WSUS metadata cleanup and Microsoft-recommended optimizations across 14 production enclaves, achieving 20-30x improvement in patch deployment efficiency. Resolved chronic delta import failures on air-gapped networks that previously required importing full OVF of upstream WSUS server, reducing monthly patch distribution time from days to hours.</li>
-                            <li><strong>WSUS Infrastructure & Storage:</strong> Diagnosed and corrected VMFS deployment issues where thin-provisioned disks consumed maximum allocated space due to improper datastore initialization. Used vmkfstools to zero datastores and reclaim disk space, recovering 200-300GB. Converted thick-provisioned WSUS servers to thin-provisioned to resolve storage constraints.</li>
-                            <li><strong>Patch Testing & Validation:</strong> Executed monthly WSUS test plans in lab environment with 60+ servers, validating Windows and third-party patches before production deployment. Reconfigured lab WSUS to pull patches from DISA WSUS servers over SSL, replacing unsecured connections to Microsoft update servers.</li>
-                            <li><strong>Exchange & Active Directory Support:</strong> Troubleshot Exchange service failures caused by GPO misconfiguration affecting SQL service account logon rights. Evaluated Domain Controller health reports, resolving DCDiag DNS delegation failures and SYSVOL replication issues across enclaves.</li>
-                            <li><strong>Proactive Monitoring:</strong> Created automated health monitoring solutions for domain controllers and Exchange systems using dcdiag and repadmin. Identified fine-grained password policy misconfiguration preventing account lockouts per STIG requirements.</li>
+                            <li><strong>WSUS Performance Optimization:</strong> Applied WSUS metadata cleanup and
+                                Microsoft-recommended optimizations across 14 production enclaves, getting 20-30x
+                                improvement in patch deployment speed. Fixed chronic delta import failures on air-gapped
+                                networks that previously required importing a full OVF of the upstream WSUS server.
+                                Monthly patch export/import went from 100+ hours to 8 hours.</li>
+                            <li><strong>WSUS Infrastructure & Storage:</strong> Diagnosed and corrected VMFS deployment
+                                issues where thin-provisioned disks consumed maximum allocated space due to improper
+                                datastore initialization. Used vmkfstools to zero datastores and reclaim disk space,
+                                recovering 200-300GB. Converted thick-provisioned WSUS servers to thin-provisioned to
+                                resolve storage constraints.</li>
+                            <li><strong>Patch Testing & Validation:</strong> Executed monthly WSUS test plans in lab
+                                environment with 60+ servers, validating Windows and third-party patches before
+                                production deployment. Reconfigured lab WSUS to pull patches from DISA WSUS servers over
+                                SSL, replacing unsecured connections to Microsoft update servers.</li>
+                            <li><strong>Exchange DAG Maintenance Automation:</strong> Wrote PowerShell scripts to start
+                                and stop DAG (Database Availability Group) maintenance mode for Microsoft Exchange
+                                mailbox servers, including checks to ensure all relevant services were properly started
+                                and stopped prior to major Cumulative Update upgrades, preventing data availability
+                                issues during maintenance windows.</li>
+                            <li><strong>Exchange & Active Directory Support:</strong> Troubleshot Exchange service
+                                failures caused by GPO misconfiguration affecting SQL service account logon rights.
+                                Evaluated Domain Controller health reports, resolving DCDiag DNS delegation failures and
+                                SYSVOL replication issues across enclaves.</li>
+                            <li><strong>Proactive Monitoring:</strong> Built automated health monitoring for domain
+                                controllers and Exchange using dcdiag and repadmin. Found a fine-grained password policy
+                                misconfiguration that was preventing account lockouts required by STIG.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">October 2020 - April 2021</span></div>
@@ -156,12 +301,51 @@
                         <h3 class="mb-0">PC Technician</h3>
                         <div class="subheading mb-3">Abbtech - US Army Corps of Engineers IT</div>
                         <ul>
-                            <li><strong>Enterprise System Health Monitoring:</strong> Developed multi-threaded PowerShell tools using runspaces to scan 600+ computers in parallel, checking SCCM client health (installation, registry, WMI namespace), Bitlocker encryption status with AD recovery key validation, Avamar backup agent activation, Windows Update compliance via registry UBR version tracking, Group Policy freshness, TPM/Secure Boot configuration, and Bomgar remote support agent components. Reduced system health check times from days to hours while enabling proactive identification of non-compliant systems.</li>
-                            <li><strong>WPF Diagnostic Dashboard:</strong> Built Windows Presentation Framework GUI tool in PowerShell for single-computer diagnostics, providing real-time status of 50+ system properties including SCCM health, Bitlocker status, McAfee HBSS components (Engine version, DAT version/date, EPO server, HIPS, DLP), Windows services states, VPN detection, and network configuration. Used parallel CIM queries with DCOM protocol to work in environments without PowerShell Remoting enabled.</li>
-                            <li><strong>BITS-Based Software Deployment:</strong> Engineered BITS-based file transfer solution for deploying 20-30GB CAD software (AutoCAD, Revit) to remote workers over VPN during COVID. Observed SCCM using BITS for fault-tolerant transfers and replicated behavior via PowerShell script, enabling asynchronous low-priority background transfers that survived VPN disconnections and automatically resumed. Eliminated requirement for users to bring laptops on-site, completing installations fully remotely via Bomgar RMM.</li>
-                            <li><strong>Remote SCCM Patch Orchestration:</strong> Developed PowerShell tool leveraging WMI remote registry to write SCCM reboot notification registry values and restart ccmexec service on target computers, triggering Software Center restart prompts without mandatory enforcement. Enabled users to restart at their convenience without phone calls or office visits.</li>
-                            <li><strong>Bitlocker Compliance Auditing:</strong> Created automated Bitlocker compliance reporting by querying AD computer objects for msFVE-RecoveryInformation presence, identifying systems missing AD-stored recovery keys. Domain-wide scanner compared on-device recovery passwords with AD records to detect synchronization failures requiring re-escrow.</li>
-                            <li><strong>System Remediation Tooling:</strong> Developed PowerShell tools for common break/fix scenarios including Windows Update Agent reset (stop BITS/WUA services, clear SoftwareDistribution folder, re-register 30+ DLLs per Microsoft documentation) and WMI repository repair.</li>
+                            <li><strong>Enterprise System Health Monitoring:</strong> Wrote multi-threaded PowerShell
+                                tools using runspaces to scan 600+ computers in parallel, checking SCCM client health
+                                (installation, registry, WMI namespace), Bitlocker encryption status with AD recovery
+                                key validation, Avamar backup agent, Windows Update compliance via registry UBR version
+                                tracking, Group Policy freshness (stale registry.pol blocks SCCM updates), TPM/Secure
+                                Boot, and Bomgar agent components. System health checks went from days to hours. Built
+                                during COVID downtime when ticket volume was minimal.</li>
+                            <li><strong>WPF Diagnostic Dashboard:</strong> Built a WPF GUI tool in PowerShell for
+                                single-computer diagnostics, showing real-time status of 50+ system properties: SCCM
+                                health, Bitlocker status, McAfee HBSS components (Engine version, DAT version/date, EPO
+                                server, HIPS, DLP), Windows services, VPN detection, and network config. Used parallel
+                                CIM queries with DCOM protocol since PowerShell Remoting wasn't enabled.</li>
+                            <li><strong>BITS-Based Software Deployment:</strong> Needed to deploy 20-30GB CAD software
+                                (AutoCAD, Revit) to remote workers over VPN during COVID. Noticed SCCM uses BITS for
+                                fault-tolerant transfers, so I wrote a PowerShell script that does the same thing -
+                                asynchronous low-priority background transfers that survive VPN disconnections and
+                                resume automatically. Users didn't need to bring laptops on-site; installations
+                                completed fully remotely via Bomgar while they worked normally. My peers were doing File
+                                Explorer copies that failed after 10+ hours when users disconnected.</li>
+                            <li><strong>SCCM Enterprise Incident Investigation:</strong> Assisted SCCM Administrators in
+                                diagnosing an enterprise-wide issue where SCCM clients were uninstalling themselves
+                                across hundreds of machines, causing operational impacts (inability to deliver OS
+                                patches and software). Traced Event Logs to identify that a recently enabled SCCM add-on
+                                was the root cause, enabling the team to resolve the issue and restore patch delivery
+                                capability.</li>
+                            <li><strong>Microsoft Office Mass Activation Failure:</strong> Diagnosed and resolved a
+                                work-stopping incident where hundreds of users had Microsoft Office deactivated and
+                                unable to open. Root cause analysis identified a misconfigured Group Policy Object as
+                                the culprit. Provided the Tier 3 Active Directory management team with the specific GPO
+                                configuration changes needed to resolve the issue enterprise-wide.</li>
+                            <li><strong>Remote SCCM Patch Orchestration:</strong> Wrote a PowerShell tool that uses WMI
+                                remote registry to write SCCM reboot notification registry values and restart ccmexec on
+                                target computers, triggering Software Center restart prompts without mandatory
+                                enforcement. Users restart at their convenience, no phone calls or office visits. I
+                                resolved patching tickets entirely remotely while peers were asking users to drive to
+                                the office.</li>
+                            <li><strong>Bitlocker Compliance Auditing:</strong> Built automated Bitlocker compliance
+                                reporting that queries AD computer objects for msFVE-RecoveryInformation to find systems
+                                missing AD-stored recovery keys. Domain-wide scanner compares on-device recovery
+                                passwords with AD records to catch sync failures that need re-escrow.</li>
+                            <li><strong>System Remediation Tooling:</strong> Wrote PowerShell tools for common break/fix
+                                scenarios: Windows Update Agent reset (stop BITS/WUA services, clear
+                                SoftwareDistribution folder, re-register 30+ DLLs per Microsoft docs) and WMI repository
+                                repair (adapted Microsoft's script to filter autorecover/deleteinstance/deleteclass MOF
+                                files that broke on Windows 10+). Fixed machines remotely instead of reimaging.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">April 2019 - September 2020</span></div>
@@ -171,11 +355,40 @@
                         <h3 class="mb-0">Helpdesk Technician</h3>
                         <div class="subheading mb-3">Hawaii Tech Support</div>
                         <ul>
-                            <li><strong>Network Discovery & Asset Documentation (Auvik):</strong> Deployed Auvik network monitoring across MSP client environments, discovering undocumented infrastructure including switches, firewalls, and servers with factory-default credentials. Configured WinRM, SNMP, and SSH integration for device profiling via MAC address identification. Systematically documented all network assets, remediated default credentials on discovered iDRAC/iLO and SonicWall devices, and established baseline inventories for environments with outdated or missing documentation.</li>
-                            <li><strong>OS Deployment Automation (MDT/WDS):</strong> Eliminated manual Windows 10 installation process where technicians spent hours babysitting individual computers through setup. Implemented MDT/WDS imaging server with VLAN isolation enabling PXE boot automation for new client computers. Reduced deployment time from 3+ hours of hands-on work to 30 minutes of automated imaging with standard software suite (RMM, Webroot, Microsoft Office).</li>
-                            <li><strong>Out-of-Band Server Management:</strong> Configured iDRAC/iLO access for client servers to enable remote power operations after power outages. Documented credentials and created procedures for other technicians, eliminating site visits previously required to physically power on servers when UPS-protected network equipment recovered but servers remained offline.</li>
-                            <li><strong>Remote Endpoint Remediation:</strong> Developed remote RMM agent installation techniques using Webroot shell command execution and domain-joined psexec access for computers discovered by Auvik but missing management software. Eliminated client site visits and office drop-offs previously required when undocumented computers needed support.</li>
-                            <li><strong>Email Deliverability Configuration:</strong> Resolved persistent email deliverability issues where client emails were being flagged as spam by recipients. Implemented SPF/DKIM/DMARC records in client DNS configurations to establish proper email authentication.</li>
+                            <li><strong>Network Discovery & Asset Documentation (Auvik):</strong> Deployed Auvik network
+                                monitoring across MSP client environments, discovered undocumented switches, firewalls,
+                                and servers still running factory-default credentials. Configured WinRM, SNMP, and SSH
+                                integration for device profiling. Documented all network assets, changed default
+                                credentials on discovered iDRAC/iLO and SonicWall devices, and built baseline
+                                inventories for environments that had none.</li>
+                            <li><strong>OS Deployment Automation (MDT/WDS):</strong> Technicians were spending hours
+                                babysitting individual Windows 10 installs. Set up MDT/WDS imaging server with VLAN
+                                isolation for PXE boot automation. New computers go from bare metal to fully imaged with
+                                standard software (RMM, Webroot, Office) in 30 minutes instead of 3+ hours of hands-on
+                                work.</li>
+                            <li><strong>Out-of-Band Server Management:</strong> Configured iDRAC/iLO access for client
+                                servers to enable remote power operations after power outages. Documented credentials
+                                and created procedures for other technicians, eliminating site visits previously
+                                required to physically power on servers when UPS-protected network equipment recovered
+                                but servers remained offline.</li>
+                            <li><strong>Remote Endpoint Remediation:</strong> Figured out how to install RMM agents
+                                remotely using Webroot shell command execution and domain-joined psexec for computers
+                                that Auvik discovered but had no management software. No more client site visits or
+                                asking users to bring laptops in just to install an agent.</li>
+                            <li><strong>Azure Recovery Services Deployment:</strong> Set up Azure Recovery Services for
+                                a non-profit client who had Azure credits sitting unused, gave them free direct-to-cloud
+                                offsite backups instead of relying solely on on-premises backup infrastructure.</li>
+                            <li><strong>Active Directory Lifecycle Automation:</strong> Set up PowerShell + Task
+                                Scheduler to automatically prune stale AD computer and user accounts. Keeps the
+                                directory clean without someone manually auditing it.</li>
+                            <li><strong>Tableau Service Startup Automation:</strong> Resolved recurring issue where
+                                Tableau Server services failed to start automatically after monthly patching-related
+                                server restarts. Worked with Tableau vendor support to identify required startup command
+                                sequence, then implemented PowerShell + Task Scheduler automation to run the commands
+                                before and after patching. Tableau support noted the issue for future software
+                                improvement.</li>
+                            <li><strong>Email Deliverability Configuration:</strong> Client emails kept getting flagged
+                                as spam. Set up SPF/DKIM/DMARC records in their DNS to fix email authentication.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">February 2018 - February 2019</span></div>
@@ -189,43 +402,58 @@
                 <h2 class="mb-5">Projects</h2>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <a href="https://github.com/AgentWong/ai-job-search"
-                            target="_blank">
-                        <h3 class="mb-0">AI Job Search Automation with Orchestrator-Agent Pattern</h3>
+                        <a href="https://github.com/AgentWong/ai-job-search" target="_blank">
+                            <h3 class="mb-0">AI Job Search Automation with Orchestrator-Agent Pattern</h3>
                         </a>
                         <ul>
-                            <li>Built AI-assisted job search automation system using GitHub Copilot prompt files with Claude models, implementing an orchestrator + dedicated agent pattern where orchestrators coordinate isolated subagents to prevent context degradation across token-heavy job search results</li>
-                            <li>Developed structured workflows for multi-platform job discovery (Greenhouse, Lever, Ashby, Workday, Hiring Cafe) using Firecrawl MCP for web scraping and Chrome DevTools MCP for browser automation, with configurable scoring framework applying boosters, penalties, and disqualifiers to rank positions on a 0-10 scale</li>
-                            <li>Implemented automated resume tailoring pipeline using Claude Code slash commands that extract keywords from job postings, match against a full CV, and generate keyword-optimized DOCX resumes and cover letters via Python docx library -- enforcing no fabrication of unlisted skills</li>
-                            <li>Designed modular configuration system with YAML-based inclusions/exclusions, markdown-based scoring rules, and CSV-based company monitoring targets, enabling rapid customization for different roles and tech stacks</li>
+                            <li>Built an AI-assisted job search system using GitHub Copilot prompt files with Claude
+                                models. Uses an orchestrator + agent pattern where orchestrators coordinate isolated
+                                subagents so each one gets clean context instead of drowning in accumulated job
+                                description tokens.</li>
+                            <li>Searches multiple platforms (Greenhouse, Lever, Ashby, Workday, Hiring Cafe) using
+                                Firecrawl MCP for scraping and Chrome DevTools MCP for browser automation. Scoring
+                                framework ranks positions 0-10 with boosters, penalties, and disqualifiers.</li>
+                            <li>Resume tailoring pipeline uses Claude Code slash commands to extract keywords from job
+                                postings, match against a full CV, and generate DOCX resumes and cover letters via
+                                Python docx library. Only uses skills actually listed in the CV, no fabrication.</li>
+                            <li>Config is modular: YAML for inclusions/exclusions, markdown for scoring rules, CSV for
+                                company monitoring targets. Easy to swap out for different roles or tech stacks.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">February 2026</span></div>
                 </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <a href="https://github.com/AgentWong/container-build-pipeline"
-                            target="_blank">
-                        <h3 class="mb-0">Multi-Distribution Container Build Pipeline</h3>
+                        <a href="https://github.com/AgentWong/container-build-pipeline" target="_blank">
+                            <h3 class="mb-0">Multi-Distribution Container Build Pipeline</h3>
                         </a>
                         <ul>
-                            <li>Developed CI/CD pipeline for building 20 container images across 4 Linux distributions (Alpine, UBI9, Ubuntu, Amazon Linux 2023) and 5 DevOps tools (Ansible, Terraform, Packer, Python, Golang), using GitHub Actions matrix strategy for parallel builds</li>
-                            <li>Implemented comprehensive security scanning with Trivy for CVE detection, secret scanning, and misconfiguration analysis, generating SPDX-format Software Bill of Materials (SBOM) for supply chain transparency</li>
-                            <li>Engineered non-root user configurations across all images for security hardening, with distribution-specific optimizations and shared requirements files to eliminate duplication</li>
-                            <li>Created Makefile-based local development workflow supporting Apple Silicon (ARM64) with build, test, scan, and shell debugging capabilities for rapid iteration without CI dependency</li>
+                            <li>CI/CD pipeline that builds 20 container images across 4 Linux distros (Alpine, UBI9,
+                                Ubuntu, Amazon Linux 2023) and 5 DevOps tools (Ansible, Terraform, Packer, Python,
+                                Golang) using GitHub Actions matrix strategy for parallel builds.</li>
+                            <li>Trivy scanning for CVEs, secrets, and misconfigs on every build. Generates SPDX SBOMs
+                                for supply chain visibility.</li>
+                            <li>All images run as non-root with distro-specific optimizations. Shared requirements files
+                                so you're not duplicating package lists across 20 Dockerfiles.</li>
+                            <li>Makefile handles local builds on Apple Silicon (ARM64), so you can build, test, scan,
+                                and shell into containers without waiting for CI.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">February 2026</span></div>
                 </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                         <a href="https://www.linkedin.com/pulse/how-i-get-10x-more-value-from-github-copilot-using-one-herman-wong-3xotc/"
+                        <a href="https://www.linkedin.com/pulse/how-i-get-10x-more-value-from-github-copilot-using-one-herman-wong-3xotc/"
                             target="_blank">
-                        <h3 class="mb-0">Apache Kafka Cluster with AI-Assisted Development Workflow</h3>
+                            <h3 class="mb-0">Apache Kafka Cluster with AI-Assisted Development Workflow</h3>
                         </a>
                         <ul>
-                            <li>Developed Ansible collection deploying production-grade 8-node Apache Kafka cluster (3 ZooKeeper nodes, 3 Kafka brokers, Root CA for TLS certificates, Kafka UI dashboard) using Molecule container-based testing for rapid local iteration without cloud costs</li>
-                            <li>Demonstrated GitHub Copilot Agent Mode optimization technique achieving 95%+ cost efficiency by leveraging autonomous Run - Analyze - Fix iterative loops that consume single premium requests regardless of iteration count</li>
+                            <li>Ansible collection that deploys an 8-node Apache Kafka cluster (3 ZooKeeper, 3 Kafka
+                                brokers, Root CA for TLS certs, Kafka UI dashboard). Tested entirely in Molecule
+                                containers, no cloud costs for iteration.</li>
+                            <li>Found that GitHub Copilot Agent Mode's autonomous Run → Analyze → Fix loops consume one
+                                premium request regardless of iteration count. Complex debugging sessions that would
+                                normally burn through quota cost virtually nothing.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">January 2026</span></div>
@@ -234,12 +462,16 @@
                     <div class="flex-grow-1">
                         <a href="https://www.linkedin.com/pulse/container-based-code-testing-ansible-molecule-herman-wong-u1xkc/"
                             target="_blank">
-                        <h3 class="mb-0">Container-based Code Testing with Ansible Molecule</h3>
+                            <h3 class="mb-0">Container-based Code Testing with Ansible Molecule</h3>
                         </a>
                         <ul>
-                            <li>Implemented comprehensive testing framework using Ansible Molecule for rapid container-based infrastructure validation, deploying 2-node monitoring stack with Grafana/Prometheus monitoring server and PostgreSQL database node</li>
-                            <li>Achieved sub-5-minute testing cycles through optimized container orchestration, enabling verification of application files, services, and API functionality across multiple deployment scenarios</li>
-                            <li>Integrated GitHub Actions CI pipelines for simultaneous multi-distribution testing across diverse Linux environments, ensuring compatibility and reliability</li>
+                            <li>Set up Ansible Molecule for container-based infrastructure testing, deploys a 2-node
+                                monitoring stack (Grafana/Prometheus server + PostgreSQL node) in under 5 minutes
+                                locally.</li>
+                            <li>Verifies application files, services, and API endpoints are working correctly after
+                                deployment. Full test cycle runs faster than waiting for a single EC2 instance to boot.
+                            </li>
+                            <li>GitHub Actions CI runs the same tests across multiple Linux distros in parallel.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">July 2025</span></div>
@@ -248,12 +480,15 @@
                     <div class="flex-grow-1">
                         <a href="https://www.linkedin.com/pulse/reality-ai-assisted-development-lessons-from-building-herman-wong-f6jac/"
                             target="_blank">
-                        <h3 class="mb-0">Model Context Protocol (MCP) Server for Infrastructure as Code</h3>
+                            <h3 class="mb-0">Model Context Protocol (MCP) Server for Infrastructure as Code</h3>
                         </a>
                         <ul>
-                            <li>Developed Python-based MCP server providing persistent memory storage for Terraform and Ansible resources, implementing advanced caching mechanisms and version tracking for IaC components</li>
-                            <li>Engineered sophisticated XML-based task tracking system for development workflow management, maintaining context across complex infrastructure deployment iterations and enabling collaborative development</li>
-                            <li>Successfully integrated AI-assisted development tools to optimize development costs and enhance workflow efficiency, open-sourcing complete solution with comprehensive tests, documentation, and integration examples</li>
+                            <li>Built a Python MCP server that gives AI tools persistent memory for Terraform and
+                                Ansible resources, caches resource state and tracks versions so the AI doesn't lose
+                                context between sessions.</li>
+                            <li>Includes an XML-based task tracking system so the AI can pick up where it left off
+                                across infrastructure deployment iterations instead of starting from scratch.</li>
+                            <li>Open-sourced with tests, documentation, and integration examples.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">February 2025</span></div>
@@ -265,9 +500,12 @@
                             <h3 class="mb-0">Elastic Cloud on Kubernetes on AWS EKS</h3>
                         </a>
                         <ul>
-                            <li>Deployed production-ready EKS cluster with dedicated IRSA roles for secure add-on permissions management and granular access control across multiple namespaces</li>
-                            <li>Implemented full Elastic stack using Terraform with kubernetes and kubectl providers, managing compute resources through Amazon Linux 2 t3.medium AWS Managed Nodes with auto-scaling capabilities</li>
-                            <li>Configured advanced networking and security policies for container orchestration in cloud-native environments, including ingress controllers and service mesh integration</li>
+                            <li>Deployed EKS cluster with IRSA roles for add-on permissions and namespace-level access
+                                control.</li>
+                            <li>Full Elastic stack deployed via Terraform using kubernetes and kubectl providers.
+                                Compute runs on Amazon Linux 2 t3.medium managed nodes with auto-scaling.</li>
+                            <li>Set up networking and security policies including ingress controllers and service mesh.
+                            </li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">June 2023</span></div>
@@ -279,9 +517,13 @@
                             <h3 class="mb-0">Terragrunt and Ansible AWS Cloud Lab</h3>
                         </a>
                         <ul>
-                            <li>Demonstrated advanced integration patterns between Terraform and Ansible for comprehensive AWS infrastructure management and automated configuration deployment across multiple environments</li>
-                            <li>Implemented Terragrunt wrapper architecture to eliminate code duplication and enhance maintainability across development, staging, and production environment deployments</li>
-                            <li>Created reusable modules for common infrastructure patterns, enabling rapid deployment of standardized environments with consistent security and compliance configurations</li>
+                            <li>Personal lab integrating Terraform and Ansible for AWS infrastructure. Terraform
+                                provisions resources, Ansible configures them, across dev/staging/prod environments.
+                            </li>
+                            <li>Terragrunt wrapper eliminates code duplication between environments. Same module,
+                                different tfvars.</li>
+                            <li>Reusable modules for common patterns (VPC, EC2, security groups) so spinning up a new
+                                environment is just a new Terragrunt config.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">July 2022</span></div>
@@ -300,20 +542,23 @@
                     <li class="list-inline-item"><i class="fab fa-aws"></i></li>
                     <li class="list-inline-item"><i class="fab fa-redhat"></i></li>
                 </ul><br>
-                
+
                 <div class="subheading mb-3">Cloud & DevOps</div>
                 <ul class="fa-ul mb-0">
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>AWS Services:</strong> EC2, S3, VPC, DynamoDB, RDS, Route 53, IAM, SSM, EKS, KMS, ASG, ELB, Kinesis Firehose, Transit Gateway, CloudFormation, Lambda, CloudWatch
+                        <strong>AWS Services:</strong> EC2, S3, VPC, DynamoDB, RDS, Route 53, IAM, SSM, EKS, KMS, ASG,
+                        ELB, Kinesis Firehose, Transit Gateway, CloudFormation, Lambda, CloudWatch
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Azure Services:</strong> VPN Gateway, Site-to-Site VPN, Entra ID, Virtual Networks, Resource Manager, Azure Monitor, Azure Policy, Azure Arc
+                        <strong>Azure Services:</strong> VPN Gateway, Site-to-Site VPN, Entra ID, Virtual Networks,
+                        Resource Manager, Azure Monitor, Azure Policy, Azure Arc
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Multi-Cloud Integration:</strong> Cross-cloud connectivity, hybrid architecture design, vendor-agnostic solutions
+                        <strong>Multi-Cloud Integration:</strong> Cross-cloud connectivity, hybrid architecture design,
+                        vendor-agnostic solutions
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
@@ -321,31 +566,37 @@
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Container Orchestration:</strong> Docker, Kubernetes, AWS EKS with Fargate profiles, IRSA roles for service accounts, External DNS, AWS Load Balancer Controller, Helm
+                        <strong>Container Orchestration:</strong> Docker, Kubernetes, AWS EKS with Fargate profiles,
+                        IRSA roles for service accounts, External DNS, AWS Load Balancer Controller, Helm
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>EKS Components:</strong> VPC-CNI networking, CoreDNS, kube-proxy, OIDC provider integration, multi-namespace isolation, EKS add-ons management
+                        <strong>EKS Components:</strong> VPC-CNI networking, CoreDNS, kube-proxy, OIDC provider
+                        integration, multi-namespace isolation, EKS add-ons management
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Persistent Storage:</strong> EFS integration with Kubernetes, multi-AZ mount targets, CSI drivers, StatefulSets
+                        <strong>Persistent Storage:</strong> EFS integration with Kubernetes, multi-AZ mount targets,
+                        CSI drivers, StatefulSets
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>IaC & Configuration:</strong> Ansible, Ansible Molecule, Packer, Selenium, Terraform, Terragrunt, PowerShell DSC
+                        <strong>IaC & Configuration:</strong> Ansible, Ansible Molecule, Packer, Selenium, Terraform,
+                        Terragrunt, PowerShell DSC
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Monitoring & Observability:</strong> Splunk HA Cluster, Elasticsearch, Prometheus, Grafana, CloudWatch, RDS Performance Insights
+                        <strong>Monitoring & Observability:</strong> Splunk HA Cluster, Elasticsearch, Prometheus,
+                        Grafana, CloudWatch, RDS Performance Insights
                     </li>
                 </ul><br>
-                
+
                 <div class="subheading mb-3">Infrastructure</div>
                 <ul class="fa-ul mb-0">
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Windows Core Services:</strong> Active Directory, GPO, DNS, PKI, PowerShell, Exchange DAG, WSUS, MDT/WDS, BITS
+                        <strong>Windows Core Services:</strong> Active Directory, GPO, DNS, PKI, PowerShell, Exchange
+                        DAG, WSUS, MDT/WDS, BITS
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
@@ -376,28 +627,36 @@
                         <strong>Email Security:</strong> SPF, DKIM, DMARC
                     </li>
                 </ul><br>
-                
+
                 <div class="subheading mb-3">AI-Assisted Development</div>
                 <ul class="fa-ul mb-0">
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>AI Tools & Integration:</strong> Claude API, Claude Code CLI, GitHub Copilot, Python Anthropic SDK
+                        <strong>AI Tools & Integration:</strong> Claude API, Claude Code CLI, GitHub Copilot, Python
+                        Anthropic SDK
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Model Context Protocol (MCP):</strong> Firecrawl MCP for web scraping/search, Chrome DevTools MCP for browser automation, MCP server configuration and integration
+                        <strong>Model Context Protocol (MCP):</strong> Firecrawl MCP for web scraping/search, Chrome
+                        DevTools MCP for browser automation, MCP server configuration and integration
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>AI Architecture Patterns:</strong> Orchestrator-agent pattern design for context-window-aware task decomposition, isolated subagent execution to prevent context degradation across token-heavy workloads
+                        <strong>AI Architecture Patterns:</strong> Orchestrator-agent pattern design for
+                        context-window-aware task decomposition, isolated subagent execution to prevent context
+                        degradation across token-heavy workloads
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Automation Pipelines:</strong> End-to-end AI-driven workflows (search, filter, score, tailor resume, generate DOCX), YAML/markdown-based configuration systems for AI workflow customization
+                        <strong>Automation Pipelines:</strong> End-to-end AI-driven workflows (search, filter, score,
+                        tailor resume, generate DOCX), YAML/markdown-based configuration systems for AI workflow
+                        customization
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Practical AI Integration:</strong> AI pair programming for infrastructure code (Terraform, Ansible), prompt engineering for structured output, treating AI tooling with infrastructure-grade engineering rigor (modularity, reproducibility, configuration management)
+                        <strong>Practical AI Integration:</strong> AI pair programming for infrastructure code
+                        (Terraform, Ansible), prompt engineering for structured output, treating AI tooling with
+                        infrastructure-grade engineering rigor (modularity, reproducibility, configuration management)
                     </li>
                 </ul>
             </div>
@@ -407,15 +666,14 @@
         <section class="resume-section" id="certifications">
             <div class="resume-section-content">
                 <h2 class="mb-5">Certifications</h2>
-                <a href="https://www.credly.com/badges/2c339a70-f3ff-4db0-b50d-409699615b22/linked_in_profile" target="_blank">
+                <a href="https://www.credly.com/badges/2c339a70-f3ff-4db0-b50d-409699615b22/linked_in_profile"
+                    target="_blank">
                     <img src="assets/img/aws-certified-solutions-architect-associate.png">
                 </a>
-                <a href="https://rhtapps.redhat.com/verify?certId=210-204-251"
-                    target="_blank">
+                <a href="https://rhtapps.redhat.com/verify?certId=210-204-251" target="_blank">
                     <img src="assets/img/RHCS_Containers_Badge.png">
                 </a>
-                <a href="https://rhtapps.redhat.com/verify?certId=210-204-251"
-                    target="_blank">
+                <a href="https://rhtapps.redhat.com/verify?certId=210-204-251" target="_blank">
                     <img src="assets/img/RHCE.png">
                 </a>
                 <a href="https://www.credly.com/badges/32c14ebf-02c7-48b6-80ca-eb1250c55fbd/public_url" target="_blank">
