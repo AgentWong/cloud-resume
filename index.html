@@ -150,10 +150,13 @@
                                 orchestrate Terraform + Ansible workflows. Push a button and 45 minutes later you have
                                 Active Directory domains, PKI services, Palo Alto NGFW, and clustered applications
                                 (Gitlab/Elasticsearch/Splunk) fully deployed.</li>
-                            <li><strong>Configuration Management Migration:</strong> Migrated inconsistent EC2 User Data
-                                scripts to native Ansible roles with real-time feedback. User Data scripts are
-                                fire-and-forget with no visibility into failures. Ansible gives you immediate output on
-                                what broke and where.</li>
+                            <li><strong>Configuration Management Migration:</strong> Inherited an environment where
+                                all EC2 provisioning was done through ad-hoc User Data scripts — a fire-and-forget
+                                approach with no visibility into failures, no idempotency, and no orchestration between
+                                dependent systems. Migrated this entire surface area to native Ansible roles:
+                                idempotent, version-controlled, and with real-time stdout feedback so failures surface
+                                immediately and in context rather than requiring engineers to SSH into individual nodes
+                                and dig through cloud-init logs.</li>
                             <li><strong>Cost Optimization:</strong> Set up AWS cost controls in Terraform: Cost
                                 Allocation Tags with enforced policies, Instance Scheduler to shut down resources
                                 off-hours, and cloud-nuke via GitHub Actions OIDC to wipe sandbox environments on
@@ -275,20 +278,13 @@
                                 issues where thin-provisioned disks consumed maximum allocated space due to improper
                                 datastore initialization. Used vmkfstools to zero datastores and reclaim disk space,
                                 recovering 200-300GB. Converted thick-provisioned WSUS servers to thin-provisioned to
-                                resolve storage constraints.</li>
-                            <li><strong>Patch Testing & Validation:</strong> Executed monthly WSUS test plans in lab
-                                environment with 60+ servers, validating Windows and third-party patches before
-                                production deployment. Reconfigured lab WSUS to pull patches from DISA WSUS servers over
-                                SSL, replacing unsecured connections to Microsoft update servers.</li>
+                                resolve storage constraints. Reconfigured lab WSUS to pull patches from DISA WSUS
+                                servers over SSL, replacing unsecured connections to Microsoft update servers.</li>
                             <li><strong>Exchange DAG Maintenance Automation:</strong> Wrote PowerShell scripts to start
                                 and stop DAG (Database Availability Group) maintenance mode for Microsoft Exchange
                                 mailbox servers, including checks to ensure all relevant services were properly started
                                 and stopped prior to major Cumulative Update upgrades, preventing data availability
                                 issues during maintenance windows.</li>
-                            <li><strong>Exchange & Active Directory Support:</strong> Troubleshot Exchange service
-                                failures caused by GPO misconfiguration affecting SQL service account logon rights.
-                                Evaluated Domain Controller health reports, resolving DCDiag DNS delegation failures and
-                                SYSVOL replication issues across enclaves.</li>
                             <li><strong>Proactive Monitoring:</strong> Built automated health monitoring for domain
                                 controllers and Exchange using dcdiag and repadmin. Found a fine-grained password policy
                                 misconfiguration that was preventing account lockouts required by STIG.</li>
@@ -402,6 +398,38 @@
                 <h2 class="mb-5">Projects</h2>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
+                        <a href="https://www.linkedin.com/pulse/deploying-elastic-cloud-aws-eks-herman-wong/"
+                            target="_blank">
+                            <h3 class="mb-0">Elastic Cloud on Kubernetes on AWS EKS</h3>
+                        </a>
+                        <ul>
+                            <li>Deployed EKS v1.33 cluster via Terragrunt with SPOT instances (m5.xlarge family) across
+                                2 AZs for 60-80% compute savings. IRSA roles for AWS Load Balancer Controller, External
+                                DNS, and EBS CSI Driver so there are zero static AWS credentials on the cluster.</li>
+                            <li>ArgoCD manages the entire stack through an App of Apps pattern with 14 child
+                                Applications across 7 sync waves. Kustomize base/overlay structure handles differences
+                                between local Rancher Desktop K3s and AWS EKS without duplicating manifests. Automated
+                                self-heal and prune keep the cluster in sync with Git.</li>
+                            <li>Full Elastic stack (Elasticsearch 8.17.4, Kibana, Fleet Server, Elastic Agent) deployed
+                                as ECK Operator custom resources. 3-node Elasticsearch cluster on encrypted gp3 EBS
+                                volumes. Elastic Agent runs as a DaemonSet collecting system and Kubernetes metrics from
+                                every node.</li>
+                            <li>Keycloak OIDC SSO across Elasticsearch, Kibana, ArgoCD, and Kiali. Solved an EKS
+                                hairpin NAT issue by splitting OIDC front-channel calls (public ALB URL) from
+                                back-channel token/JWKS calls (internal K8s DNS). Realm bootstrap and Elasticsearch role
+                                mappings handled by ArgoCD PostSync Jobs.</li>
+                            <li>Istio service mesh in sidecar mode on the Elastic namespace for L7 traffic observability
+                                through Kiali and Prometheus. 15 NetworkPolicies across 3 namespaces implementing
+                                default-deny-ingress with selective allow rules.</li>
+                            <li>AWS ALB with ACM wildcard TLS termination and CIDR-restricted access. External DNS
+                                auto-creates Route53 records from Ingress annotations. cert-manager with a self-signed
+                                CA issues internal TLS certs for all internal-only components.</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">February 2026</span></div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
                         <a href="https://github.com/AgentWong/ai-job-search" target="_blank">
                             <h3 class="mb-0">AI Job Search Automation with Orchestrator-Agent Pattern</h3>
                         </a>
@@ -495,23 +523,6 @@
                 </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <a href="https://www.linkedin.com/pulse/deploying-elastic-cloud-aws-eks-herman-wong/"
-                            target="_blank">
-                            <h3 class="mb-0">Elastic Cloud on Kubernetes on AWS EKS</h3>
-                        </a>
-                        <ul>
-                            <li>Deployed EKS cluster with IRSA roles for add-on permissions and namespace-level access
-                                control.</li>
-                            <li>Full Elastic stack deployed via Terraform using kubernetes and kubectl providers.
-                                Compute runs on Amazon Linux 2 t3.medium managed nodes with auto-scaling.</li>
-                            <li>Set up networking and security policies including ingress controllers and service mesh.
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="flex-shrink-0"><span class="text-primary">June 2023</span></div>
-                </div>
-                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                    <div class="flex-grow-1">
                         <a href="https://www.linkedin.com/pulse/terragrunt-ansible-aws-cloud-lab-herman-wong/"
                             target="_blank">
                             <h3 class="mb-0">Terragrunt and Ansible AWS Cloud Lab</h3>
@@ -527,6 +538,26 @@
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">July 2022</span></div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
+                        <h3 class="mb-0">AWS Cloud Resume Challenge</h3>
+                        <ul>
+                            <li>Built a static resume site on AWS: S3 for hosting, CloudFront for HTTPS delivery with a
+                                managed cache policy, ACM for TLS, and Route53 for DNS. Root domain redirects to www
+                                via S3 website redirect.</li>
+                            <li>Visitor counter built with API Gateway, Lambda (Python), and DynamoDB. Lambda uses an
+                                atomic DynamoDB UpdateItem so the count is accurate even with concurrent hits. API
+                                Gateway has rate limiting configured to avoid surprise costs.</li>
+                            <li>GitHub Actions CI/CD pipeline syncs the repo to S3 and invalidates the CloudFront cache
+                                on every push to main. Originally used IAM access keys; later migrated to GitHub OIDC
+                                so no long-lived credentials are stored in GitHub secrets.</li>
+                            <li>Infrastructure migrated from AWS SAM/CloudFormation to Terraform in 2025. Existing S3,
+                                CloudFront, ACM, and Route53 resources were imported into state. State stored in S3
+                                with native locking.</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">March 2022</span></div>
                 </div>
             </div>
         </section>
@@ -557,17 +588,17 @@
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Multi-Cloud Integration:</strong> Cross-cloud connectivity, hybrid architecture design,
-                        vendor-agnostic solutions
+                        <strong>Multi-Cloud Integration:</strong> Cross-cloud connectivity (AWS-to-Azure VPN), hybrid
+                        architecture
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>CI/CD:</strong> Git, GitLab CI, GitHub, GitHub Actions, ArgoCD for GitOps
+                        <strong>CI/CD Platforms:</strong> GitLab CI, GitHub Actions, Git workflows, ArgoCD for GitOps
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Container Orchestration:</strong> Docker, Kubernetes, AWS EKS with Fargate profiles,
-                        IRSA roles for service accounts, External DNS, AWS Load Balancer Controller, Helm
+                        <strong>Container Orchestration:</strong> Docker, Kubernetes, AWS EKS, IRSA roles for
+                        service accounts, External DNS, AWS Load Balancer Controller, Helm package management
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
@@ -581,8 +612,23 @@
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>IaC & Configuration:</strong> Ansible, Ansible Molecule, Packer, Selenium, Terraform,
-                        Terragrunt, PowerShell DSC
+                        <strong>IaC Tools:</strong> Terraform, Terragrunt, AWS CloudFormation, Packer for image
+                        automation
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <strong>Configuration Management:</strong> Ansible playbooks, roles, and collections for
+                        enterprise deployments
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <strong>Infrastructure Testing:</strong> Ansible Molecule for container-based testing, automated
+                        validation pipelines
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <strong>Automation Frameworks:</strong> PowerShell DSC, Selenium for web automation, Python
+                        scripting
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
@@ -612,7 +658,11 @@
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>VMware Monitoring:</strong> vRealize Operations Manager, vRealize Log Insight, PowerCLI
+                        <strong>VMware Monitoring:</strong> vRealize Operations Manager, vRealize Log Insight
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <strong>VMware Automation:</strong> PowerCLI
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
@@ -637,26 +687,19 @@
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Model Context Protocol (MCP):</strong> Firecrawl MCP for web scraping/search, Chrome
-                        DevTools MCP for browser automation, MCP server configuration and integration
+                        <strong>Model Context Protocol (MCP):</strong> Firecrawl MCP for web scraping, Chrome
+                        DevTools MCP for browser automation, built custom MCP servers
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>AI Architecture Patterns:</strong> Orchestrator-agent pattern design for
-                        context-window-aware task decomposition, isolated subagent execution to prevent context
-                        degradation across token-heavy workloads
+                        <strong>AI Architecture Patterns:</strong> Orchestrator-agent pattern for breaking up
+                        token-heavy workloads, each subagent gets clean context instead of accumulating noise
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Automation Pipelines:</strong> End-to-end AI-driven workflows (search, filter, score,
-                        tailor resume, generate DOCX), YAML/markdown-based configuration systems for AI workflow
-                        customization
-                    </li>
-                    <li>
-                        <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Practical AI Integration:</strong> AI pair programming for infrastructure code
-                        (Terraform, Ansible), prompt engineering for structured output, treating AI tooling with
-                        infrastructure-grade engineering rigor (modularity, reproducibility, configuration management)
+                        <strong>Practical Usage:</strong> AI pair programming for Terraform and Ansible, prompt
+                        engineering for structured output, building repeatable AI workflows with the same rigor as
+                        infrastructure code (version-controlled configs, modular design, testable components)
                     </li>
                 </ul>
             </div>
