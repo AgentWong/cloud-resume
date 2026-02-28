@@ -90,7 +90,9 @@
 
                 <b>Note:</b><br>
                 <p>This website is a static site hosted in an AWS S3 bucket behind a CloudFront CDN. Changes are made in
-                    VSCode, sync'd to GitHub, and then deployed to AWS via a simple CI/CD pipeline with GitHub Action.
+                    VSCode, sync'd to GitHub, and then deployed to AWS via a simple CI/CD pipeline with GitHub Actions.
+                    <a href="https://github.com/AgentWong/cloud-resume" target="_blank">Front-end</a> (S3 bucket, GitHub Actions CI/CD to sync main branch with S3) |
+                    <a href="https://github.com/AgentWong/cloud-resume-infra" target="_blank">Infrastructure</a> (backend in Terraform)
                 </p><br>
                 <p>
                     Visits:
@@ -398,7 +400,7 @@
                 <h2 class="mb-5">Projects</h2>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <a href="https://www.linkedin.com/pulse/deploying-elastic-cloud-aws-eks-herman-wong/"
+                        <a href="https://github.com/AgentWong/eck-2026-project"
                             target="_blank">
                             <h3 class="mb-0">Elastic Cloud on Kubernetes on AWS EKS</h3>
                         </a>
@@ -541,7 +543,10 @@
                 </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
+                        <a href="https://github.com/AgentWong/cloud-resume"
+                            target="_blank">
                         <h3 class="mb-0">AWS Cloud Resume Challenge</h3>
+                        </a>
                         <ul>
                             <li>Built a static resume site on AWS: S3 for hosting, CloudFront for HTTPS delivery with a
                                 managed cache policy, ACM for TLS, and Route53 for DNS. Root domain redirects to www
