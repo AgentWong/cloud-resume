@@ -52,8 +52,7 @@
                     <span class="text-primary">Wong</span>
                 </h1>
                 <div class="subheading mb-5">
-                    Lewiston, ID ·
-                    <a href="mailto:hwong@hermanwong.net">hwong@hermanwong.net</a>
+                    Lewiston, ID
                 </div>
                 <p>
                     DevOps Engineer with <strong>7+ years in IT</strong>, coming from the Ops side. I focus on
@@ -91,8 +90,10 @@
                 <b>Note:</b><br>
                 <p>This website is a static site hosted in an AWS S3 bucket behind a CloudFront CDN. Changes are made in
                     VSCode, sync'd to GitHub, and then deployed to AWS via a simple CI/CD pipeline with GitHub Actions.
-                    <a href="https://github.com/AgentWong/cloud-resume" target="_blank">Front-end</a> (S3 bucket, GitHub Actions CI/CD to sync main branch with S3) |
-                    <a href="https://github.com/AgentWong/cloud-resume-infra" target="_blank">Infrastructure</a> (backend in Terraform)
+                <ul>
+                    <li><a href="https://github.com/AgentWong/cloud-resume" target="_blank">Front-end</a> (S3 bucket, GitHub Actions CI/CD to sync main branch with S3)</li>
+                    <li><a href="https://github.com/AgentWong/cloud-resume-infra" target="_blank">Infrastructure</a> (backend in Terraform)</li>
+                </ul>
                 </p><br>
                 <p>
                     Visits:
@@ -155,10 +156,18 @@
                             <li><strong>Configuration Management Migration:</strong> Inherited an environment where
                                 all EC2 provisioning was done through ad-hoc User Data scripts — a fire-and-forget
                                 approach with no visibility into failures, no idempotency, and no orchestration between
-                                dependent systems. Migrated this entire surface area to native Ansible roles:
-                                idempotent, version-controlled, and with real-time stdout feedback so failures surface
-                                immediately and in context rather than requiring engineers to SSH into individual nodes
-                                and dig through cloud-init logs.</li>
+                                dependent systems. The Splunk cluster setup alone involved 9+ Python scripts and a
+                                custom module with hard-coded hostname logic that couldn't scale beyond the original
+                                node count. Windows Domain Controllers were configured via PowerShell/DSC scripts
+                                downloaded from S3 at runtime (a workaround for User Data size limits), with replica DC
+                                setup implemented as a 45-minute sleep followed by a domain join attempt. Ansible Tower
+                                itself was bootstrapped through shell scripts wrapping its own setup tooling, stitched
+                                together with jq for inventory configuration. Migrated this entire surface area to
+                                native Ansible roles: idempotent, version-controlled, and with real-time stdout feedback
+                                so failures surface immediately and in context rather than requiring engineers to SSH
+                                into individual nodes and dig through cloud-init logs. The improvement was most
+                                significant for clustered applications, where the original scripts had no mechanism to
+                                coordinate across nodes at all.</li>
                             <li><strong>Cost Optimization:</strong> Set up AWS cost controls in Terraform: Cost
                                 Allocation Tags with enforced policies, Instance Scheduler to shut down resources
                                 off-hours, and cloud-nuke via GitHub Actions OIDC to wipe sandbox environments on
@@ -166,6 +175,15 @@
                             <li><strong>Process Automation:</strong> Wrote Selenium (Python) scripts to automate
                                 browser-based configurations for systems with no API. When there's no API, you either
                                 click through a web UI manually or you script a browser to do it for you.</li>
+                            <li><strong>Jira SLA Metrics Reporting Tool (Python, AI-Assisted):</strong> Manager needed
+                                a way to pull SLA violation and compliance data out of client Jira deployments. Used
+                                GitHub Copilot to write a ~1,300-line single-file Python script that queries Jira's REST
+                                API for SLA breaches, MTTR/MTTA by priority, ticket activity trends, and closure quality
+                                metrics. Kept it as one file deliberately so Tier 1-2 support engineers can copy/paste
+                                it into client environments without dealing with pip packages or project structure.
+                                Supports AWS Secrets Manager for credentials in production, with env var fallback for
+                                dev. Tested locally using Ansible Molecule to spin up a Jira instance in Docker
+                                containers rather than developing against production.</li>
                             <li><strong>Packer AMI Templating with Jinja2:</strong> Built an Ansible Jinja2 templating
                                 tool that generates valid Packer HCL templates for multiple Linux distributions (AL2,
                                 AL2023, Ubuntu 20.04/22.04, RHEL8/9) and AMI purposes (base-os, docker, eks). Shared
@@ -237,11 +255,12 @@
                                 (View Connection Server) + 4x UAG architecture replacing the original 4x VCS setup.
                                 Configured load-balanced UAG appliances so VDI sessions stay active during Connection
                                 Server restarts, so users stop getting kicked during monthly patching.</li>
-                            <li><strong>Infrastructure Monitoring Stack:</strong> Deployed vRealize Operations Manager
-                                with vCenter SSO integration across production environments. Set up DISA Compliance Pack
-                                for STIG monitoring. Integrated vRealize Log Insight with Content Packs for AD,
-                                Exchange, SQL, Windows, Horizon View, and Linux, all funneled through vROPS so you have
-                                one place to look.</li>
+                            <li><strong>Infrastructure Monitoring Stack:</strong> Production environments had no
+                                centralized visibility — troubleshooting meant logging into individual systems to check
+                                logs. Deployed vRealize Operations Manager with vCenter SSO integration and DISA
+                                Compliance Pack for STIG monitoring. Integrated vRealize Log Insight with Content Packs
+                                for AD, Exchange, SQL, Windows, Horizon View, and Linux, all funneled through vROPS so
+                                you have one place to look.</li>
                             <li><strong>Internal Documentation Platform (DokuWiki):</strong> There was no internal
                                 documentation across production enclaves. Confluence was available but leadership wanted
                                 an air-gap-friendly alternative they controlled. Deployed DokuWiki on a Synology NAS
@@ -249,19 +268,29 @@
                                 hierarchy covering infrastructure domains and operational areas. Ended up being the
                                 primary author, writing runbooks for vROPs/vLOG SSO, VxRail troubleshooting, and Horizon
                                 View administration.</li>
-                            <li><strong>Windows Failover Clustering:</strong> Set up native clustered VMDK with Windows
-                                Failover Clustering for file servers across production enclaves. Anti-affinity rules
-                                keep file servers on separate hosts so users have zero-downtime file access during
-                                monthly patching.</li>
+                            <li><strong>Windows Failover Clustering:</strong> Monthly patching took file servers
+                                offline, disrupting user access across production enclaves. Set up native clustered VMDK
+                                on vSAN with Windows Failover Clustering and anti-affinity rules to keep file servers on
+                                separate hosts, giving users zero-downtime file access during patching. Wrote and tested
+                                a PowerShell script to automate cluster creation and configuration.</li>
                             <li><strong>PowerShell DSC Patch Orchestration:</strong> Wrote PowerShell DSC configurations
-                                for orchestrated patching across 6 production enclaves. Primary VMs in each role get
-                                patched first, secondaries wait until primary completes. DSC Pull Server with a config
-                                data file to toggle orchestration on/off.</li>
-                            <li><strong>Infrastructure Automation:</strong> Wrote PowerCLI scripts for monthly pre-patch
-                                snapshot management. Built a PowerShell script that reads registry uninstall strings
-                                from Windows VMs for automated software inventory of 100+ VMs per enclave. Domain
-                                controller health automation runs dcdiag and dfsdiag with parsed, color-coded output for
-                                quick health checks.</li>
+                                for orchestrated patching across 6 production enclaves (separate Windows domain
+                                environments). Primary VMs in each role get patched first, secondaries wait until
+                                primary completes. DSC Pull Server with a config data file to toggle orchestration
+                                on/off. Enabled fully patching all 6 enclaves in a single day.</li>
+                            <li><strong>PowerShell DSC Software Inventory via vRealize Log Insight:</strong> Wrote a
+                                custom PowerShell DSC class-based resource that reads the uninstall registry hive to
+                                determine installed software names and versions, then writes custom Events for vRealize
+                                Log Insight to consume. Provided automated inventory of all software and versions across
+                                100+ VMs per enclave without requiring agents or third-party tools.</li>
+                            <li><strong>Office 2019 Air-Gapped Distribution:</strong> Air-gapped downstream servers had
+                                no path to Microsoft's update infrastructure, leaving Office 2019 unpatched across the
+                                fleet — a compliance gap surfaced during reaccreditation. Wrote two PowerShell scripts:
+                                the first pulled the latest Office 2019 installer files from Microsoft's CDN via the
+                                Office Deployment Tool onto an internet-connected WSUS server; the second synced only
+                                changed files to air-gapped downstream servers using SHA hash comparison to skip
+                                unchanged files. Deployed to four production environments as the ongoing patch delivery
+                                mechanism for Office.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">April 2021 - April 2022</span></div>
@@ -285,11 +314,8 @@
                             <li><strong>Exchange DAG Maintenance Automation:</strong> Wrote PowerShell scripts to start
                                 and stop DAG (Database Availability Group) maintenance mode for Microsoft Exchange
                                 mailbox servers, including checks to ensure all relevant services were properly started
-                                and stopped prior to major Cumulative Update upgrades, preventing data availability
-                                issues during maintenance windows.</li>
-                            <li><strong>Proactive Monitoring:</strong> Built automated health monitoring for domain
-                                controllers and Exchange using dcdiag and repadmin. Found a fine-grained password policy
-                                misconfiguration that was preventing account lockouts required by STIG.</li>
+                                and stopped prior to major Cumulative Update upgrades. Prevents email loss by gracefully
+                                failing over nodes prior to patching.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">October 2020 - April 2021</span></div>
@@ -326,9 +352,10 @@
                                 capability.</li>
                             <li><strong>Microsoft Office Mass Activation Failure:</strong> Diagnosed and resolved a
                                 work-stopping incident where hundreds of users had Microsoft Office deactivated and
-                                unable to open. Root cause analysis identified a misconfigured Group Policy Object as
-                                the culprit. Provided the Tier 3 Active Directory management team with the specific GPO
-                                configuration changes needed to resolve the issue enterprise-wide.</li>
+                                unable to open. Root cause analysis identified a misconfigured Group Policy Object
+                                (missing DNS suffix SearchList entry) as the culprit. Provided the Tier 3 Active
+                                Directory management team with the specific GPO configuration changes needed to resolve
+                                the issue enterprise-wide.</li>
                             <li><strong>Remote SCCM Patch Orchestration:</strong> Wrote a PowerShell tool that uses WMI
                                 remote registry to write SCCM reboot notification registry values and restart ccmexec on
                                 target computers, triggering Software Center restart prompts without mandatory
@@ -385,6 +412,12 @@
                                 sequence, then implemented PowerShell + Task Scheduler automation to run the commands
                                 before and after patching. Tableau support noted the issue for future software
                                 improvement.</li>
+                            <li><strong>SQL Server Backup Automation:</strong> Configured SQL Server Agent to automate
+                                cleanup of SQL Server backups, preventing storage exhaustion from accumulated backup
+                                files.</li>
+                            <li><strong>Client Communication Automation:</strong> Utilized Microsoft Flows (Power
+                                Automate) to automate regular email notices to clients, reducing manual follow-up
+                                overhead.</li>
                             <li><strong>Email Deliverability Configuration:</strong> Client emails kept getting flagged
                                 as spam. Set up SPF/DKIM/DMARC records in their DNS to fix email authentication.</li>
                         </ul>
@@ -558,8 +591,9 @@
                                 on every push to main. Originally used IAM access keys; later migrated to GitHub OIDC
                                 so no long-lived credentials are stored in GitHub secrets.</li>
                             <li>Infrastructure migrated from AWS SAM/CloudFormation to Terraform in 2025. Existing S3,
-                                CloudFront, ACM, and Route53 resources were imported into state. State stored in S3
-                                with native locking.</li>
+                                CloudFront, ACM, and Route53 resources were imported into state. The SAM counter stack
+                                was replaced with new Terraform-managed resources and the old CloudFormation stacks
+                                deleted. State stored in S3 with native locking.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">March 2022</span></div>
