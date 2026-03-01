@@ -91,8 +91,10 @@
                 <p>This website is a static site hosted in an AWS S3 bucket behind a CloudFront CDN. Changes are made in
                     VSCode, sync'd to GitHub, and then deployed to AWS via a simple CI/CD pipeline with GitHub Actions.
                 <ul>
-                    <li><a href="https://github.com/AgentWong/cloud-resume" target="_blank">Front-end</a> (S3 bucket, GitHub Actions CI/CD to sync main branch with S3)</li>
-                    <li><a href="https://github.com/AgentWong/cloud-resume-infra" target="_blank">Infrastructure</a> (backend in Terraform)</li>
+                    <li><a href="https://github.com/AgentWong/cloud-resume" target="_blank">Front-end</a> (S3 bucket,
+                        GitHub Actions CI/CD to sync main branch with S3)</li>
+                    <li><a href="https://github.com/AgentWong/cloud-resume-infra" target="_blank">Infrastructure</a>
+                        (backend in Terraform)</li>
                 </ul>
                 </p><br>
                 <p>
@@ -332,11 +334,13 @@
                                 tracking, Group Policy freshness (stale registry.pol blocks SCCM updates), TPM/Secure
                                 Boot, and Bomgar agent components. System health checks went from days to hours. Built
                                 during COVID downtime when ticket volume was minimal.</li>
-                            <li><strong>WPF Diagnostic Dashboard:</strong> Built a WPF GUI tool in PowerShell for
-                                single-computer diagnostics, showing real-time status of 50+ system properties: SCCM
+                            <li><strong>WPF Diagnostic Dashboard:</strong> Reverse-engineered an existing VBScript
+                                diagnostic tool (basically end-of-life language) that was natively single-threaded and
+                                painfully slow. Rebuilt the whole thing in PowerShell as a WPF GUI, using runspace pools
+                                for parallel CIM queries with DCOM protocol (since PowerShell Remoting wasn't enabled),
+                                making it about 3-5x faster. Shows real-time status of 50+ system properties: SCCM
                                 health, Bitlocker status, McAfee HBSS components (Engine version, DAT version/date, EPO
-                                server, HIPS, DLP), Windows services, VPN detection, and network config. Used parallel
-                                CIM queries with DCOM protocol since PowerShell Remoting wasn't enabled.</li>
+                                server, HIPS, DLP), Windows services, VPN detection, and network config.</li>
                             <li><strong>BITS-Based Software Deployment:</strong> Needed to deploy 20-30GB CAD software
                                 (AutoCAD, Revit) to remote workers over VPN during COVID. Noticed SCCM uses BITS for
                                 fault-tolerant transfers, so I wrote a PowerShell script that does the same thing -
@@ -433,8 +437,7 @@
                 <h2 class="mb-5">Projects</h2>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <a href="https://github.com/AgentWong/eck-2026-project"
-                            target="_blank">
+                        <a href="https://github.com/AgentWong/eck-2026-project" target="_blank">
                             <h3 class="mb-0">Elastic Cloud on Kubernetes on AWS EKS</h3>
                         </a>
                         <ul>
@@ -576,9 +579,8 @@
                 </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <a href="https://github.com/AgentWong/cloud-resume"
-                            target="_blank">
-                        <h3 class="mb-0">AWS Cloud Resume Challenge</h3>
+                        <a href="https://github.com/AgentWong/cloud-resume" target="_blank">
+                            <h3 class="mb-0">AWS Cloud Resume Challenge</h3>
                         </a>
                         <ul>
                             <li>Built a static resume site on AWS: S3 for hosting, CloudFront for HTTPS delivery with a
