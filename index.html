@@ -129,9 +129,12 @@
                                 identifying <strong>CloudFormation</strong>-managed resources, AWS-managed service-linked roles, and
                                 resources unsupported by <strong>AWS Config</strong> or <strong>Terraform</strong>.</li>
                             <li><strong>Infrastructure Automation & Deployment:</strong> Built <strong>Terraform</strong> configs for
-                                cloud resource provisioning (<strong>EC2</strong>, <strong>Kinesis Firehose</strong>, ALB, Security Groups) and <strong>Ansible</strong>
-                                roles for configuration management. <strong>Splunk</strong> HA Cluster deployments went from 153 hours of
-                                manual work to under 5 hours, fully automated through standardized playbooks.</li>
+                                cloud resource provisioning (<strong>EC2</strong>, <strong>Kinesis Firehose</strong>, ALB, Security Groups, <strong>SQS</strong>) and
+                                <strong>Ansible</strong> roles for configuration management. <strong>Splunk</strong> HA Cluster deployments went from
+                                153 hours of manual work to under 5 hours, fully automated through standardized
+                                playbooks. <strong>SQS</strong> queues handle the S3-notification-based log ingestion path for AWS
+                                services that cannot write directly to CloudWatch (ALB access logs being a primary
+                                example); <strong>Kinesis Firehose</strong> handles the real-time streaming path.</li>
                             <li><strong>Ansible Molecule Container-Based Testing:</strong> Set up <strong>Ansible Molecule</strong> with
                                 <strong>Docker</strong> containers for local role and collection testing, replacing slow cloud-based
                                 validation cycles where you'd wait for <strong>EC2</strong> instances just to test a config change.
@@ -293,6 +296,69 @@
                                 changed files to air-gapped downstream servers using SHA hash comparison to skip
                                 unchanged files. Deployed to four production environments as the ongoing patch delivery
                                 mechanism for Office.</li>
+                            <li><strong>Adobe Flash Killswitch — Proactive Discovery and Fleet-Wide Remediation:</strong>
+                                Production <strong>Horizon View</strong> admin portals were going to become inaccessible on January 12,
+                                2021 due to a time-based killswitch built into Adobe Flash — an obscure end-of-life
+                                mechanism most teams weren't aware of. Discovered the issue proactively by manually
+                                advancing the system date on a management VM to February 2021 and confirming the Horizon
+                                portal became unreachable. Found and documented an <code>mms.cfg</code> allowlist configuration
+                                that bypasses the killswitch. Led the contractor team in deploying the fix across all
+                                production enclaves before the cutoff date, preventing a maintenance window that would
+                                have blindsided operations.</li>
+                            <li><strong>Domain Controller Outage Diagnosis and Recovery:</strong> Domain controllers in
+                                a production enclave dropped to Public network profiles after NLA misclassified their
+                                NICs, causing domain authentication failures across VMs and VDI pools. After a reboot to
+                                fix the NLA issue, logins stopped working entirely. Event Log analysis showed SYSVOL
+                                replication had been silently failing because the C: drive on the replica domain
+                                controller was full — no SYSVOL replication meant domain auth was broken. Cleared
+                                <code>C:\Windows\Temp</code> by mapping C$ from the healthy primary domain controller,
+                                rebooted the replica, and restored full domain authentication.</li>
+                            <li><strong>SubCA Certificate / NDES Misconfiguration Root Cause Analysis:</strong>
+                                <strong>NDES</strong> web server configuration was failing with generic 500 errors across three new
+                                production enclaves despite identical configurations — months of work had stalled with
+                                no progress. Volunteered to investigate and traced the 500 errors to DNS resolution
+                                failures, which exposed a deeper structural issue: the Subordinate CA certificate had
+                                incorrect CRL/AIA distribution point URLs, causing all enclave assets to reference an
+                                airgapped legacy enclave domain controller for Certificate Revocation checks — a single
+                                point of failure that crossed environment boundaries. Worked with the architect and team
+                                lead to reissue the SubCA certificates with correct CRL/AIA locations. This unblocked
+                                <strong>NDES</strong> deployment and eliminated the cross-environment CRL dependency.</li>
+                            <li><strong>Certificate Trust List Sync for Air-Gapped Networks:</strong> Air-gapped
+                                downstream <strong>WSUS</strong> servers had no mechanism to receive updated Windows Certificate Trust
+                                Lists — a gap surfaced as a reaccreditation finding. Wrote two <strong>PowerShell</strong> scripts: the
+                                first used <code>certutil -SyncWithWU</code> on the internet-connected WSUS to pull the latest
+                                CTL; the second downloaded it to air-gapped downstream servers. Added a custom <strong>GPO</strong> to
+                                redirect the domain CTL URL to the local WSUS path so endpoints pulled from the
+                                internal source. Deployed across all production enclaves and closed the reaccreditation
+                                finding.</li>
+                            <li><strong>Windows 10 WSUS GPO Regression After 1909 Upgrade:</strong> All Windows 10 VMs
+                                across all production enclaves stopped receiving <strong>WSUS</strong>-targeted patches after being
+                                upgraded past Windows 10 1909 — they were silently ignoring existing Windows Update
+                                <strong>GPOs</strong>. A secondary issue was that Dual-Scan behavior was causing VMs to attempt
+                                outbound connections to Microsoft's public Windows Update servers, generating unnecessary
+                                firewall noise in an air-gapped environment. Researched Microsoft's whitepaper on GPO
+                                changes introduced in 1909+, identified the new required policy settings, tested in lab,
+                                and documented the changes for the team. Also added settings to disable Dual-Scan,
+                                eliminating the firewall traffic.</li>
+                            <li><strong>vRealize Log Insight Appliance Recovery from Filesystem Corruption:</strong> A
+                                production <strong>vRealize Log Insight</strong> appliance became unbootable with no obvious cause.
+                                Analyzed journalctl boot logs, identified inode corruption on the core data volume
+                                (<code>/dev/mapper/data-core</code>), and ran fsck to repair it. Appliance recovered and
+                                booted successfully without data loss or a rebuild.</li>
+                            <li><strong>DISM Air-Gapped OS Repair Procedure:</strong> DOD air-gapped environments had
+                                no documented method to repair Windows component store corruption short of rebuilding the
+                                VM — the standard DISM repair source is Windows Update, which isn't reachable. Researched
+                                and validated an alternative: using the WinSxS folder from a healthy VM running the same
+                                OS version at equal or higher patch level as an offline repair source. Tested the method
+                                in lab and documented it as a viable repair option for engineers facing component store
+                                corruption in air-gapped environments.</li>
+                            <li><strong>PowerShell Pester Infrastructure Health Test Suite:</strong> No standardized
+                                validation existed for verifying the health of critical environment infrastructure before
+                                and after patching cycles. Wrote a <strong>PowerShell</strong> Pester test suite covering Active
+                                Directory, Exchange DAG, File Server Failover Cluster, <strong>Horizon View</strong>, Admin Server, and
+                                C2PCGW. Tests gave engineers an automated health baseline instead of manual
+                                spot-checking. Formally handed off the suite during offboarding alongside the DSC
+                                orchestration scripts, vROPs/vLOG configurations, and WSUS tooling.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">April 2021 - April 2022</span></div>
@@ -620,7 +686,7 @@
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
                         <strong>AWS Services:</strong> EC2, S3, VPC, DynamoDB, RDS, Route 53, IAM, SSM, EKS, KMS, ASG,
-                        ELB, Kinesis Firehose, Transit Gateway, CloudFormation, Lambda, CloudWatch
+                        ELB, Kinesis Firehose, SQS, Transit Gateway, CloudFormation, Lambda, CloudWatch
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
