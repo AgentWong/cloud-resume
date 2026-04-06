@@ -119,22 +119,24 @@
                         <h3 class="mb-0">DevOps Engineer</h3>
                         <div class="subheading mb-3">Coalfire</div>
                         <ul>
-                            <li><strong>Terraform Drift Detection Tool Enhancement (Golang):</strong> Re-architected an
-                                open-source drift detection tool (driftctl) to replace 107 service-specific API
-                                enumerators with a single AWS Config API call for resource discovery, eliminating API
-                                rate limiting issues and reducing maintenance overhead. Integrated the terraform-exec
-                                Golang library to run <code>terraform init</code> + <code>terraform plan</code> against
-                                all root modules, enabling true configuration drift detection rather than just unmanaged
-                                resource identification. Implemented categorization logic to filter false positives by
-                                identifying CloudFormation-managed resources, AWS-managed service-linked roles, and
-                                resources unsupported by AWS Config or Terraform.</li>
-                            <li><strong>Infrastructure Automation & Deployment:</strong> Built Terraform configs for
-                                cloud resource provisioning (EC2, Kinesis Firehose, ALB, Security Groups, SQS) and
-                                Ansible roles for configuration management. Splunk HA Cluster deployments went from
-                                153 hours of manual work to under 5 hours, fully automated through standardized
-                                playbooks. SQS queues handle the S3-notification-based log ingestion path for AWS
-                                services that cannot write directly to CloudWatch (ALB access logs being a primary
-                                example); Kinesis Firehose handles the real-time streaming path.</li>
+                            <li><strong>Infrastructure Automation & Deployment:</strong> Splunk HA Cluster deployments
+                                required 153 hours of manual work per environment, repetitive, error-prone, and blocking
+                                project deadlines. Only Senior engineers had enough context to deploy them successfully.
+                                Built Terraform configs for cloud resource provisioning (EC2, Kinesis Firehose, ALB,
+                                Security Groups, SQS) and Ansible roles for configuration management, cutting Splunk
+                                deployments to under 5 hours through standardized playbooks. The Ansible roles abstract
+                                away 80-90% of the configuration complexity, similar to how Helm charts wrap raw
+                                Kubernetes manifests: you still need foundational Ansible knowledge (where variables go,
+                                how to read playbooks, how roles and collections work), but the roles limit what you need
+                                to touch and expose the rest as adjustable values. The practical result was that Junior
+                                engineers could deploy a functional Splunk cluster without needing to understand every
+                                config decision under the hood. It's not a true zero-touch push-button automation that
+                                removes the need to learn the tool, but it made cluster deployments accessible to people
+                                who previously couldn't attempt them. SQS queues are a standard part of the log ingestion
+                                pipeline for AWS services that cannot write directly to CloudWatch (ALB access logs being
+                                a primary example). S3 bucket notifications trigger SQS, and Splunk's S3 input polls the
+                                queue to ingest those logs. Kinesis Firehose handles the real-time streaming path; SQS
+                                handles the S3-notification-based path for services where that's the only option.</li>
 
                             <li><strong>Ansible Molecule Container-Based Testing:</strong> Set up Ansible Molecule with
                                 Docker containers for local role and collection testing, replacing slow cloud-based
@@ -167,11 +169,23 @@
                                 accounts) without inspecting message contents.</li>
                             <li><strong>Multi-Cloud Architecture:</strong> Built Terraform configs for HA Site-to-Site
                                 VPN between AWS Transit Gateway and Azure VPN Gateway with dual tunnels and BGP routing.
-                                What was a 3-week manual process took 2 days with IaC. Failover works automatically.
-                                Diagnosed tunnel establishment failures by enabling VPN logging via Terraform and
-                                analyzing IKE negotiation errors - root cause was incompatible default encryption
-                                protocols between AWS and Azure, resolved by explicitly defining compatible
-                                Diffie-Hellman Group 24 cipher configurations on both platforms.</li>
+                                <ul>
+                                    <li><strong>Implementation:</strong> A colleague had spent 3 weeks unable to get the
+                                        VPN communicating. ClickOps made it nearly impossible to tear down and rebuild
+                                        cleanly, and reviewing the configuration required opening both the AWS and Azure
+                                        portals side by side. Capturing the full setup in Terraform meant we could reset
+                                        to a known-good state instantly and review both ends of the tunnel in a single
+                                        diff. What had been stuck for weeks was resolved in 2 days.</li>
+                                    <li><strong>Troubleshooting:</strong> Enabled VPN logging on both the AWS and Azure
+                                        resources by changing a few lines of Terraform, which surfaced IKE negotiation
+                                        errors in the tunnel logs. Formed a hypothesis that neither AWS nor Azure had
+                                        been explicitly told which encryption protocols to use, causing them to negotiate
+                                        with incompatible defaults. Consulted an LLM to generate aligned Diffie-Hellman
+                                        Group 24 cipher configurations for both ends, applied them via Terraform, and
+                                        confirmed the fix. The root cause and resolution were documented so the next
+                                        engineer wouldn't need to rediscover it.</li>
+                                </ul>
+                            </li>
                             <li><strong>CI/CD Pipeline Development:</strong> Built GitLab CI/CD pipelines that
                                 orchestrate Terraform + Ansible workflows. Push a button and 45 minutes later you have
                                 Active Directory domains, PKI services, Palo Alto NGFW, and clustered applications
@@ -197,28 +211,35 @@
                                 The improvement was most significant for clustered applications, where the original
                                 scripts had no mechanism to coordinate across nodes at all.</li>
                             <li><strong>Cost Optimization:</strong> Set up AWS cost controls in Terraform: Cost
-                                Allocation Tags with enforced policies, Instance Scheduler to shut down resources
-                                off-hours, and cloud-nuke via GitHub Actions OIDC to wipe sandbox environments on
-                                schedule. Made it obvious who's spending what.</li>
+                                Allocation Tags with enforced SCP and Tag policies, Instance Scheduler to shut down
+                                resources off-hours, and cloud-nuke via GitHub Actions OIDC to wipe sandbox environments
+                                on schedule which were not explicitly excluded. Made it obvious who's spending what.</li>
                             <li><strong>Process Automation:</strong> Wrote Selenium (Python) scripts to automate
                                 browser-based configurations for systems with no API. When there's no API, you either
                                 click through a web UI manually or you script a browser to do it for you.</li>
                             <li><strong>Jira SLA Metrics Reporting Tool (Python, AI-Assisted):</strong> Manager needed
-                                a way to pull SLA violation and compliance data out of client Jira deployments. Used
-                                GitHub Copilot to write a ~1,300-line single-file Python script that queries Jira's REST
-                                API for SLA breaches, MTTR/MTTA by priority, ticket activity trends, and closure quality
-                                metrics. Kept it as one file deliberately so Tier 1-2 support engineers can copy/paste
-                                it into client environments without dealing with pip packages or project structure.
-                                Supports AWS Secrets Manager for credentials in production, with env var fallback for
-                                dev. Tested locally using Ansible Molecule to spin up a Jira instance in Docker
-                                containers rather than developing against production.</li>
+                                a way to pull SLA violation and compliance data out of client Jira deployments. No clear
+                                spec on presentation, so I figured out the audience (non-technical IT managers) and chose
+                                a single HTML report as output since it's easy to open anywhere without extra
+                                dependencies. Used GitHub Copilot to write a ~1,300-line single-file Python script that
+                                queries Jira's REST API for SLA breaches, MTTR/MTTA by priority, ticket activity trends,
+                                and closure quality metrics. Kept it as one file deliberately so Tier 1-2 support
+                                engineers can copy/paste it into client environments without dealing with pip packages or
+                                project structure. Supports AWS Secrets Manager for credentials in production, with env
+                                var fallback for dev. Tested locally using Ansible Molecule to spin up a Jira instance in
+                                Docker containers rather than developing against production. Had to do some manual setup
+                                (trial license, SLA configurations, mock projects), but it gave the AI a real Jira API to
+                                test against instead of guessing from documentation, and kept the blast radius at
+                                zero.</li>
                             <li><strong>Packer AMI Templating with Jinja2:</strong> Built an Ansible Jinja2 templating
                                 tool that generates valid Packer HCL templates for multiple Linux distributions (AL2,
                                 AL2023, Ubuntu 20.04/22.04, RHEL8/9) and AMI purposes (base-os, docker, eks). Shared
                                 build steps (cloud-init wait, package updates, Python/Ansible install, LVM compliance
-                                volumes, STIG hardening) live in one place; distro-specific variations are handled by
-                                the template. GitHub Actions CI pipeline runs monthly sandbox builds with automated
-                                validation.</li>
+                                volumes, STIG hardening via Ansible Lockdown roles, FIPS mode enablement where supported)
+                                live in one place; distro-specific variations are handled by the template. FIPS
+                                configuration extended beyond the OS to enterprise application endpoints (e.g., ensuring
+                                AWS API calls used FIPS-validated endpoints). GitHub Actions CI pipeline runs monthly
+                                sandbox builds with automated validation.</li>
                             <li><strong>Cross-Platform Container Image Build Pipeline:</strong> Built a container build
                                 pipeline using go-task, building hardened images from IronBank ubi9-minimal base with
                                 Trivy scanning and OpenSCAP RHEL9 STIG checks. Runs on both GitHub Actions (external,
@@ -291,11 +312,11 @@
                                 you have one place to look.</li>
                             <li><strong>Internal Documentation Platform (DokuWiki):</strong> There was no internal
                                 documentation across production enclaves. Confluence was available but leadership wanted
-                                an air-gap-friendly alternative they controlled. Deployed DokuWiki on a Synology NAS
-                                with plugins for backup, syntax highlighting, discussions, and tagging. Set up namespace
-                                hierarchy covering infrastructure domains and operational areas. Ended up being the
-                                primary author, writing runbooks for vROPs/vLOG SSO, VxRail troubleshooting, and Horizon
-                                View administration.</li>
+                                an air-gap-friendly alternative they directly controlled. Deployed DokuWiki on a
+                                Synology NAS with plugins for backup, syntax highlighting, discussions, and tagging. Set
+                                up namespace hierarchy covering infrastructure domains and operational areas. Ended up
+                                being the primary author, writing runbooks for vROPs/vLOG SSO, VxRail troubleshooting,
+                                C2PC administration, and Horizon View administration.</li>
                             <li><strong>Windows Failover Clustering:</strong> Monthly patching took file servers
                                 offline, disrupting user access across production enclaves. Set up native clustered VMDK
                                 on vSAN with Windows Failover Clustering and anti-affinity rules to keep file servers on
@@ -392,16 +413,16 @@
                         <div class="subheading mb-3">Zachary Piper Solutions - SPAWAR (Government Client)</div>
                         <ul>
                             <li><strong>WSUS Performance Optimization:</strong> Applied WSUS metadata cleanup and
-                                Microsoft-recommended optimizations across 14 production enclaves, getting 20-30x
+                                Microsoft-recommended optimizations across 7 production enclaves, getting 20-30x
                                 improvement in patch deployment speed. Fixed chronic delta import failures on air-gapped
                                 networks that previously required importing a full OVF of the upstream WSUS server.
                                 Monthly patch export/import went from 100+ hours to 8 hours.</li>
                             <li><strong>WSUS Infrastructure & Storage:</strong> Diagnosed and corrected VMFS deployment
                                 issues where thin-provisioned disks consumed maximum allocated space due to improper
                                 datastore initialization. Used vmkfstools to zero datastores and reclaim disk space,
-                                recovering 200-300GB. Converted thick-provisioned WSUS servers to thin-provisioned to
-                                resolve storage constraints. Reconfigured lab WSUS to pull patches from DISA WSUS
-                                servers over SSL, replacing unsecured connections to Microsoft update servers.</li>
+                                recovering 200-300GB. Converted thick-provisioned WSUS servers to thin-provisioned via
+                                vMotion to resolve storage constraints. Reconfigured lab WSUS to pull patches from DISA
+                                WSUS servers over SSL, replacing unsecured connections to Microsoft update servers.</li>
                             <li><strong>Exchange DAG Maintenance Automation:</strong> Wrote PowerShell scripts to start
                                 and stop DAG (Database Availability Group) maintenance mode for Microsoft Exchange
                                 mailbox servers, including checks to ensure all relevant services were properly started
@@ -526,6 +547,78 @@
                 <h2 class="mb-5">Projects</h2>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
+                        <a href="https://github.com/AgentWong/kafka-ansible-collection"
+                            target="_blank">
+                        <h3 class="mb-0">Apache Kafka Cluster with Observability Stack</h3>
+                        </a>
+                        <ul>
+                            <li>Ansible collection that deploys an 11-node environment across Rocky Linux 9 Molecule
+                                containers: Root CA, 3-node ZooKeeper ensemble, 3 Kafka brokers, Kafka UI, dedicated
+                                Prometheus/Grafana monitoring node, Nginx reverse proxy, and a Python traffic generator.
+                                Full stack tested entirely in containers.</li>
+                            <li>TLS end-to-end across the cluster: Root CA role generates per-node PKCS12 keystores and
+                                JKS truststores distributed via Ansible. ZooKeeper quorum runs on the TLS port (2281),
+                                Kafka inter-broker replication uses the SSL listener (9093), and Nginx terminates HTTPS
+                                with a CA-signed cert. JMX Exporter agents are loaded at JVM startup on all Kafka and
+                                ZooKeeper nodes; <code>kafka_exporter</code> adds consumer-group lag and offset
+                                metrics.</li>
+                            <li>Five Grafana dashboards deployed via file-provisioned JSON (no manual import): custom
+                                dashboards for broker throughput/partition health, consumer lag by group and topic, and
+                                ZooKeeper latency/connection counts; plus the community Node Exporter Full and
+                                kafka_exporter dashboards. Four Prometheus alert rules cover broker and ZooKeeper
+                                availability and under-replicated partitions.</li>
+                            <li>Nginx reverse proxy with HTTPS and HTTP→HTTPS redirect, basic auth on all routes, Kafka
+                                UI served at root <code>/</code> and Grafana at <code>/grafana/</code>. Handles the
+                                Grafana sub-path asset loading requirement (<code>serve_from_sub_path</code>) and React
+                                SPA routing correctly without manual workarounds.</li>
+                            <li>Python traffic generator using <code>kafka-python</code> produces to 5 topics with 3
+                                consumer groups at deliberately different polling delays (1s / 8s / 15s) to create
+                                realistic, measurable consumer lag profiles. Dashboards show meaningful data immediately
+                                after <code>molecule converge</code> completes.</li>
+                            <li>Developed with GitHub Copilot Agent Mode using Molecule as the test harness. The agent's
+                                autonomous Run → Analyze → Fix loop iterates through converge/verify cycles without
+                                human intervention. An entire multi-service debugging session counts as one premium
+                                request regardless of iteration count.</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">April 2026</span></div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
+                        <a href="https://github.com/AgentWong/driftctl" target="_blank">
+                            <h3 class="mb-0">driftctl Fork: Terraform Drift Detection Tool (Golang)</h3>
+                        </a>
+                        <ul>
+                            <li>Forked <a href="https://github.com/snyk/driftctl" target="_blank">snyk/driftctl</a> and
+                                re-architected it in Go to fix three fundamental limitations: no actual drift detection
+                                (it only compared state vs. live resources, never ran <code>terraform plan</code>), 103
+                                separate AWS API enumerators that hit rate limits and required constant maintenance, and
+                                no CloudFormation awareness causing most resources to show as "Unmanaged" in mixed IaC
+                                environments.</li>
+                            <li>Replaced all 103 per-service API enumerators with a single AWS Config Advanced Query API
+                                call covering 132 resource type mappings. Eliminates rate-limiting risk and reduces the
+                                maintenance surface from 103 enumerator files to one SQL-style query. The tool runs with
+                                standard <code>ReadOnlyAccess</code> IAM permissions; inventory mode can be narrowed to
+                                just 5 IAM actions.</li>
+                            <li>Integrated HashiCorp's <code>terraform-exec</code> Go library to run
+                                <code>terraform init</code> + <code>terraform plan</code> against discovered root modules
+                                with parallel execution. This enables true attribute-level drift detection (e.g., a
+                                security group rule changed outside Terraform) rather than just identifying unmanaged
+                                resources.</li>
+                            <li>Built categorization logic that queries the CloudFormation API
+                                (<code>ListStacks</code> + <code>ListStackResources</code>) to classify
+                                CloudFormation-managed resources separately from genuinely unmanaged ones. Also filters
+                                default AWS resources (default event buses, SSO reserved roles, default KMS aliases) and
+                                service-linked roles to reduce false positives to a meaningful signal.</li>
+                            <li>Used Claude Code + Github Copilot for navigating the unfamiliar Go codebase and
+                                iterating on API integration, demonstrating practical AI-assisted development on a real
+                                open-source project rather than greenfield code.</li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-primary">April 2026</span></div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="flex-grow-1">
                         <a href="https://github.com/AgentWong/eck-2026-project" target="_blank">
                             <h3 class="mb-0">Elastic Cloud on Kubernetes on AWS EKS</h3>
                         </a>
@@ -595,76 +688,6 @@
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">February 2026</span></div>
-                </div>
-                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                    <div class="flex-grow-1">
-                        <a href="https://www.linkedin.com/pulse/how-i-get-10x-more-value-from-github-copilot-using-one-herman-wong-3xotc/"
-                            target="_blank">
-                            <h3 class="mb-0">Apache Kafka Cluster with AI-Assisted Development Workflow</h3>
-                        </a>
-                        <ul>
-                            <li>Ansible collection that deploys an 8-node Apache Kafka cluster (3 ZooKeeper, 3 Kafka
-                                brokers, Root CA for TLS certs, Kafka UI dashboard). Tested entirely in Ansible Molecule
-                                containers, no cloud costs for iteration.</li>
-                            <li>Found that GitHub Copilot Agent Mode's autonomous Run → Analyze → Fix loops consume one
-                                premium request regardless of iteration count. Complex debugging sessions that would
-                                normally burn through quota cost virtually nothing.</li>
-                        </ul>
-                    </div>
-                    <div class="flex-shrink-0"><span class="text-primary">January 2026</span></div>
-                </div>
-                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                    <div class="flex-grow-1">
-                        <a href="https://www.linkedin.com/pulse/container-based-code-testing-ansible-molecule-herman-wong-u1xkc/"
-                            target="_blank">
-                            <h3 class="mb-0">Container-based Code Testing with Ansible Molecule</h3>
-                        </a>
-                        <ul>
-                            <li>Set up Ansible Molecule for container-based infrastructure testing, deploys a 2-node
-                                monitoring stack (Grafana/Prometheus server + PostgreSQL node) in under 5 minutes
-                                locally.</li>
-                            <li>Verifies application files, services, and API endpoints are working correctly after
-                                deployment. Full test cycle runs faster than waiting for a single EC2 instance to boot.
-                            </li>
-                            <li>GitHub Actions CI runs the same tests across multiple Linux distros in parallel.</li>
-                        </ul>
-                    </div>
-                    <div class="flex-shrink-0"><span class="text-primary">July 2025</span></div>
-                </div>
-                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                    <div class="flex-grow-1">
-                        <a href="https://www.linkedin.com/pulse/reality-ai-assisted-development-lessons-from-building-herman-wong-f6jac/"
-                            target="_blank">
-                            <h3 class="mb-0">Model Context Protocol (MCP) Server for Infrastructure as Code</h3>
-                        </a>
-                        <ul>
-                            <li>Built a Python MCP server that gives AI tools persistent memory for Terraform and
-                                Ansible resources, caches resource state and tracks versions so the AI doesn't lose
-                                context between sessions.</li>
-                            <li>Includes an XML-based task tracking system so the AI can pick up where it left off
-                                across infrastructure deployment iterations instead of starting from scratch.</li>
-                            <li>Open-sourced with tests, documentation, and integration examples.</li>
-                        </ul>
-                    </div>
-                    <div class="flex-shrink-0"><span class="text-primary">February 2025</span></div>
-                </div>
-                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                    <div class="flex-grow-1">
-                        <a href="https://www.linkedin.com/pulse/terragrunt-ansible-aws-cloud-lab-herman-wong/"
-                            target="_blank">
-                            <h3 class="mb-0">Terragrunt and Ansible AWS Cloud Lab</h3>
-                        </a>
-                        <ul>
-                            <li>Personal lab integrating Terraform and Ansible for AWS infrastructure. Terraform
-                                provisions resources, Ansible configures them, across dev/staging/prod environments.
-                            </li>
-                            <li>Terragrunt wrapper eliminates code duplication between environments. Same module,
-                                different tfvars.</li>
-                            <li>Reusable modules for common patterns (VPC, EC2, security groups) so spinning up a new
-                                environment is just a new Terragrunt config.</li>
-                        </ul>
-                    </div>
-                    <div class="flex-shrink-0"><span class="text-primary">July 2022</span></div>
                 </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
