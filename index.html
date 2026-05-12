@@ -60,11 +60,11 @@
                     repeatable, version-controlled pipelines you can run with a single click.</p>
 
                 <p>
-                    Most of my recent work has been Terraform and Ansible on AWS. I've built everything from multi-cloud
-                    VPN connectivity (AWS-to-Azure, dual tunnels with BGP) to fully automated Splunk HA cluster
-                    deployments that cut provisioning from 153 hours to under 5. I write CI/CD pipelines in GitLab CI
-                    and GitHub Actions, build hardened container images, and use Ansible Molecule for testing
-                    infrastructure code locally before it touches a cloud account.</p>
+                    Most of my recent work has been Terraform and Ansible on AWS. I cut Splunk cluster deployments from
+                    153 hours of manual work to under 5, built CI/CD pipelines that deploy full environments on a single
+                    button push in roughly 45 minutes, and resolved a multi-week AWS-to-Azure VPN deadlock in two days
+                    by capturing both ends in Terraform. I also test infrastructure code locally in containers (Ansible
+                    Molecule) so configuration errors surface before anything touches a cloud account.</p>
 
                 <p>
                     I also integrate AI tooling (GitHub Copilot, Claude) into infrastructure workflows - not as a
@@ -146,9 +146,9 @@
                                 base with Trivy scanning and OpenSCAP RHEL9 STIG checks. Runs on both GitHub Actions
                                 and an airgapped GitLab with ECR push.</li>
                             <li><strong>RegScale GRC Platform Deployment:</strong> Built the full cloud infrastructure
-                                in Terraform: EKS with IRSA for service account permissions, multi-AZ RDS SQL Server
-                                with KMS encryption, multi-AZ EFS for persistent storage, and AWS Load Balancer
-                                Controller via Helm for ingress.</li>
+                                in Terraform for a governance and compliance application: EKS with fine-grained service
+                                account permissions via workload identity, multi-AZ SQL Server with managed encryption,
+                                multi-AZ persistent storage, and an AWS-managed ingress controller deployed by Helm.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">May 2022 - Jan 2026</span></div>
@@ -267,33 +267,22 @@
                         <h3 class="mb-0">Apache Kafka Cluster with Observability Stack</h3>
                         </a>
                         <ul>
-                            <li>Ansible collection that deploys an 11-node environment across Rocky Linux 9 Molecule
-                                containers: Root CA, 3-node ZooKeeper ensemble, 3 Kafka brokers, Kafka UI, dedicated
-                                Prometheus/Grafana monitoring node, Nginx reverse proxy, and a Python traffic generator.
-                                Full stack tested entirely in containers.</li>
-                            <li>TLS end-to-end across the cluster: Root CA role generates per-node PKCS12 keystores and
-                                JKS truststores distributed via Ansible. ZooKeeper quorum runs on the TLS port (2281),
-                                Kafka inter-broker replication uses the SSL listener (9093), and Nginx terminates HTTPS
-                                with a CA-signed cert. JMX Exporter agents are loaded at JVM startup on all Kafka and
-                                ZooKeeper nodes; <code>kafka_exporter</code> adds consumer-group lag and offset
-                                metrics.</li>
-                            <li>Five Grafana dashboards deployed via file-provisioned JSON (no manual import): custom
-                                dashboards for broker throughput/partition health, consumer lag by group and topic, and
-                                ZooKeeper latency/connection counts; plus the community Node Exporter Full and
-                                kafka_exporter dashboards. Four Prometheus alert rules cover broker and ZooKeeper
-                                availability and under-replicated partitions.</li>
-                            <li>Nginx reverse proxy with HTTPS and HTTP→HTTPS redirect, basic auth on all routes, Kafka
-                                UI served at root <code>/</code> and Grafana at <code>/grafana/</code>. Handles the
-                                Grafana sub-path asset loading requirement (<code>serve_from_sub_path</code>) and React
-                                SPA routing correctly without manual workarounds.</li>
-                            <li>Python traffic generator using <code>kafka-python</code> produces to 5 topics with 3
-                                consumer groups at deliberately different polling delays (1s / 8s / 15s) to create
-                                realistic, measurable consumer lag profiles. Dashboards show meaningful data immediately
-                                after <code>molecule converge</code> completes.</li>
-                            <li>Developed with GitHub Copilot Agent Mode using Molecule as the test harness. The agent's
-                                autonomous Run → Analyze → Fix loop iterates through converge/verify cycles without
-                                human intervention. An entire multi-service debugging session counts as one premium
-                                request regardless of iteration count.</li>
+                            <li>Built an automated deployment for a full Kafka messaging environment in containers:
+                                coordination cluster, message brokers, a Kafka UI, a monitoring stack
+                                (Prometheus + Grafana), an Nginx reverse proxy, and a Python load generator. Whole
+                                stack tested locally without touching a cloud account.</li>
+                            <li>End-to-end encryption across the cluster with a built-in certificate authority that
+                                issues per-node keys and trust stores, all distributed by Ansible. Five Grafana
+                                dashboards deployed by configuration (no manual import) showing broker throughput,
+                                consumer lag, and coordinator health, with alerts for broker availability and
+                                under-replicated partitions.</li>
+                            <li>Nginx reverse proxy fronts everything: Kafka UI at root, Grafana at <code>/grafana/</code>,
+                                with HTTPS and basic auth on all routes. Python load generator produces traffic to
+                                multiple topics at different polling delays, so the dashboards show meaningful consumer
+                                lag profiles immediately after the cluster comes up.</li>
+                            <li>Developed with GitHub Copilot Agent Mode in a self-driving test loop. The AI runs
+                                tests, reads failures, and fixes the playbooks on its own without human intervention
+                                between iterations.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">April 2026</span></div>
@@ -305,29 +294,21 @@
                         </a>
                         <ul>
                             <li>Forked <a href="https://github.com/snyk/driftctl" target="_blank">snyk/driftctl</a> and
-                                re-architected it in Go to fix three fundamental limitations: no actual drift detection
-                                (it only compared state vs. live resources, never ran <code>terraform plan</code>), 103
-                                separate AWS API enumerators that hit rate limits and required constant maintenance, and
-                                no CloudFormation awareness causing most resources to show as "Unmanaged" in mixed IaC
-                                environments.</li>
-                            <li>Replaced all 103 per-service API enumerators with a single AWS Config Advanced Query API
-                                call covering 132 resource type mappings. Eliminates rate-limiting risk and reduces the
-                                maintenance surface from 103 enumerator files to one SQL-style query. The tool runs with
-                                standard <code>ReadOnlyAccess</code> IAM permissions; inventory mode can be narrowed to
-                                just 5 IAM actions.</li>
-                            <li>Integrated HashiCorp's <code>terraform-exec</code> Go library to run
-                                <code>terraform init</code> + <code>terraform plan</code> against discovered root modules
-                                with parallel execution. This enables true attribute-level drift detection (e.g., a
-                                security group rule changed outside Terraform) rather than just identifying unmanaged
-                                resources.</li>
-                            <li>Built categorization logic that queries the CloudFormation API
-                                (<code>ListStacks</code> + <code>ListStackResources</code>) to classify
-                                CloudFormation-managed resources separately from genuinely unmanaged ones. Also filters
-                                default AWS resources (default event buses, SSO reserved roles, default KMS aliases) and
-                                service-linked roles to reduce false positives to a meaningful signal.</li>
-                            <li>Used Claude Code + Github Copilot for navigating the unfamiliar Go codebase and
-                                iterating on API integration, demonstrating practical AI-assisted development on a real
-                                open-source project rather than greenfield code.</li>
+                                reworked it in Go to fix three real limitations: it never actually detected drift (only
+                                listed orphan resources), it hit AWS rate limits on large accounts, and it had no
+                                awareness of resources managed by CloudFormation.</li>
+                            <li>Replaced 103 separate AWS API calls with a single AWS Config query covering 132
+                                resource types. Cuts maintenance from a per-service enumerator down to one SQL-style
+                                query and eliminates the rate-limit risk. Runs with standard read-only AWS
+                                permissions.</li>
+                            <li>Added a real Terraform plan integration so the tool compares live AWS state against
+                                what Terraform thinks should exist. That's actual attribute-level drift detection
+                                (e.g., a security group rule changed outside Terraform), not just unmanaged-vs-managed.</li>
+                            <li>Added categorization so CloudFormation-managed resources show up separately from
+                                genuinely unmanaged ones. Default AWS resources and built-in service roles get filtered
+                                out, so the output is signal rather than noise.</li>
+                            <li>Used Claude Code and GitHub Copilot to navigate the unfamiliar Go codebase. Demonstrates
+                                AI-assisted development on a real open-source project rather than greenfield code.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">April 2026</span></div>
@@ -338,27 +319,27 @@
                             <h3 class="mb-0">Elastic Cloud on Kubernetes on AWS EKS</h3>
                         </a>
                         <ul>
-                            <li>Deployed EKS v1.33 cluster via Terragrunt with SPOT instances (m5.xlarge family) across
-                                2 AZs for 60-80% compute savings. IRSA roles for AWS Load Balancer Controller, External
-                                DNS, and EBS CSI Driver so there are zero static AWS credentials on the cluster.</li>
-                            <li>ArgoCD manages the entire stack through an App of Apps pattern with 14 child
-                                Applications across 7 sync waves. Kustomize base/overlay structure handles differences
-                                between local Rancher Desktop K3s and AWS EKS without duplicating manifests. Automated
-                                self-heal and prune keep the cluster in sync with Git.</li>
-                            <li>Full Elastic stack (Elasticsearch 8.17.4, Kibana, Fleet Server, Elastic Agent) deployed
-                                as ECK Operator custom resources. 3-node Elasticsearch cluster on encrypted gp3 EBS
-                                volumes. Elastic Agent runs as a DaemonSet collecting system and Kubernetes metrics from
-                                every node.</li>
-                            <li>Keycloak OIDC SSO across Elasticsearch, Kibana, ArgoCD, and Kiali. Solved an EKS
-                                hairpin NAT issue by splitting OIDC front-channel calls (public ALB URL) from
-                                back-channel token/JWKS calls (internal K8s DNS). Realm bootstrap and Elasticsearch role
-                                mappings handled by ArgoCD PostSync Jobs.</li>
-                            <li>Istio service mesh in sidecar mode on the Elastic namespace for L7 traffic observability
-                                through Kiali and Prometheus. 15 NetworkPolicies across 3 namespaces implementing
-                                default-deny-ingress with selective allow rules.</li>
-                            <li>AWS ALB with ACM wildcard TLS termination and CIDR-restricted access. External DNS
-                                auto-creates Route 53 records from Ingress annotations. cert-manager with a self-signed
-                                CA issues internal TLS certs for all internal-only components.</li>
+                            <li>Built a full Kubernetes-hosted Elasticsearch stack on AWS EKS, deployed via Terragrunt
+                                with Spot instances across two availability zones for 60-80% compute savings. Service
+                                accounts get fine-grained AWS permissions through workload identity, so the cluster
+                                runs with zero static credentials.</li>
+                            <li>ArgoCD manages the entire stack through an App of Apps pattern across 7 sync waves.
+                                A shared Kustomize base/overlay structure handles the differences between a local
+                                Rancher Desktop cluster and AWS EKS without duplicating manifests. Automated self-heal
+                                keeps the cluster in sync with Git.</li>
+                            <li>Full Elastic stack (Elasticsearch, Kibana, Fleet Server, Elastic Agent) deployed through
+                                the ECK Operator. Elastic Agent runs as a DaemonSet collecting system and Kubernetes
+                                metrics from every node.</li>
+                            <li>Single sign-on through Keycloak across Elasticsearch, Kibana, ArgoCD, and Kiali. Solved
+                                an EKS networking quirk by splitting public and internal sign-on calls down separate
+                                paths (public load balancer URL for the front channel, internal Kubernetes DNS for the
+                                back channel).</li>
+                            <li>Service mesh (Istio + Kiali) for traffic observability between services. Network
+                                policies across 3 namespaces implement default-deny with explicit allow rules, so
+                                traffic between services has to be opted in rather than implied.</li>
+                            <li>AWS load balancer with managed TLS certificates and restricted access. External DNS
+                                creates DNS records automatically from Ingress annotations, and cert-manager issues
+                                internal TLS certs for components that never leave the cluster.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">February 2026</span></div>
@@ -369,16 +350,16 @@
                             <h3 class="mb-0">AI Job Search Automation with Orchestrator-Agent Pattern</h3>
                         </a>
                         <ul>
-                            <li>Built an AI-assisted job search system using GitHub Copilot prompt files with Claude
-                                models. Uses an orchestrator + agent pattern where orchestrators coordinate isolated
-                                subagents so each one gets clean context instead of drowning in accumulated job
-                                description tokens.</li>
-                            <li>Searches multiple platforms (Greenhouse, Lever, Ashby, Workday, Hiring Cafe) using
-                                Firecrawl MCP for scraping and Chrome DevTools MCP for browser automation. Scoring
-                                framework ranks positions 0-10 with boosters, penalties, and disqualifiers.</li>
-                            <li>Resume tailoring pipeline uses Claude Code slash commands to extract keywords from job
-                                postings, match against a full CV, and generate DOCX resumes and cover letters via
-                                Python docx library. Only uses skills actually listed in the CV, no fabrication.</li>
+                            <li>Built an AI-assisted job search tool using Claude. An orchestrator coordinates isolated
+                                AI subagents so each one starts with clean context instead of drowning in accumulated
+                                job description text. The AI equivalent of breaking a long script into focused
+                                functions.</li>
+                            <li>Searches Greenhouse, Lever, Ashby, Workday, and Hiring Cafe. A scoring framework ranks
+                                postings 0-10 and filters out disqualifying ones (wrong stack, senior-only titles,
+                                non-remote requirements) before they ever hit my queue.</li>
+                            <li>Generates tailored resumes and cover letters from a single source CV. Strict rules
+                                prevent the AI from inventing experience that isn't actually there. Output is a
+                                validated DOCX, not free-form text.</li>
                             <li>Config is modular: YAML for inclusions/exclusions, markdown for scoring rules, CSV for
                                 company monitoring targets. Easy to swap out for different roles or tech stacks.</li>
                         </ul>
@@ -391,15 +372,16 @@
                             <h3 class="mb-0">Multi-Distribution Container Build Pipeline</h3>
                         </a>
                         <ul>
-                            <li>CI/CD pipeline that builds 20 container images across 4 Linux distros (Alpine, UBI9,
-                                Ubuntu, Amazon Linux 2023) and 5 DevOps tools (Ansible, Terraform, Packer, Python,
-                                Golang) using GitHub Actions matrix strategy for parallel builds.</li>
-                            <li>Trivy scanning for CVEs, secrets, and misconfigs on every build. Generates SPDX SBOMs
-                                for supply chain visibility.</li>
-                            <li>All images run as non-root with distro-specific optimizations. Shared requirements files
-                                so you're not duplicating package lists across 20 Dockerfiles.</li>
-                            <li>Makefile handles local builds on Apple Silicon (ARM64), so you can build, test, scan,
-                                and shell into containers without waiting for CI.</li>
+                            <li>GitHub Actions pipeline that builds 20 container images in parallel across 4 Linux
+                                distributions (Alpine, Red Hat UBI9, Ubuntu, Amazon Linux 2023) and 5 DevOps tools
+                                (Ansible, Terraform, Packer, Python, Go).</li>
+                            <li>Every build is scanned for known vulnerabilities, secret leaks, and misconfigurations,
+                                and produces a software bill of materials so you can trace what's actually inside each
+                                image.</li>
+                            <li>All images run as non-root by default. Shared package requirements files keep package
+                                lists from being duplicated across 20 Dockerfiles.</li>
+                            <li>Local builds work on Apple Silicon (ARM64) so the develop-test-scan loop doesn't depend
+                                on CI.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">February 2026</span></div>
@@ -410,19 +392,17 @@
                             <h3 class="mb-0">AWS Cloud Resume Challenge</h3>
                         </a>
                         <ul>
-                            <li>Built a static resume site on AWS: S3 for hosting, CloudFront for HTTPS delivery with a
-                                managed cache policy, ACM for TLS, and Route 53 for DNS. Root domain redirects to www
-                                via S3 website redirect.</li>
-                            <li>Visitor counter built with API Gateway, Lambda (Python), and DynamoDB. Lambda uses an
-                                atomic DynamoDB UpdateItem so the count is accurate even with concurrent hits. API
-                                Gateway has rate limiting configured to avoid surprise costs.</li>
-                            <li>GitHub Actions CI/CD pipeline syncs the repo to S3 and invalidates the CloudFront cache
-                                on every push to main. Originally used IAM access keys; later migrated to GitHub OIDC
-                                so no long-lived credentials are stored in GitHub secrets.</li>
-                            <li>Infrastructure migrated from AWS SAM/CloudFormation to Terraform in 2025. Existing S3,
-                                CloudFront, ACM, and Route 53 resources were imported into state. The SAM counter stack
-                                was replaced with new Terraform-managed resources and the old CloudFormation stacks
-                                deleted. State stored in S3 with native locking.</li>
+                            <li>Static resume site on AWS: S3 for hosting, CloudFront for HTTPS, and Route 53 for DNS.
+                                The page you're reading right now.</li>
+                            <li>Visitor counter built with API Gateway, Lambda (Python), and DynamoDB. The Lambda uses
+                                atomic database updates so the count stays accurate even with concurrent visitors, and
+                                the API has rate limiting so a runaway crawler can't run up a bill.</li>
+                            <li>GitHub Actions pipeline pushes content changes to S3 and refreshes the cache on every
+                                push to main. Originally used long-lived AWS keys; migrated to GitHub's OIDC federation
+                                in 2025 so no AWS credentials are stored in GitHub anymore.</li>
+                            <li>Whole infrastructure migrated from CloudFormation (via AWS SAM) to Terraform in 2025
+                                without downtime by importing existing resources into Terraform state and replacing the
+                                counter stack with new Terraform-managed resources.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">March 2022</span></div>
@@ -465,8 +445,9 @@
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Container Orchestration:</strong> Docker, Kubernetes, AWS EKS, IRSA roles for
-                        service accounts, External DNS, AWS Load Balancer Controller, Helm package management
+                        <strong>Container Orchestration:</strong> Docker, Kubernetes, AWS EKS, workload identity
+                        (IRSA) for service account permissions, External DNS, AWS Load Balancer Controller, Helm
+                        package management
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
