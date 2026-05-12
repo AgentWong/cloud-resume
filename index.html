@@ -119,141 +119,35 @@
                         <h3 class="mb-0">DevOps Engineer</h3>
                         <div class="subheading mb-3">Coalfire</div>
                         <ul>
-                            <li><strong>Infrastructure Automation & Deployment:</strong> Splunk HA Cluster deployments
-                                required 153 hours of manual work per environment, repetitive, error-prone, and blocking
-                                project deadlines. Only Senior engineers had enough context to deploy them successfully.
-                                Built Terraform configs for cloud resource provisioning (EC2, Kinesis Firehose, ALB,
-                                Security Groups, SQS) and Ansible roles for configuration management, cutting Splunk
-                                deployments to under 5 hours through standardized playbooks. The Ansible roles abstract
-                                away 80-90% of the configuration complexity, similar to how Helm charts wrap raw
-                                Kubernetes manifests: you still need foundational Ansible knowledge (where variables go,
-                                how to read playbooks, how roles and collections work), but the roles limit what you need
-                                to touch and expose the rest as adjustable values. The practical result was that Junior
-                                engineers could deploy a functional Splunk cluster without needing to understand every
-                                config decision under the hood. It's not a true zero-touch push-button automation that
-                                removes the need to learn the tool, but it made cluster deployments accessible to people
-                                who previously couldn't attempt them. SQS queues are a standard part of the log ingestion
-                                pipeline for AWS services that cannot write directly to CloudWatch (ALB access logs being
-                                a primary example). S3 bucket notifications trigger SQS, and Splunk's S3 input polls the
-                                queue to ingest those logs. Kinesis Firehose handles the real-time streaming path; SQS
-                                handles the S3-notification-based path for services where that's the only option.</li>
-
-                            <li><strong>Ansible Molecule Container-Based Testing:</strong> Set up Ansible Molecule with
-                                Docker containers for local role and collection testing, replacing slow cloud-based
-                                validation cycles where you'd wait for EC2 instances just to test a config change.
-                                Configured multi-node test scenarios simulating production topologies (Elasticsearch
-                                clusters, Kibana, Fleet Server) with systemd support and custom networking. Catches
-                                configuration errors locally before anything touches a cloud account.</li>
-                            <li><strong>AI-Assisted Development with Continuous Feedback Loop:</strong> Integrated
-                                GitHub Copilot Agent Mode with Molecule testing so the AI could run tests, read
-                                failures, and fix issues on its own in a loop. Created instruction files defining test
-                                commands, error patterns, and fix strategies so the AI handles the tedious Run → Analyze
-                                → Fix → Repeat cycle, which cut debugging time on complex Ansible roles significantly.
-                            </li>
-                            <li><strong>AWS CloudWatch → Azure Sentinel Log Ingestion Pipeline:</strong> A client
-                                operating an AWS/Azure hybrid environment needed all AWS service logs (Lambda, RDS,
-                                etc.) centralized in Azure Sentinel as their SIEM. The native Microsoft AWS S3
-                                CloudWatch connector only populates two fields in the AWSCloudWatch table: timestamp
-                                and message, with no log group name, log stream name, or account ID. With hundreds of
-                                log groups across services, there was no scalable way to distinguish a Lambda log from
-                                an RDS log without reading individual message bodies, making alerting and KQL queries
-                                impractical. Built a Terraform-provisioned pipeline: CloudWatch Subscription Filters →
-                                Kinesis Data Firehose → S3 → SQS → Sentinel. A Lambda transform function prefixed each
-                                log message with three metadata fields (AWS Account ID, Log Group Name, Log Stream
-                                Name) as a comma-delimited header before the original message body, embedding the
-                                context that Kinesis strips during transit. On the Azure side, extended the Log
-                                Analytics table schema with custom columns for those fields, then configured a DCR
-                                ingestion-time KQL transformation to parse the comma-delimited prefix out of the raw
-                                message field and populate the new columns at write time. The result was a queryable
-                                pipeline where engineers could filter by log source (e.g., all Lambda logs across all
-                                accounts) without inspecting message contents.</li>
-                            <li><strong>Multi-Cloud Architecture:</strong> Built Terraform configs for HA Site-to-Site
-                                VPN between AWS Transit Gateway and Azure VPN Gateway with dual tunnels and BGP routing.
-                                <ul>
-                                    <li><strong>Implementation:</strong> A colleague had spent 3 weeks unable to get the
-                                        VPN communicating. ClickOps made it nearly impossible to tear down and rebuild
-                                        cleanly, and reviewing the configuration required opening both the AWS and Azure
-                                        portals side by side. Capturing the full setup in Terraform meant we could reset
-                                        to a known-good state instantly and review both ends of the tunnel in a single
-                                        diff. What had been stuck for weeks was resolved in 2 days.</li>
-                                    <li><strong>Troubleshooting:</strong> Enabled VPN logging on both the AWS and Azure
-                                        resources by changing a few lines of Terraform, which surfaced IKE negotiation
-                                        errors in the tunnel logs. Formed a hypothesis that neither AWS nor Azure had
-                                        been explicitly told which encryption protocols to use, causing them to negotiate
-                                        with incompatible defaults. Consulted an LLM to generate aligned Diffie-Hellman
-                                        Group 24 cipher configurations for both ends, applied them via Terraform, and
-                                        confirmed the fix. The root cause and resolution were documented so the next
-                                        engineer wouldn't need to rediscover it.</li>
-                                </ul>
-                            </li>
-                            <li><strong>CI/CD Pipeline Development:</strong> Built GitLab CI/CD pipelines that
-                                orchestrate Terraform + Ansible workflows. Push a button and 45 minutes later you have
-                                Active Directory domains, PKI services, Palo Alto NGFW, and clustered applications
-                                (Gitlab/Elasticsearch/Splunk) fully deployed.</li>
-                            <li><strong>Configuration Management Migration:</strong> Inherited an environment where
-                                all EC2 provisioning was done through ad-hoc User Data scripts — a fire-and-forget
-                                approach with no visibility into failures, no idempotency, and no orchestration between
-                                dependent systems. The Splunk cluster setup alone involved 9+ Python scripts and a
-                                custom module with hard-coded hostname logic that couldn't scale beyond the original
-                                node count. Windows Domain Controllers were configured via PowerShell/DSC scripts that
-                                hit the User Data size limit — rather than using the correct workaround (store the
-                                script in S3 and download it at runtime), the previous engineers had modified
-                                AWS-controlled cloud-init files inside the Windows AMI itself to add GZIP
-                                decompression support, allowing oversized scripts to be crammed directly into User
-                                Data. This was a time bomb: when AWS updated their Windows AMI (likely adding
-                                code-signing to their PowerShell scripts), the modifications broke. Replica DC setup
-                                was a 45-minute sleep followed by a domain join attempt — a race condition masquerading
-                                as orchestration. Ansible Tower itself was bootstrapped through shell scripts wrapping
-                                its own setup tooling, stitched together with jq for inventory configuration. Migrated
-                                this entire surface area to native Ansible roles: idempotent, version-controlled, and
-                                with real-time stdout feedback so failures surface immediately and in context rather
-                                than requiring engineers to SSH into individual nodes and dig through cloud-init logs.
-                                The improvement was most significant for clustered applications, where the original
-                                scripts had no mechanism to coordinate across nodes at all.</li>
-                            <li><strong>Cost Optimization:</strong> Set up AWS cost controls in Terraform: Cost
-                                Allocation Tags with enforced SCP and Tag policies, Instance Scheduler to shut down
-                                resources off-hours, and cloud-nuke via GitHub Actions OIDC to wipe sandbox environments
-                                on schedule which were not explicitly excluded. Made it obvious who's spending what.</li>
-                            <li><strong>Process Automation:</strong> Wrote Selenium (Python) scripts to automate
-                                browser-based configurations for systems with no API. When there's no API, you either
-                                click through a web UI manually or you script a browser to do it for you.</li>
-                            <li><strong>Jira SLA Metrics Reporting Tool (Python, AI-Assisted):</strong> Manager needed
-                                a way to pull SLA violation and compliance data out of client Jira deployments. No clear
-                                spec on presentation, so I figured out the audience (non-technical IT managers) and chose
-                                a single HTML report as output since it's easy to open anywhere without extra
-                                dependencies. Used GitHub Copilot to write a ~1,300-line single-file Python script that
-                                queries Jira's REST API for SLA breaches, MTTR/MTTA by priority, ticket activity trends,
-                                and closure quality metrics. Kept it as one file deliberately so Tier 1-2 support
-                                engineers can copy/paste it into client environments without dealing with pip packages or
-                                project structure. Supports AWS Secrets Manager for credentials in production, with env
-                                var fallback for dev. Tested locally using Ansible Molecule to spin up a Jira instance in
-                                Docker containers rather than developing against production. Had to do some manual setup
-                                (trial license, SLA configurations, mock projects), but it gave the AI a real Jira API to
-                                test against instead of guessing from documentation, and kept the blast radius at
-                                zero.</li>
-                            <li><strong>Packer AMI Templating with Jinja2:</strong> Built an Ansible Jinja2 templating
-                                tool that generates valid Packer HCL templates for multiple Linux distributions (AL2,
-                                AL2023, Ubuntu 20.04/22.04, RHEL8/9) and AMI purposes (base-os, docker, eks). Shared
-                                build steps (cloud-init wait, package updates, Python/Ansible install, LVM compliance
-                                volumes, STIG hardening via Ansible Lockdown roles, FIPS mode enablement where supported)
-                                live in one place; distro-specific variations are handled by the template. FIPS
-                                configuration extended beyond the OS to enterprise application endpoints (e.g., ensuring
-                                AWS API calls used FIPS-validated endpoints). GitHub Actions CI pipeline runs monthly
-                                sandbox builds with automated validation.</li>
-                            <li><strong>Cross-Platform Container Image Build Pipeline:</strong> Built a container build
-                                pipeline using go-task, building hardened images from IronBank ubi9-minimal base with
-                                Trivy scanning and OpenSCAP RHEL9 STIG checks. Runs on both GitHub Actions (external,
-                                with build validation and badges) and airgapped GitLab with ECR push for internal
-                                deployments. Makefile handles local builds for bootstrapping Docker executor images.
-                            </li>
-                            <li><strong>RegScale GRC Platform Infrastructure Deployment:</strong> Built the full cloud
-                                infrastructure for RegScale (Governance, Risk, and Compliance) in Terraform: EKS cluster
-                                with AWS-managed node groups for multi-environment workloads (dev/prod/default
-                                namespaces), IRSA roles for granular service account permissions (VPC-CNI, AWS Load
-                                Balancer Controller, External DNS). Backend was multi-AZ RDS SQL Server (Express for
-                                dev, Standard Edition for prod) with KMS encryption and automated backups, plus multi-AZ
-                                EFS for persistent storage. Networking was VPC with multi-tier subnets
-                                (public/private/database/intra), least-privilege security groups, and AWS Load Balancer
+                            <li><strong>Splunk HA Cluster Automation:</strong> Splunk HA cluster deployments required
+                                153 hours of manual work per environment and only senior engineers could attempt them.
+                                Replaced fragile shell-script bootstraps with reusable Terraform configs and Ansible
+                                roles, cutting deployments to under 5 hours and making them accessible to junior
+                                engineers.</li>
+                            <li><strong>Multi-Cloud VPN:</strong> AWS-to-Azure site-to-site VPN had been stuck for three
+                                weeks under ClickOps. Captured both tunnel endpoints in Terraform, enabled tunnel
+                                logging to surface the encryption mismatch, and had it running in two days. Both ends
+                                now reviewable in a single diff.</li>
+                            <li><strong>GitLab CI/CD Pipelines:</strong> Single button push deploys Active Directory
+                                domains, PKI services, firewalls, and clustered applications (GitLab, Elasticsearch,
+                                Splunk) in roughly 45 minutes.</li>
+                            <li><strong>AWS-to-Azure Log Pipeline:</strong> The native Sentinel connector dropped
+                                everything except timestamp and message body, so engineers could not distinguish Lambda
+                                logs from RDS logs without reading message bodies. Built a Lambda transform that
+                                prefixes each record with account ID, log group, and stream name, and a Sentinel-side
+                                KQL transform that parses those fields back out at ingestion time.</li>
+                            <li><strong>AI-Assisted Development:</strong> Integrated GitHub Copilot Agent Mode with
+                                Ansible Molecule so the AI runs tests, reads failures, and fixes issues on its own
+                                loop. Significantly cut debug time on complex Ansible roles.</li>
+                            <li><strong>Ansible Molecule Local Testing:</strong> Set up Molecule with Docker containers
+                                so engineers could test infrastructure code locally instead of waiting on EC2
+                                instances. Caught configuration errors before anything touched a cloud account.</li>
+                            <li><strong>Container Image Pipeline:</strong> Hardened images from IronBank ubi9-minimal
+                                base with Trivy scanning and OpenSCAP RHEL9 STIG checks. Runs on both GitHub Actions
+                                and an airgapped GitLab with ECR push.</li>
+                            <li><strong>RegScale GRC Platform Deployment:</strong> Built the full cloud infrastructure
+                                in Terraform: EKS with IRSA for service account permissions, multi-AZ RDS SQL Server
+                                with KMS encryption, multi-AZ EFS for persistent storage, and AWS Load Balancer
                                 Controller via Helm for ingress.</li>
                         </ul>
                     </div>
@@ -265,144 +159,33 @@
                         <div class="subheading mb-3">General Dynamics Information Technology - SPAWAR (Government
                             Client)</div>
                         <ul>
-                            <li><strong>VMware Horizon VDI Performance Optimization:</strong> Diagnosed VDI recompose
-                                operations taking 3-5 hours due to Horizon View Agent defaulting to KMS activation
-                                instead of AD-based activation. Implemented registry fix reducing recompose time to 30
-                                minutes per pool (97% reduction), dramatically cutting maintenance windows and
-                                increasing VDI availability.</li>
-                            <li><strong>VDI Infrastructure Recovery:</strong> Resolved critical issue where VDI pools
-                                could not be managed or recomposed for 4 months. Diagnosed SQL database deployment group
-                                ID mismatch with ADAM database values on View Connection Server and corrected, restoring
-                                full pool management capability across production environment.</li>
-                            <li><strong>C2PC Legacy Software VDI Integration:</strong> Integrated C2PC (military Command
-                                and Control software by Northrop Grumman) with Horizon View VDI infrastructure it was
-                                never designed for. C2PC's SQL Server instances are hostname-based, causing the
-                                application to spam critical alerts and become unresponsive after VDI pool recompose
-                                operations changed clone hostnames. Wrote a PowerShell script to connect to SQL Server,
-                                drop the stale database, create a new database, and run the vendor's table-recreation
-                                script; registered it as a Horizon View post-synchronization script so it ran
-                                automatically after every pool publish. Successfully tested in lab and deployed
-                                across all 6 production enclaves, resolving recurring C2PC failures after pool recompose.
-                            </li>
-                            <li><strong>VxRail Upgrade Troubleshooting & PKI Certificate Remediation:</strong> When
-                                VxRail upgrades stalled for one month across 6 production enclaves despite vendor
-                                support, volunteered to investigate. Identified two configuration issues: new SubCA
-                                certificate not added to VxRail Manager trust store after CA rotation, and missing
-                                /etc/hosts entries for ESXi hosts. Located documentation on vendor portal that team
-                                members couldn't access. Successfully upgraded 5 of 6 production enclaves within one
-                                week after diagnosis. Also diagnosed a separate incident where serious problems in new
-                                systems were caused by incorrectly issued Subordinate CA (PKI/SSL) certificates; worked
-                                with government SME to reissue correctly configured certificates and reinstall them
-                                across all affected infrastructure components (vCenter, VxRail) to prevent service
-                                impacts.</li>
-                            <li><strong>Log4J Vulnerability Remediation:</strong> Assessed and executed patching
-                                procedures for vROPs, Horizon View, and vCenter to address Log4J vulnerability across
-                                production environments. Resolved legacy View Security Server blocking issue requiring
-                                Flash-based pairing password reset; adapted unsupported PowerCLI script as workaround.
-                                Trained team on VMware stack patching procedures.</li>
-                            <li><strong>Unified Access Gateway HA Architecture:</strong> Researched and proposed 2x VCS
-                                (View Connection Server) + 4x UAG architecture replacing the original 4x VCS setup.
-                                Configured load-balanced UAG appliances so VDI sessions stay active during Connection
-                                Server restarts, so users stop getting kicked during monthly patching.</li>
-                            <li><strong>Infrastructure Monitoring Stack:</strong> Production environments had no
-                                centralized visibility — troubleshooting meant logging into individual systems to check
-                                logs. Deployed vRealize Operations Manager with vCenter SSO integration and DISA
-                                Compliance Pack for STIG monitoring. Integrated vRealize Log Insight with Content Packs
-                                for AD, Exchange, SQL, Windows, Horizon View, and Linux, all funneled through vROPS so
-                                you have one place to look.</li>
-                            <li><strong>Internal Documentation Platform (DokuWiki):</strong> There was no internal
-                                documentation across production enclaves. Confluence was available but leadership wanted
-                                an air-gap-friendly alternative they directly controlled. Deployed DokuWiki on a
-                                Synology NAS with plugins for backup, syntax highlighting, discussions, and tagging. Set
-                                up namespace hierarchy covering infrastructure domains and operational areas. Ended up
-                                being the primary author, writing runbooks for vROPs/vLOG SSO, VxRail troubleshooting,
-                                C2PC administration, and Horizon View administration.</li>
-                            <li><strong>Windows Failover Clustering:</strong> Monthly patching took file servers
-                                offline, disrupting user access across production enclaves. Set up native clustered VMDK
-                                on vSAN with Windows Failover Clustering and anti-affinity rules to keep file servers on
-                                separate hosts, giving users zero-downtime file access during patching. Wrote and tested
-                                a PowerShell script to automate cluster creation and configuration.</li>
-                            <li><strong>PowerShell DSC Patch Orchestration:</strong> Wrote PowerShell DSC configurations
-                                for orchestrated patching across 6 production enclaves (separate Windows domain
-                                environments). Primary VMs in each role get patched first, secondaries wait until
-                                primary completes. DSC Pull Server with a config data file to toggle orchestration
-                                on/off. Enabled fully patching all 6 enclaves in a single day.</li>
-                            <li><strong>PowerShell DSC Software Inventory via vRealize Log Insight:</strong> Wrote a
-                                custom PowerShell DSC class-based resource that reads the uninstall registry hive to
-                                determine installed software names and versions, then writes custom Events for vRealize
-                                Log Insight to consume. Provided automated inventory of all software and versions across
-                                100+ VMs per enclave without requiring agents or third-party tools.</li>
-                            <li><strong>Office 2019 Air-Gapped Distribution:</strong> Air-gapped downstream servers had
-                                no path to Microsoft's update infrastructure, leaving Office 2019 unpatched across the
-                                fleet — a compliance gap surfaced during reaccreditation. Wrote two PowerShell scripts:
-                                the first pulled the latest Office 2019 installer files from Microsoft's CDN via the
-                                Office Deployment Tool onto an internet-connected WSUS server; the second synced only
-                                changed files to air-gapped downstream servers using SHA hash comparison to skip
-                                unchanged files. Deployed to four production environments as the ongoing patch delivery
-                                mechanism for Office.</li>
-                            <li><strong>Adobe Flash Killswitch — Proactive Discovery and Fleet-Wide Remediation:</strong>
-                                Production Horizon View admin portals were going to become inaccessible on January 12,
-                                2021 due to a time-based killswitch built into Adobe Flash — an obscure end-of-life
-                                mechanism most teams weren't aware of. Discovered the issue proactively by manually
-                                advancing the system date on a management VM to February 2021 and confirming the Horizon
-                                portal became unreachable. Found and documented an <code>mms.cfg</code> allowlist configuration
-                                that bypasses the killswitch. Led the contractor team in deploying the fix across all
-                                production enclaves before the cutoff date, preventing a maintenance window that would
-                                have blindsided operations.</li>
-                            <li><strong>Domain Controller Outage Diagnosis and Recovery:</strong> Domain controllers in
-                                a production enclave dropped to Public network profiles after NLA misclassified their
-                                NICs, causing domain authentication failures across VMs and VDI pools. After a reboot to
-                                fix the NLA issue, logins stopped working entirely. Event Log analysis showed SYSVOL
-                                replication had been silently failing because the C: drive on the replica domain
-                                controller was full — no SYSVOL replication meant domain auth was broken. Cleared
-                                <code>C:\Windows\Temp</code> by mapping C$ from the healthy primary domain controller,
-                                rebooted the replica, and restored full domain authentication.</li>
-                            <li><strong>SubCA Certificate / NDES Misconfiguration Root Cause Analysis:</strong>
-                                NDES web server configuration was failing with generic 500 errors across three new
-                                production enclaves despite identical configurations — months of work had stalled with
-                                no progress. Volunteered to investigate and traced the 500 errors to DNS resolution
-                                failures, which exposed a deeper structural issue: the Subordinate CA certificate had
-                                incorrect CRL/AIA distribution point URLs, causing all enclave assets to reference an
-                                airgapped legacy enclave domain controller for Certificate Revocation checks — a single
-                                point of failure that crossed environment boundaries. Worked with the architect and team
-                                lead to reissue the SubCA certificates with correct CRL/AIA locations. This unblocked
-                                NDES deployment and eliminated the cross-environment CRL dependency.</li>
-                            <li><strong>Certificate Trust List Sync for Air-Gapped Networks:</strong> Air-gapped
-                                downstream WSUS servers had no mechanism to receive updated Windows Certificate Trust
-                                Lists — a gap surfaced as a reaccreditation finding. Wrote two PowerShell scripts: the
-                                first used <code>certutil -SyncWithWU</code> on the internet-connected WSUS to pull the latest
-                                CTL; the second downloaded it to air-gapped downstream servers. Added a custom GPO to
-                                redirect the domain CTL URL to the local WSUS path so endpoints pulled from the
-                                internal source. Deployed across all production enclaves and closed the reaccreditation
-                                finding.</li>
-                            <li><strong>Windows 10 WSUS GPO Regression After 1909 Upgrade:</strong> All Windows 10 VMs
-                                across all production enclaves stopped receiving WSUS-targeted patches after being
-                                upgraded past Windows 10 1909 — they were silently ignoring existing Windows Update
-                                GPOs. A secondary issue was that Dual-Scan behavior was causing VMs to attempt
-                                outbound connections to Microsoft's public Windows Update servers, generating unnecessary
-                                firewall noise in an air-gapped environment. Researched Microsoft's whitepaper on GPO
-                                changes introduced in 1909+, identified the new required policy settings, tested in lab,
-                                and documented the changes for the team. Also added settings to disable Dual-Scan,
-                                eliminating the firewall traffic.</li>
-                            <li><strong>vRealize Log Insight Appliance Recovery from Filesystem Corruption:</strong> A
-                                production vRealize Log Insight appliance became unbootable with no obvious cause.
-                                Analyzed journalctl boot logs, identified inode corruption on the core data volume
-                                (<code>/dev/mapper/data-core</code>), and ran fsck to repair it. Appliance recovered and
-                                booted successfully without data loss or a rebuild.</li>
-                            <li><strong>DISM Air-Gapped OS Repair Procedure:</strong> DOD air-gapped environments had
-                                no documented method to repair Windows component store corruption short of rebuilding the
-                                VM — the standard DISM repair source is Windows Update, which isn't reachable. Researched
-                                and validated an alternative: using the WinSxS folder from a healthy VM running the same
-                                OS version at equal or higher patch level as an offline repair source. Tested the method
-                                in lab and documented it as a viable repair option for engineers facing component store
-                                corruption in air-gapped environments.</li>
-                            <li><strong>PowerShell Pester Infrastructure Health Test Suite:</strong> No standardized
-                                validation existed for verifying the health of critical environment infrastructure before
-                                and after patching cycles. Wrote a PowerShell Pester test suite covering Active
-                                Directory, Exchange DAG, File Server Failover Cluster, Horizon View, Admin Server, and
-                                C2PCGW. Tests gave engineers an automated health baseline instead of manual
-                                spot-checking. Formally handed off the suite during offboarding alongside the DSC
-                                orchestration scripts, vROPs/vLOG configurations, and WSUS tooling.</li>
+                            <li><strong>VDI Recompose Performance:</strong> Diagnosed VDI recompose operations taking
+                                3-5 hours, traced to the View Agent defaulting to a slow activation path. A registry
+                                fix cut recompose time to 30 minutes per pool (97% reduction).</li>
+                            <li><strong>4-Month VDI Outage Recovery:</strong> VDI pools could not be managed or
+                                recomposed for 4 months. Traced the failure to a database ID mismatch on the View
+                                Connection Server and corrected it, restoring full pool management.</li>
+                            <li><strong>VxRail Upgrade Recovery:</strong> Hyperconverged infrastructure upgrades had
+                                stalled for a month across 6 production enclaves despite vendor support. Identified a
+                                certificate trust issue from a recent CA rotation plus missing host file entries.
+                                Completed 5 of 6 enclaves in one week.</li>
+                            <li><strong>C2PC VDI Integration:</strong> Wrote a PowerShell script that resets a stale
+                                SQL database after every VDI pool recompose, registered as a Horizon View
+                                post-synchronization script. Deployed across 6 production enclaves to eliminate
+                                recurring post-recompose failures in the C2PC military command-and-control software.</li>
+                            <li><strong>PowerShell DSC Patch Orchestration:</strong> Wrote DSC configurations to
+                                orchestrate Windows patching across 6 production environments in a single day,
+                                sequencing primary VMs before secondaries.</li>
+                            <li><strong>Centralized Monitoring:</strong> Deployed vRealize Operations and Log Insight
+                                into environments that previously had no shared visibility, so engineers stopped
+                                logging into individual systems to chase logs. Content Packs cover AD, Exchange, SQL,
+                                Windows, Horizon View, and Linux.</li>
+                            <li><strong>Adobe Flash Killswitch Discovery:</strong> Production Horizon View admin
+                                portals were going to become inaccessible on January 12, 2021 due to a time-based
+                                killswitch built into Adobe Flash. Discovered the issue proactively by advancing the
+                                system date on a management VM, found and documented the <code>mms.cfg</code> allowlist
+                                configuration that bypasses the killswitch, and led the team in deploying the fix
+                                before the cutoff date.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">April 2021 - April 2022</span></div>
@@ -413,21 +196,13 @@
                         <div class="subheading mb-3">Zachary Piper Solutions - SPAWAR (Government Client)</div>
                         <ul>
                             <li><strong>WSUS Performance Optimization:</strong> Applied WSUS metadata cleanup and
-                                Microsoft-recommended optimizations across 7 production enclaves, getting 20-30x
-                                improvement in patch deployment speed. Fixed chronic delta import failures on air-gapped
-                                networks that previously required importing a full OVF of the upstream WSUS server.
-                                Monthly patch export/import went from 100+ hours to 8 hours.</li>
-                            <li><strong>WSUS Infrastructure & Storage:</strong> Diagnosed and corrected VMFS deployment
-                                issues where thin-provisioned disks consumed maximum allocated space due to improper
-                                datastore initialization. Used vmkfstools to zero datastores and reclaim disk space,
-                                recovering 200-300GB. Converted thick-provisioned WSUS servers to thin-provisioned via
-                                vMotion to resolve storage constraints. Reconfigured lab WSUS to pull patches from DISA
-                                WSUS servers over SSL, replacing unsecured connections to Microsoft update servers.</li>
-                            <li><strong>Exchange DAG Maintenance Automation:</strong> Wrote PowerShell scripts to start
-                                and stop DAG (Database Availability Group) maintenance mode for Microsoft Exchange
-                                mailbox servers, including checks to ensure all relevant services were properly started
-                                and stopped prior to major Cumulative Update upgrades. Prevents email loss by gracefully
-                                failing over nodes prior to patching.</li>
+                                Microsoft-recommended optimizations across 7 air-gapped production environments. Cut
+                                monthly patch export/import from 100+ hours to 8 hours and fixed chronic delta import
+                                failures.</li>
+                            <li><strong>Exchange DAG Maintenance Automation:</strong> Wrote PowerShell scripts to
+                                start and stop Database Availability Group maintenance mode for Exchange mailbox
+                                servers, including service health checks before major Cumulative Update upgrades.
+                                Prevents email loss by gracefully failing over nodes prior to patching.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">October 2020 - April 2021</span></div>
@@ -438,53 +213,21 @@
                         <div class="subheading mb-3">Abbtech - US Army Corps of Engineers IT</div>
                         <ul>
                             <li><strong>Enterprise System Health Monitoring:</strong> Wrote multi-threaded PowerShell
-                                tools using runspaces to scan 600+ computers in parallel, checking SCCM client health
-                                (installation, registry, WMI namespace), Bitlocker encryption status with Active Directory recovery
-                                key validation, Avamar backup agent, Windows Update compliance via registry UBR version
-                                tracking, GPO freshness (stale registry.pol blocks SCCM updates), TPM/Secure
-                                Boot, and Bomgar agent components. System health checks went from days to hours. Built
-                                during COVID downtime when ticket volume was minimal.</li>
-                            <li><strong>WPF Diagnostic Dashboard:</strong> Reverse-engineered an existing VBScript
-                                diagnostic tool (basically end-of-life language) that was natively single-threaded and
-                                painfully slow. Rebuilt the whole thing in PowerShell as a WPF GUI, using runspace pools
-                                for parallel CIM queries with DCOM protocol (since WinRM wasn't enabled),
-                                making it about 3-5x faster. Shows real-time status of 50+ system properties: SCCM
-                                health, Bitlocker status, McAfee HBSS components (Engine version, DAT version/date, EPO
-                                server, HIPS, DLP), Windows services, VPN detection, and network config.</li>
-                            <li><strong>BITS-Based Software Deployment:</strong> Needed to deploy 20-30GB CAD software
-                                (AutoCAD, Revit) to remote workers over VPN during COVID. Noticed SCCM uses BITS for
-                                fault-tolerant transfers, so I wrote a PowerShell script that does the same thing -
-                                asynchronous low-priority background transfers that survive VPN disconnections and
-                                resume automatically. Users didn't need to bring laptops on-site; installations
-                                completed fully remotely via Bomgar while they worked normally. My peers were doing File
-                                Explorer copies that failed after 10+ hours when users disconnected.</li>
-                            <li><strong>SCCM Enterprise Incident Investigation:</strong> Assisted SCCM Administrators in
-                                diagnosing an enterprise-wide issue where SCCM clients were uninstalling themselves
-                                across hundreds of machines, causing operational impacts (inability to deliver OS
-                                patches and software). Traced Event Logs to identify that a recently enabled SCCM add-on
-                                was the root cause, enabling the team to resolve the issue and restore patch delivery
+                                tools to scan 600+ computers in parallel for SCCM client health, BitLocker status,
+                                patch compliance, and Group Policy freshness. Health audits that previously took days
+                                completed in hours.</li>
+                            <li><strong>WPF Diagnostic Dashboard:</strong> Rebuilt a slow single-threaded VBScript
+                                diagnostic tool as a PowerShell WPF GUI using runspace pools for parallel CIM queries
+                                (DCOM, since PowerShell Remoting was disabled). Real-time status of 50+ system
+                                properties at 3-5x the speed of the legacy tool.</li>
+                            <li><strong>BITS-Based Software Deployment:</strong> Wrote a PowerShell script using BITS
+                                for fault-tolerant transfers of 20-30GB CAD software (AutoCAD, Revit) to remote workers
+                                during COVID. Asynchronous background transfers survived VPN disconnections, so users
+                                did not need to bring laptops on-site.</li>
+                            <li><strong>SCCM Enterprise Incident Investigation:</strong> Diagnosed an enterprise-wide
+                                issue where SCCM clients were uninstalling themselves across hundreds of machines.
+                                Traced the cause to a recently enabled SCCM add-on, restoring patch delivery
                                 capability.</li>
-                            <li><strong>Microsoft Office Mass Activation Failure:</strong> Diagnosed and resolved a
-                                work-stopping incident where hundreds of users had Microsoft Office deactivated and
-                                unable to open. Root cause analysis identified a misconfigured GPO
-                                (missing DNS suffix SearchList entry) as the culprit. Provided the Tier 3 Active
-                                Directory management team with the specific GPO configuration changes needed to resolve
-                                the issue enterprise-wide.</li>
-                            <li><strong>Remote SCCM Patch Orchestration:</strong> Wrote a PowerShell tool that uses WMI
-                                remote registry to write SCCM reboot notification registry values and restart ccmexec on
-                                target computers, triggering Software Center restart prompts without mandatory
-                                enforcement. Users restart at their convenience, no phone calls or office visits. I
-                                resolved patching tickets entirely remotely while peers were asking users to drive to
-                                the office.</li>
-                            <li><strong>Bitlocker Compliance Auditing:</strong> Built automated Bitlocker compliance
-                                reporting that queries Active Directory computer objects for msFVE-RecoveryInformation to find systems
-                                missing AD-stored recovery keys. Domain-wide scanner compares on-device recovery
-                                passwords with AD records to catch sync failures that need re-escrow.</li>
-                            <li><strong>System Remediation Tooling:</strong> Wrote PowerShell tools for common break/fix
-                                scenarios: Windows Update Agent reset (stop BITS/WUA services, clear
-                                SoftwareDistribution folder, re-register 30+ DLLs per Microsoft docs) and WMI repository
-                                repair (adapted Microsoft's script to filter autorecover/deleteinstance/deleteclass MOF
-                                files that broke on Windows 10+). Fixed machines remotely instead of reimaging.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">April 2019 - September 2020</span></div>
@@ -494,46 +237,18 @@
                         <h3 class="mb-0">Helpdesk Technician</h3>
                         <div class="subheading mb-3">Hawaii Tech Support</div>
                         <ul>
-                            <li><strong>Network Discovery & Asset Documentation (Auvik):</strong> Deployed Auvik network
-                                monitoring across MSP client environments, discovered undocumented switches, firewalls,
-                                and servers still running factory-default credentials. Configured WinRM, SNMP, and SSH
-                                integration for device profiling. Documented all network assets, changed default
-                                credentials on discovered iDRAC/iLO and SonicWall devices, and built baseline
-                                inventories for environments that had none.</li>
-                            <li><strong>OS Deployment Automation (MDT/WDS):</strong> Technicians were spending hours
-                                babysitting individual Windows 10 installs. Set up MDT/WDS imaging server with VLAN
-                                isolation for PXE boot automation. New computers go from bare metal to fully imaged with
-                                standard software (RMM, Webroot, Office) in 30 minutes instead of 3+ hours of hands-on
-                                work.</li>
-                            <li><strong>Out-of-Band Server Management:</strong> Configured iDRAC/iLO access for client
-                                servers to enable remote power operations after power outages. Documented credentials
-                                and created procedures for other technicians, eliminating site visits previously
-                                required to physically power on servers when UPS-protected network equipment recovered
-                                but servers remained offline.</li>
+                            <li><strong>Network Discovery (Auvik):</strong> Deployed Auvik network monitoring across
+                                MSP client environments. Discovered undocumented switches, firewalls, and servers still
+                                running factory-default credentials. Built baseline inventories for environments that
+                                had none.</li>
+                            <li><strong>OS Deployment Automation (MDT/WDS):</strong> Set up an MDT/WDS imaging server
+                                with PXE boot automation. New computers went from bare metal to fully configured with
+                                standard software in 30 minutes instead of 3+ hours of hands-on work.</li>
                             <li><strong>Remote Endpoint Remediation:</strong> Figured out how to install RMM agents
-                                remotely using Webroot shell command execution and domain-joined psexec for computers
-                                that Auvik discovered but had no management software. No more client site visits or
-                                asking users to bring laptops in just to install an agent.</li>
-                            <li><strong>Azure Recovery Services Deployment:</strong> Set up Azure Recovery Services for
-                                a non-profit client who had Azure credits sitting unused, gave them free direct-to-cloud
-                                offsite backups instead of relying solely on on-premises backup infrastructure.</li>
-                            <li><strong>Active Directory Lifecycle Automation:</strong> Set up PowerShell + Task
-                                Scheduler to automatically prune stale Active Directory computer and user accounts. Keeps the
-                                directory clean without someone manually auditing it.</li>
-                            <li><strong>Tableau Service Startup Automation:</strong> Resolved recurring issue where
-                                Tableau Server services failed to start automatically after monthly patching-related
-                                server restarts. Worked with Tableau vendor support to identify required startup command
-                                sequence, then implemented PowerShell + Task Scheduler automation to run the commands
-                                before and after patching. Tableau support noted the issue for future software
-                                improvement.</li>
-                            <li><strong>SQL Server Backup Automation:</strong> Configured SQL Server Agent to automate
-                                cleanup of SQL Server backups, preventing storage exhaustion from accumulated backup
-                                files.</li>
-                            <li><strong>Client Communication Automation:</strong> Utilized Microsoft Flows (Power
-                                Automate) to automate regular email notices to clients, reducing manual follow-up
-                                overhead.</li>
-                            <li><strong>Email Deliverability Configuration:</strong> Client emails kept getting flagged
-                                as spam. Set up SPF/DKIM/DMARC records in their DNS to fix email authentication.</li>
+                                remotely using Webroot shell execution and domain-joined psexec, eliminating client site
+                                visits for management software deployment.</li>
+                            <li><strong>Email Deliverability:</strong> Client emails kept getting flagged as spam. Set
+                                up SPF, DKIM, and DMARC records to fix email authentication.</li>
                         </ul>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">February 2018 - February 2019</span></div>
@@ -850,9 +565,10 @@
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <strong>Practical Usage:</strong> AI pair programming for Terraform and Ansible, prompt
-                        engineering for structured output, building repeatable AI workflows with the same rigor as
-                        infrastructure code (version-controlled configs, modular design, testable components)
+                        <strong>Practical Usage:</strong> AI pair programming for Terraform and Ansible, writing
+                        structured AI instructions for consistent and parseable output, building repeatable AI workflows
+                        with the same rigor as infrastructure code (version-controlled configs, modular design, testable
+                        components)
                     </li>
                 </ul>
             </div>
